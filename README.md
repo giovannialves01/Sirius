@@ -7,7 +7,7 @@ Projeto API 4° Semestre
 <h2>Integrantes da Equipe</h2>
 <ul>
        <li><a href="https://www.linkedin.com/in/giovanni-santos-546412154/">Giovanni dos Santos Alves</a> (<i>Scrum Master</i>)
-       <li><a href="https://www.linkedin.com/in/anna-yukimi-yamada-6ba23b149/">Anna Yukimi Yamada</a> (<i>Project Owner</i>)
+       <li><a href="https://www.linkedin.com/in/anna-yukimi-yamada-6ba23b149/">Anna Yukimi Yamada</a> (<i>Product Owner</i>)
        <li><a href="https://www.linkedin.com/in/felipe-silva-13b3b61a0/">Felipe Silva</a> (<i>Development Team</i>)
        <li> Levi Alberto Motta Santos</a> (<i>Development Team</i>)
        <li> Raul Santos Iglesias</a> (<i>Development Team</i>)
