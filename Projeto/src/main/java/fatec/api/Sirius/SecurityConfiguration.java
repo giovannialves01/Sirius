@@ -1,7 +1,5 @@
 package fatec.api.Sirius;
 
-import fatec.api.Sirius.repository.UserRepository;
-import fatec.api.Sirius.services.SSUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,6 +11,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+import fatec.api.Sirius.repository.UserRepository;
+import fatec.api.Sirius.services.SSUserDetailsService;
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
@@ -21,10 +22,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     public static BCryptPasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
-
-
-    @Autowired
-    private SSUserDetailsService userDetailsService;
 
     @Autowired
     private UserRepository userRepository;
@@ -53,13 +50,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception{
-      /* auth.inMemoryAuthentication()
-                .withUser("david").password(passwordEncoder().encode("david2020"))
-                .authorities("ADMIN")
-                .and()
-                .withUser("user")
-                .password(passwordEncoder().encode("password"))
-                .authorities("USER");*/
         auth.userDetailsService(userDetailsServiceBean())
                 .passwordEncoder(passwordEncoder());
     }

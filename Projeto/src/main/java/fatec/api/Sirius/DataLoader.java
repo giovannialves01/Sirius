@@ -24,19 +24,25 @@ public class DataLoader implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        roleRepository.save(new Role("USER"));
-        roleRepository.save(new Role("ADMIN"));
-
+    	
+    	if(roleRepository.findAll() == null) {
+    		roleRepository.save(new Role("USER"));
+    		roleRepository.save(new Role("ADMIN"));
+    	}
+    	
         Role adminRole = roleRepository.findByRole("ADMIN");
         Role userRole = roleRepository.findByRole("USER");
 
+        if( userRepository.findByUsername("admin") == null ){
         User user = new User("admin@code.com", passwordEncoder.encode("password"),"Admin", "Super", true, "admin" );
         user.setRoles(Arrays.asList(adminRole));
         userRepository.save(user);
-
-        user = new User("user@code.com", passwordEncoder.encode("password"),"User", "Super", true, "user" );
-        user.setRoles(Arrays.asList(userRole));
+        }
+        
+        if( userRepository.findByUsername("user") == null){
+        User user = new User("user@code.com", passwordEncoder.encode("password"),"User", "Super", true, "user" );
+       user.setRoles(Arrays.asList(userRole));
         userRepository.save(user);
-
+        }
     }
 }

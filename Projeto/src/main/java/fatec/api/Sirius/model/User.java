@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.util.Collection;
 
 @Entity
-@Table(name = "User")
+@Table(name = "tb_user")
 public class User {
 
     @Id
@@ -28,7 +28,7 @@ public class User {
     @Column(name = "enable")
     private boolean enabled;
 
-    @Column(name = "username")
+    @Column(name = "username", unique = true)
     private String username;
 
     @ManyToMany(fetch = FetchType.EAGER)
