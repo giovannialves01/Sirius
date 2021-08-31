@@ -1,4 +1,4 @@
-package fatec.api.Sirius.model;
+package fatec.api.Sirius.services;
 
 import java.io.OutputStream;
 
@@ -23,12 +23,4 @@ public class SSLClientExample {
 		sslOS.flush();
 		sslSocket.close();
 	}//
-	public static void main(String[] args) throws Exception{
-		String trustFilename = pathToStores+"/"+trustStoreFile;
-		System.setProperty("javax.net.ssl.TrustStore",trustFilename);
-		System.setProperty("javax.net.ssl.TrustStorePassword",passwrd);
-		if(debug)
-			System.setProperty("javax.net.debug","all");
-		new SSLClientExample().doClientSide();
-	}
 }
