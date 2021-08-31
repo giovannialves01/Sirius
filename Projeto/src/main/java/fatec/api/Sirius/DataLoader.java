@@ -1,15 +1,12 @@
 package fatec.api.Sirius;
 
-import fatec.api.Sirius.model.Role;
-import fatec.api.Sirius.model.User;
-import fatec.api.Sirius.repository.RoleRepository;
-import fatec.api.Sirius.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import java.util.Arrays;
+import fatec.api.Sirius.model.User;
+import fatec.api.Sirius.repository.UserRepository;
 
 @Component
 public class DataLoader implements CommandLineRunner {
@@ -17,31 +14,20 @@ public class DataLoader implements CommandLineRunner {
     @Autowired
     UserRepository userRepository;
     @Autowired
-    RoleRepository roleRepository;
-    @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
 
     @Override
     public void run(String... args) throws Exception {
     	
-    	if(roleRepository.findAll() == null) {
-    		roleRepository.save(new Role("USER"));
-    		roleRepository.save(new Role("ADMIN"));
-    	}
-    	
-        Role adminRole = roleRepository.findByRole("ADMIN");
-        Role userRole = roleRepository.findByRole("USER");
 
         if( userRepository.findByUsername("admin") == null ){
         User user = new User("admin@code.com", passwordEncoder.encode("password"),"Admin", "Super", true, "admin" );
-        user.setRoles(Arrays.asList(adminRole));
         userRepository.save(user);
         }
         
         if( userRepository.findByUsername("user") == null){
         User user = new User("user@code.com", passwordEncoder.encode("password"),"User", "Super", true, "user" );
-       user.setRoles(Arrays.asList(userRole));
         userRepository.save(user);
         }
     }

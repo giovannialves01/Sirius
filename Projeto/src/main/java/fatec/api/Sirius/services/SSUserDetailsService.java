@@ -1,19 +1,19 @@
 package fatec.api.Sirius.services;
 
-import fatec.api.Sirius.model.Role;
-import fatec.api.Sirius.model.User;
-import fatec.api.Sirius.repository.UserRepository;
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.transaction.Transactional;
+
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.Transient;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
-import java.util.HashSet;
-import java.util.Set;
+import fatec.api.Sirius.model.User;
+import fatec.api.Sirius.repository.UserRepository;
 
 @Transactional
 @Service
@@ -42,10 +42,9 @@ public class SSUserDetailsService implements UserDetailsService {
     private Set<GrantedAuthority> getAuthories(User user){
 
         Set<GrantedAuthority> authorities = new HashSet<>();
-        for (Role role: user.getRoles()){
-            GrantedAuthority grantedAuthority = new SimpleGrantedAuthority(role.getRole());
-            authorities.add(grantedAuthority);
-        }
+        GrantedAuthority grantedAuthority = new SimpleGrantedAuthority("ADMIN");
+        authorities.add(grantedAuthority);
+        
         return authorities;
     }
 }
