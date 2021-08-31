@@ -22,5 +22,5 @@ public class SSLClientExample {
 		sslOS.write("Hello World".getBytes());
 		sslOS.flush();
 		sslSocket.close();
-	}//
+	}
 }
