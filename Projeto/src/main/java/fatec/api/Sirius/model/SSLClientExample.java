@@ -22,7 +22,7 @@ public class SSLClientExample {
 		sslOS.write("Hello World".getBytes());
 		sslOS.flush();
 		sslSocket.close();
-	}
+	}//
 	public static void main(String[] args) throws Exception{
 		String trustFilename = pathToStores+"/"+trustStoreFile;
 		System.setProperty("javax.net.ssl.TrustStore",trustFilename);
