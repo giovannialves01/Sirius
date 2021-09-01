@@ -11,6 +11,7 @@ Projeto API 4° Semestre
        <li><a href="https://www.linkedin.com/in/felipe-silva-13b3b61a0/">Felipe Silva</a> (<i>Development Team</i>)
        <li><a href="https://www.linkedin.com/in/levi-motta-5001a2173/">Levi Alberto Motta Santos</a> (<i>Development Team</i>)
        <li><a href="https://www.linkedin.com/in/raul-iglesias-8010201a1/"> Raul Santos Iglesias</a> (<i>Development Team</i>)
+       <li><a href="https://www.linkedin.com/in/vitor-yuri-48b477213/"> Vitor Yuri</a> (<i>Development Team</i>)  
 </ul>
 <h2> Disciplina Focal Point: Engenharia de Software III</h2>
 <ul>
