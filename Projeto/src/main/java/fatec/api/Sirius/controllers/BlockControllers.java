@@ -15,7 +15,7 @@ import fatec.api.Sirius.model.Block;
 import fatec.api.Sirius.repository.BlockRepository;
 import io.swagger.annotations.ApiOperation;
 
-@RestController
+@RestController//
 @RequestMapping(value="/api")
 public class BlockControllers {
 
