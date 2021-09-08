@@ -13,7 +13,6 @@
         h1, h2, h3{
         font-family: Arial;
         text-align: center;
-        /*background-image: url(..\images\fundoTitulo.jpg);*/ /* Não funciona ainda */
         }
         div {
             align-content: center;
@@ -25,47 +24,30 @@
             background-color: #7291FF;
             border-width: 0px;
             padding: 5px;
-            align-self: center; /* Arranjar algo que centralize esse botão */
         }
     </style>
 	<meta charset="ISO-8859-1">
 	<title>LoadArquivos</title>
 </head>
-<body>
+<body>    
     <header style="align-content: right;">
         <button onclick="minimizar">-</button>
         <button onclick="fechar">x</button>
     </header>
 <div><h1>Documentos</h1></div>
 
-<form>
-
-    <div>
-		<input type="text" text="Arquivo" name="arquivoUp"/>
-        <button onclick="uploadArquivo">Upload</button>
-	</div>
+<form style="align-content: center;">
 
 	<div>
-		<input type="text" text="Documento" name="doc"/>
-        <input type="text" text="Seção" name="sec"/>
-        <input type="text" text="Sub-seção" name="subSec"/>
-        <input type="text" text="Bloco" name="block"/>
-        <input type="text" text="Código" name="code"/>
-        <input type="text" text="Remark" name="rem"/>
-        <button onclick="selectDoc">Selecionar</button>
-	</div>
-	
-    <div>
-        <h3>Lista de itens selecionados aqui</h3>
+		<input type="text" text="Nome" name="nomeCadastro"/>
     </div>
-    
-	<div>
-		<button onclick="downloadArquivo">Download</button>
-	</div>
-	
     <div>
-    <h2>Últimos documentos baixados</h2>
+        <input type="text" text="senha" name="senha1"/>
     </div>
+    <div>
+        <input type="text" text="confirme sua senha" name="senha2"/>
+    </div>
+	<button onclick="cadastrar">Cadastrar</button>
 </form>
 </body>
 </html>
