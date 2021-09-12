@@ -34,7 +34,7 @@ public class RemarkController {
 	}
 	@PostMapping("/remark")
 	@ApiOperation(value="Salva um remark")
-	public Remark blockSave(@RequestBody Remark block) {
-		return  remarkRepository.save(block);
+	public Remark remarkSave(@RequestBody Remark remark) {
+		return  remarkRepository.save(remark);
 	}
 }

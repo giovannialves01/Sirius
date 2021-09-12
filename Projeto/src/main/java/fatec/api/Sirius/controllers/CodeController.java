@@ -18,22 +18,24 @@ import io.swagger.annotations.ApiOperation;
 @RestController
 @RequestMapping(value="/api")
 public class CodeController {
+	
 	@Autowired
 	CodeRepository codeRepository;
-	@GetMapping("/remark")
+	
+	@GetMapping("/code")
 	@ApiOperation(value="Retorna lista de codigo")
 	public List<Code> sectionList(){
 		return codeRepository.findAll();//
 	}
-	@GetMapping("/remark/{id}")
+	@GetMapping("/code/{id}")
 	@ApiOperation(value="Retorna um codigo")
 	public Optional<Code> uniqueSection(@PathVariable(value="id")String id){
 		return  codeRepository.findById(id);
 	}
-	@PostMapping("/remark")
+	@PostMapping("/code")
 	@ApiOperation(value="Salva um codigo")
-	public Code blockSave(@RequestBody Code block) {
-		return  codeRepository.save(block);
+	public Code codeSave(@RequestBody Code code) {
+		return  codeRepository.save(code);
 	}
 
 }
