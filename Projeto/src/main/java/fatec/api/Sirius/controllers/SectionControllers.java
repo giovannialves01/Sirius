@@ -1,5 +1,6 @@
 package fatec.api.Sirius.controllers;
 
+import java.io.File;
 import java.util.List;
 import java.util.Optional;
 
@@ -11,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import fatec.api.Sirius.model.Document;
 import fatec.api.Sirius.model.Section;
+import fatec.api.Sirius.repository.DocumentRepository;
 import fatec.api.Sirius.repository.SectionRepository;
 import io.swagger.annotations.ApiOperation;
 
@@ -21,6 +24,9 @@ public class SectionControllers {
 
 	@Autowired
 	SectionRepository sectionRepository;
+	
+	@Autowired
+	DocumentRepository documentRepository;
 	
 	@GetMapping("/section")
 	@ApiOperation(value="Retorna lista de seções")
@@ -35,7 +41,23 @@ public class SectionControllers {
 	@PostMapping("/section")
 	@ApiOperation(value="Salva uma seção")
 	public Section sectionSave(@RequestBody Section section) {
+		File file = new File("..\\Root\\Main");
+		
+		String auxPath = file.toString() + "\\" + section.getDocument().getPath().toString() + "\\" + section.getPath().toString();
+		Document doc = section.getDocument();
+		
+		doc.setDocument(section.getDocument().toString());
+		doc.setPath(file.toString() + "\\" + section.getDocument().getPath().toString());
+		
+		section.setPath(auxPath);
+		section.setDocument(section.getDocument());
+		
 		return  sectionRepository.save(section);
+	}
+	
+	public File toFile(String dir) {
+		File teste = new File(dir);
+		return teste;
 	}
 }
 

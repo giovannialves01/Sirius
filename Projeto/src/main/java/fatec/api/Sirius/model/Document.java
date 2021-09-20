@@ -22,16 +22,7 @@ public class Document {
 	//@OneToMany(MappedBy="document_id")
 	private String document;
 	
-	@Column(nullable = false)
 	private String path;
-
-	public String getDocument() {
-		return document;
-	}
-
-	public void setDocument(String document) {
-		this.document = document;
-	}
 
 	public String getPath() {
 		return path;
@@ -40,9 +31,15 @@ public class Document {
 	public void setPath(String path) {
 		this.path = path;
 	}
-	
-	
 
+	public String getDocument() {
+		return document;
+	}
+
+	public void setDocument(String document) {
+		this.document = document;
+	}
+	
 
 	
 }

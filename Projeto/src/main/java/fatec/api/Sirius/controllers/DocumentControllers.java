@@ -1,5 +1,6 @@
 package fatec.api.Sirius.controllers;
 
+import java.io.File;
 import java.util.List;
 import java.util.Optional;
 
@@ -39,7 +40,21 @@ public class DocumentControllers {
 	@PostMapping("/document")
 	@ApiOperation(value="Salva um documento")
 	public Document documentSave(@RequestBody Document document) {
+		File file = new File("..\\Root\\Main");
+		
+		String[] arquivos = file.list();
+	    
+	    for (String arquivo:arquivos) {
+	    	System.out.println(arquivo);
+	    }
+		String auxPath = file.toString() + "\\" + document.getPath().toString() ;
+		document.setPath(auxPath);   
 		return documentRepository.save(document);
 	}
+	
+	public File toFile(String dir) {
+		File teste = new File(dir);
+		return teste;
+	}
 
-}
+}	

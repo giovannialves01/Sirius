@@ -35,7 +35,7 @@ public class Block {
 	public void setBlock(String block) {
 		this.block = block;
 	}
-
+	
 	public String getPath() {
 		return path;
 	}

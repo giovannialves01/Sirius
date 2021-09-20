@@ -10,6 +10,20 @@
 <a href="/admin">Admin Page</a><br>
 <a href="/login">Login</a><br>
 <a href="/logout">Logout</a><br>
-<a href="http://localhost:8080/swagger-ui.html">Swagger</a><br>
+<a href="http://localhost:8080/swagger-ui.html">swagger</a><br>
+<div class="container">
+    <div class="page-header">
+        <h1>Escolhe a desgraCa do lugar que vc quer q seja o root dessa porcaria seu maconheiro</h1>
+    </div>
+    
+    <div class="row">
+    <form th:action="@{/api/root}" method="POST">
+		<input type="file" webkitdirectory id="fileURL" name="root_path"/><br><br>
+		<button type="submit">Upload</button>
+			</form>
+</div>
+
+  </div>
+
 </body>
 </html>

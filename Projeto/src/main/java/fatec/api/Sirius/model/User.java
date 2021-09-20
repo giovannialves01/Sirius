@@ -3,10 +3,10 @@ package fatec.api.Sirius.model;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.*;
-
+import java.util.Collection;
 
 @Entity
-@Table(name = "users")
+@Table(name = "tb_user")
 public class User {
 
     @Id

@@ -1,5 +1,7 @@
 package fatec.api.Sirius.model;
 
+import java.io.File;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -20,6 +22,9 @@ public class Section {
 	
 	@Column(unique=true)
 	private String section;		
+	
+	@Column(nullable = false)
+	private String path;
 
 	@ManyToOne(cascade=CascadeType.PERSIST)
 	@JoinColumn(name="document_id")
@@ -40,6 +45,18 @@ public class Section {
 	public void setDocument(Document document) {
 		this.document = document;
 	}
+
+	public String getPath() {
+		return path;
+	}
+
+	public void setPath(String path) {
+		this.path = path;
+	}
+
+	
+
+	
 	
 
 	
