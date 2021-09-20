@@ -44,13 +44,22 @@ public class SectionControllers {
 		File file = new File("..\\Root\\Main");
 		
 		String auxPath = file.toString() + "\\" + section.getDocument().getPath().toString() + "\\" + section.getPath().toString();
-		Document doc = section.getDocument();
+		Document doc = new Document();
 		
 		doc.setDocument(section.getDocument().toString());
 		doc.setPath(file.toString() + "\\" + section.getDocument().getPath().toString());
-		
+
 		section.setPath(auxPath);
-		section.setDocument(section.getDocument());
+		section.setDocument(doc);
+
+		file = toFile(auxPath);
+		try{
+		    file.mkdirs(); { 	
+		    	System.out.println("Deu certo");
+		    } 
+		} catch(Exception e){
+		    e.printStackTrace();
+		}
 		
 		return  sectionRepository.save(section);
 	}

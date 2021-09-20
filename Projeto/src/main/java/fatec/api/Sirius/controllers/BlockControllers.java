@@ -55,6 +55,16 @@ public class BlockControllers {
 		block.setPath(auxPath);
 		block.setSection(auxSection);
 		
+		file = toFile(auxPath);
+		block.setPath(auxPath); 
+		try{
+		    file.mkdirs(); { 
+		    	System.out.println("Deu certo");
+		    } 
+		} catch(Exception e){
+		    e.printStackTrace();
+		}
+		
 		return  blockRepository.save(block);
 	}
 	

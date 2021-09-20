@@ -48,7 +48,15 @@ public class DocumentControllers {
 	    	System.out.println(arquivo);
 	    }
 		String auxPath = file.toString() + "\\" + document.getPath().toString() ;
-		document.setPath(auxPath);   
+		file = toFile(auxPath);
+		document.setPath(auxPath); 
+		try{
+		    file.mkdirs(); { 	  
+		    	System.out.println("Deu certo");
+		    } 
+		} catch(Exception e){
+		    e.printStackTrace();
+		} 
 		return documentRepository.save(document);
 	}
 	
