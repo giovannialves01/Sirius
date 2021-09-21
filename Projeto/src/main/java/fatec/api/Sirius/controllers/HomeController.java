@@ -25,4 +25,9 @@ public class HomeController {
     public String secure(){
         return "secure";
     }
+    
+    @RequestMapping("/downloadUpload")
+    public String downloadUpload(){
+        return "downloadUpload";
+    }
 }
