@@ -1,7 +1,5 @@
 package fatec.api.Sirius.model;
 
-import java.io.File;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
