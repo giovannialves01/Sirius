@@ -15,10 +15,10 @@ public class Document {
 	//private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-
-	@Column(unique=true)
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	private int id;
+	
+	@Column
 	//@OneToMany(MappedBy="document_id")
 	private String document;
 	

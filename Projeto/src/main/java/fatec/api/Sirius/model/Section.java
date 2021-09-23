@@ -17,10 +17,10 @@ import javax.persistence.Table;
 public class Section {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	private int id;
 	
-	@Column(unique=true)
+	@Column
 	private String section;		
 	
 	@Column(nullable = false)

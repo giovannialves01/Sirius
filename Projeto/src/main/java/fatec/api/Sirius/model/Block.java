@@ -15,10 +15,10 @@ import javax.persistence.Table;
 public class Block {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-
-	@Column(unique=true)
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	private int id;
+	
+	@Column
 	public String block;
 	
 	public String path;

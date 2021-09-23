@@ -41,15 +41,15 @@ public class BlockControllers {
 		
 		File file = new File("..\\Root\\Main");
 		
-		String auxPath = file.toString() + "\\" + block.getSection().getDocument().getPath().toString() + "\\" + block.getSection().getPath().toString() + "\\" + block.getPath().toString();
+		String auxPath = file.toString() + "\\" + block.getSection().getDocument().getDocument().toString() + "\\" + block.getSection().getSection().toString() + "\\" + block.getBlock().toString();
 		
 		Section auxSection = new Section();
 		auxSection.setSection(block.getSection().getSection());
-		auxSection.setPath((file.toString() + "\\" + block.getSection().getDocument().getPath().toString() + "\\" + block.getSection().getPath().toString()));
+		auxSection.setPath((file.toString() + "\\" + block.getSection().getDocument().getDocument().toString() + "\\" + block.getSection().getSection().toString()));
 		
 		Document doc = block.getSection().getDocument();
-		doc.setDocument(block.getSection().getDocument().toString());
-		doc.setPath(file.toString() + "\\" + block.getSection().getDocument().getPath().toString());
+		doc.setDocument(block.getSection().getDocument().getDocument().toString());
+		doc.setPath(file.toString() + "\\" + block.getSection().getDocument().getDocument().toString());
 		auxSection.setDocument(doc);
 		
 		block.setPath(auxPath);

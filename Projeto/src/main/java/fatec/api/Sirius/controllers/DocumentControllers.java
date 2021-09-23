@@ -32,11 +32,15 @@ public class DocumentControllers {
 	public List<Document> documentList(){
 		return documentRepository.findAll();
 	}
-	@GetMapping("/document/{id}")
-	@ApiOperation(value="Retorna um documento")
-	public Optional<Document> uniqueDoc(@PathVariable(value="id")String id){
-		return documentRepository.findById(id);
-	}
+	
+	//@GetMapping("/document/{doc}/{section}/{block}")
+	//@ApiOperation(value="Retorna um documento")
+	//public List<Document> uniqueDoc(@PathVariable(value="doc")String id, @PathVariable(value="section")String section, @PathVariable(value="block")String block){
+	//	return documentRepository;
+		
+	//}
+	
+	
 	@PostMapping("/document")
 	@ApiOperation(value="Salva um documento")
 	public Document documentSave(@RequestBody Document document) {
@@ -48,8 +52,9 @@ public class DocumentControllers {
 	    	System.out.println(arquivo);
 	    }
 		String auxPath = file.toString() + "\\" + document.getPath().toString() ;
-		file = toFile(auxPath);
 		document.setPath(auxPath); 
+		file = toFile(auxPath);
+		
 		try{
 		    file.mkdirs(); { 	  
 		    	System.out.println("Deu certo");
