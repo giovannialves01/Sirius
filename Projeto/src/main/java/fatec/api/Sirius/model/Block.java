@@ -23,6 +23,10 @@ public class Block {
 	
 	public String path;
 	
+	public String documentName;
+	
+	public String sectionName;
+	
 	@ManyToOne(cascade=CascadeType.PERSIST)
 	@JoinColumn(name="section_id")
 	private Section section;
@@ -51,7 +55,23 @@ public class Block {
 	public void setSection(Section section) {
 		this.section = section;
 	}
-	
 
+	public String getDocumentName() {
+		return documentName;
+	}
+
+	public void setDocumentName(String documentName) {
+		this.documentName = documentName;
+	}
+
+	public String getSectionName() {
+		return sectionName;
+	}
+
+	public void setSectionName(String sectionName) {
+		this.sectionName = sectionName;
+	}
+	
+	
 	
 }

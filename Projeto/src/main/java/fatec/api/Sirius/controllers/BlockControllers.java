@@ -30,11 +30,21 @@ public class BlockControllers {
 	public List<Block> sectionList(){
 		return  blockRepository.findAll();
 	}
-	@GetMapping("/block/{id}")
+	@GetMapping({"/block/{doc}/{section}/{block}/{code}/{remark}", "/block/{doc}/{section}/{block}/{code}", "/block/{doc}/{section}/{block}/{remark}", "/block/{doc}/{section}/{remark}", "/block/{doc}/{section}/{code}", "/block/{doc}/{section}/{code}/{remark}"})
 	@ApiOperation(value="Retorna um blocos")
-	public Optional<Block> uniqueSection(@PathVariable(value="id")String id){
-		return  blockRepository.findById(id);
+	public void download(@PathVariable(value="doc")String doc, @PathVariable(value="section")String section, @PathVariable(value="block")String block, @PathVariable(value="code")String code, @PathVariable(value="remark")String remark){
+		
+		File file = new File("..\\Root\\Main");
+		
+		String auxPath = criaPath(file.toString(), doc, section, block, pdfName(doc, section, block, code));
+		file = toFile(auxPath);
+		System.out.println(auxPath);
+		
+		
+		return ;
 	}
+	
+	
 	@PostMapping("/block")
 	@ApiOperation(value="Salva um blocos")
 	public Block blockSave(@RequestBody Block block) {
@@ -54,6 +64,8 @@ public class BlockControllers {
 		
 		block.setPath(auxPath);
 		block.setSection(auxSection);
+		block.setDocumentName(block.getSection().getDocument().getDocument().toString());
+		block.setSectionName(block.getSection().getSection().toString());
 		
 		file = toFile(auxPath);
 		block.setPath(auxPath); 
@@ -71,6 +83,27 @@ public class BlockControllers {
 	public File toFile(String dir) {
 		File teste = new File(dir);
 		return teste;
+	}
+	
+	public String criaPath(String auxPath, String doc, String section, String block, String code) {
+		
+		if(doc != null) {
+			auxPath = auxPath + "\\" + doc;
+		}
+		if(section != null) {
+			auxPath = auxPath + "\\" + section;
+		}
+		if(block != null) {
+			auxPath = auxPath + "\\" + block;
+		}
+		if(code != null) {
+			auxPath = auxPath + "\\" + code;
+		}
+		return auxPath;
+	}
+	
+	public String pdfName(String doc, String section, String block, String code) {
+		return doc + "-" + section + "-" + block + "c" + code;
 	}
 }
 
