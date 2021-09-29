@@ -20,6 +20,11 @@ public class HomeController {
     public String admin(){
         return "admin";
     }
+    
+    @RequestMapping("/home")
+    public String home(){
+        return "home";
+    }
 
     @RequestMapping("/secure")
     public String secure(){
