@@ -1,10 +1,19 @@
 package fatec.api.Sirius.controllers;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+import fatec.api.Sirius.model.User;
+import fatec.api.Sirius.repository.UserRepository;
 
 @Controller
 public class HomeController {
+	
+	@Autowired
+	private UserRepository userRepository;
 
     @RequestMapping("/login")
     public String login(){
@@ -25,9 +34,21 @@ public class HomeController {
     public String home(){
         return "home";
     }
-
-    @RequestMapping("/secure")
-    public String secure(){
-        return "secure";
+    
+    @RequestMapping("/cadastro")
+    public String cadastro(){
+        return "cadastro";
     }
+    
+    @GetMapping("/cadastrar")
+	public ModelAndView salvar(User user) {
+		
+			userRepository.save(user);
+			ModelAndView andView = new ModelAndView("cadastro");
+			Iterable<User> usersIt = userRepository.findAll();
+			andView.addObject("users", usersIt);
+			
+		return andView;
+	}
+
 }

@@ -13,29 +13,19 @@
 	crossorigin="anonymous"></script>
 </head>
 <body>
-	<h1>HOME</h1>
-	<a type="button" class="btn btn-primary" href="/secure">Secure Page</a>
+	<h1>Home Page</h1>
 	<br>
-	<a type="button" class="btn btn-primary" href="/admin">Admin Page</a>
-	<br>
-	<a type="button" class="btn btn-primary" href="/login">Login</a>
-	<br>
-	<a type="button" class="btn btn-primary" href="/logout">Logout</a>
-	<br>
-	<a type="button" class="btn btn-primary" href="http://localhost:8080/swagger-ui.html">Swagger</a>
-	<br>
-	<div class="container">
-		<div class="page-header"></div>
-
-		<div class="row">
-			<form th:action="@{/api/root}" method="POST">
-				<input type="file" webkitdirectory id="fileURL" name="root_path" /><br>
-				<br>
-				<button type="submit">Upload</button>
-			</form>
-		</div>
-
-	</div>
+	<a type="button" class="btn btn-primary" href="/cadastro">Cadastro</a><br><br>
+	
+	<a type="button" class="btn btn-primary" href="/">Index</a><br><br>
+	
+	<a type="button" class="btn btn-primary" href="/admin">Admin Page</a><br><br>
+	
+	<a type="button" class="btn btn-primary" href="/login">Login</a><br><br>
+	
+	<a type="button" class="btn btn-primary" href="/logout">Logout</a><br><br>
+	
+	<a type="button" class="btn btn-primary" href="http://localhost:8080/swagger-ui.html">Swagger</a><br><br>
 
 </body>
 </html>
