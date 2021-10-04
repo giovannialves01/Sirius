@@ -45,6 +45,11 @@ public class HomeController {
         return "updown";
     }
     
+    @RequestMapping("/UploadFile")
+    public String UploadFile(){
+        return "UploadFile";
+    }
+    
     @GetMapping("/cadastrar")
 	public ModelAndView salvar(User user) {
 		
