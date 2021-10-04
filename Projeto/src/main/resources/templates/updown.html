@@ -21,9 +21,9 @@
 	</form>
 	</br>
 
-	<form th:action="@{/UploadFiles}" method="POST"
+	<form th:action="@{/UploadFile}" method="POST"
 		enctype="multipart/form-data">
-		<input type="file" name="file" multiple /><br> <input
+		<input type="file" name="files" multiple /><br> <input
 			type="submit" value="Upload Files">Upload
 		</button>
 		<br>
@@ -32,30 +32,6 @@
 		<span th:text="${msg}"></span>
 	</div>
 
-	<br />
-	<br />
-	<br />
-	<h4>teste</h4>
-	<form action="fileuploadservlet" method="POST"
-		enctype="multipart/form-data">
-		<input type="file" name="file" multiple /><br /> <input
-			type="submit" value="Upload" /><br /> <br /> <br />
-	</form>
-	<input id="ajaxfile" type="file" />
-	<br />
-	<button onclick="uploadFile()">Upload</button>
-	<script>
-		async
-		function uploadFile() {
-			let formData = new FormData();
-			formData.append("file", ajaxfile.files[0]);
-			await
-			fetch('fileuploadservlet', {
-				method : "POST",
-				body : formData
-			});
-			alert('Upload concluido com sucesso');
-		}
-	</script>
+
 </body>
 </html>
