@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 @RestController
 public class FileUploadController {
@@ -18,7 +19,7 @@ public class FileUploadController {
 	
 
 	@PostMapping("/UploadFile")
-	public String upload(Model model,@RequestParam("files") MultipartFile[] files) {	
+	public ModelAndView upload(Model model,@RequestParam("files") MultipartFile[] files) {	
 		StringBuilder fileNames = new StringBuilder();
 		for(MultipartFile file:files) {
 			Path fileNameAndPath = Paths.get(uploadDirectory,file.getOriginalFilename());
@@ -30,6 +31,6 @@ public class FileUploadController {
 				e.printStackTrace();
 			}
 		}
-		return "updown";
+		return new ModelAndView("redirect:http://localhost:8080/updown");
 	}
 }
