@@ -27,7 +27,6 @@ public class FileUploadController {
 			try {
 				Files.write(fileNameAndPath, file.getBytes());
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
