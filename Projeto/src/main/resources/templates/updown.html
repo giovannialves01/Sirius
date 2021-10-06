@@ -13,6 +13,23 @@
 	crossorigin="anonymous"></script>
 </head>
 <body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">SIRIUS</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarText">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+      </li>
+    </ul>
+    <span class="navbar-text">
+      Upload
+    </span>
+  </div>
+</nav>
+<div class="container">
 	<form th:action="@{/block}" method="POST">
 		<input placeholder="Nome" name="block"/><br>
 		<input type="text" name="path"><br>
@@ -26,5 +43,17 @@
 	<div th:if="${msg}">
 		<span th:text="${msg}"></span>
 	</div>
+	
 </body>
+<!-- Footer -->
+<footer class="page-footer font-small blue">
+
+  <!-- Copyright -->
+  <div class="footer-copyright text-center py-3">© 2021 Copyright: Sirius API 
+
+  </div>
+  <!-- Copyright -->
+
+</footer>
+<!-- Footer -->
 </html>
