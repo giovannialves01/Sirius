@@ -27,7 +27,6 @@ public class FileUploadController {
 		for(MultipartFile file:files) {
 			
 			uploadDirectory = uploadDirectory + organizePath(file.getOriginalFilename());
-			System.out.println(uploadDirectory);
 			
 			File CreateFile = bc.toFile(uploadDirectory);
 			CreateFile.mkdirs();
@@ -50,6 +49,7 @@ public class FileUploadController {
 		String achadoDoc = null;
 		String achadoSecao = null;
 		String achadoBlock = null;
+		String achadoSubs = null;
 		
 		
 		//Pega o doc ABC(SÓ LETRAS)-1234(SÓ NUMEROS) 
@@ -66,30 +66,63 @@ public class FileUploadController {
     	Pattern parteSecao = Pattern.compile(regexSecao1);
     	Matcher matcherSecao = parteSecao.matcher(path);	
     	while(matcherSecao.find()){
-    		achadoSecao = matcherSecao.group();
-    		System.out.println("Secao antes de arrumar1 " + achadoSecao);
+    		achadoSecao = matcherSecao.group();   		
     		
     		parteSecao = Pattern.compile(regexSecao2);
         	matcherSecao = parteSecao.matcher(achadoSecao);
 
         	while(matcherSecao.find()){
-        		achadoSecao = matcherSecao.group();
-        		System.out.println("Secao antes de arrumar2 " + achadoSecao);
-        		achadoSecao = matcherSecao.group().substring(0, matcherSecao.group().length()-1);
-        		System.out.println("Secao " + achadoSecao);
+        		achadoSecao = matcherSecao.group();     		
+        		achadoSecao = matcherSecao.group().substring(0, matcherSecao.group().length()-1);     		
         	}
     		
+    	}
+    	
+    	if(haveSubs(path)) {
+    		
+    		String regexSubs1 = "-\\w+-\\d+c";
+        	String regexSubs2 = "^-\\w+";
+        	Pattern parteSubs = Pattern.compile(regexSubs1);
+        	Matcher matcherSubs = parteSubs.matcher(path);	
+        	while(matcherSubs.find()){
+        		achadoSubs = matcherSubs.group();       		
+        		
+        		parteSubs = Pattern.compile(regexSubs2);
+            	matcherSubs = parteSubs.matcher(achadoSubs);
+
+            	while(matcherSubs.find()){
+            		achadoSubs = matcherSubs.group();
+            		achadoSubs = matcherSubs.group().substring(1, matcherSubs.group().length());           		
+            	}
+        		
+        	}
+        	
     	}
     	
     	String regexBlock = "-\\d+c";
     	Pattern parteBlock = Pattern.compile(regexBlock);
     	Matcher matcherBlock = parteBlock.matcher(path);	
     	while(matcherBlock.find()){
-    		achadoBlock = matcherBlock.group().substring(1, matcherBlock.group().length()-1);
-    		System.out.println("bloco " + achadoBlock);
+    		achadoBlock = matcherBlock.group().substring(1, matcherBlock.group().length()-1);  		
     	}
-    	String caminho = achadoDoc + "/" + achadoSecao+ "/" + achadoBlock;
- 
-		return caminho;
+    	if(achadoSubs == null){
+    		String caminho = achadoDoc + "/" + achadoSecao+ "/" + achadoBlock;
+    		return caminho;
+    	}else {
+    		String caminho = achadoDoc + "/" + achadoSecao+ "/" + achadoSubs+ "/" + achadoBlock;
+    		return caminho;
+    	}
+		
+	}
+	
+	public boolean haveSubs(String name) {
+		
+		name = name.replace("-", " ");
+		String[] words = name.split(" ");
+		
+		if(words.length == 5){
+			return true;
+		}
+		return false;
 	}
 }
