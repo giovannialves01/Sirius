@@ -1,19 +1,42 @@
 # Sirius
 Projeto API 4° Semestre
+ 
+## Índice
+- [Objetivo](#objetivo)
+  - [Projeto Rodando](#projeto-rodando)
+  - [Tecnologias Utilizadas](#tecnologias-utilizadas)
+  - [Sprint Cards](#sprint-cards)
+  - [Cronograma de Entregas](#cronograma-de-entregas)
+- [Integrantes do Grupo](#integrantes-do-grupo)
+- [Manual de Instalação](#manual-de-instalação)
 
-<h2>Burndown das Sprints</h2>
-<li><a href="https://fatecspgov-my.sharepoint.com/:x:/r/personal/anna_yamada_fatec_sp_gov_br/_layouts/15/Doc.aspx?sourcedoc=%7BC1E41090-53E3-48A5-BCEB-292BA350FE4B%7D&file=Sirius%20-%20Burndown.xlsx&action=default&mobileredirect=true"> Sprint 1</a>
-  
-<h2>Integrantes da Equipe</h2>
-<ul>
-       <li><a href="https://www.linkedin.com/in/giovanni-santos-546412154/">Giovanni dos Santos Alves</a> (<i>Scrum Master</i>)
-       <li><a href="https://www.linkedin.com/in/anna-yukimi-yamada-6ba23b149/">Anna Yukimi Yamada</a> (<i>Product Owner</i>)
-       <li><a href="https://www.linkedin.com/in/felipe-silva-13b3b61a0/">Felipe Silva</a> (<i>Development Team</i>)
-       <li><a href="https://www.linkedin.com/in/levi-motta-5001a2173/">Levi Alberto Motta Santos</a> (<i>Development Team</i>)
-       <li><a href="https://www.linkedin.com/in/raul-iglesias-8010201a1/"> Raul Santos Iglesias</a> (<i>Development Team</i>)
-</ul>
-<h2> Disciplina Focal Point: Engenharia de Software III</h2>
-<ul>
-       <li>M2 (Master dos Masters): Prof. Gerson da Penha Neto
-       <li>P2 (PO dos PO's): Profa. Juliana Forin Pasquini Martinez
-</ul>
+# Objetivo
+Com a proposta de aprimorar a criação da documentação das aeronaves, a empresa parceira solicitou a criação de uma aplicação que, aprimorasse sua antiga forma manual de desenvolvimento, com uma maneira mais eficaz, segura e simples.
+
+## Projeto Rodando
+Em breve
+
+## Sprint Cards
+Em breve
+
+## Tecnologias Utilizadas
+Em breve
+
+## Cronograma de Entregas
+
+| Sprints | Descrição | Datas | Visualizar |
+| --- | --- | --- | --- | 
+| Sprint 1 | Wireframes, Documentação e Entendimento da proposta | 30/08 a 19/09 | [Sprint 1]() |
+| Sprint 2 | Acesso por meio de Login, Função CRUD usuários, Upload e Download de arquivos | 20/09 a 10/10 | [Sprint 2]() |
+| Sprint 3 | Visualização dos arquivos, Visualizar o Codelist e Exclusão de uma linha no Codelist | 18/10 a 07/11 | [Sprint 3]() |
+| Sprint 4 | Visualização das revisões e Criação das revisões FULL e DELTA com a LEP | 08/11 a 28/11 | [Sprint 4]() |
+
+# Integrantes do Grupo
+- [Levi Alberto Motta Santos](https://www.linkedin.com/in/levi-motta-5001a2173/) - *Scrum Master* 
+- [Giovanni dos Santos Alves](https://www.linkedin.com/in/giovanni-santos-546412154/) - *Product Owner*
+- [Raul Santos Iglesias](https://www.linkedin.com/in/raul-iglesias-8010201a1/) - Development Team
+- [Felipe Silva](https://www.linkedin.com/in/felipe-silva-13b3b61a0) - *Development Team*
+- [Vitor Yuri Santos](https://www.linkedin.com/in/vitor-yuri-48b477213/) - *Development Team*
+
+# Manual de Instalação
+Em breve
