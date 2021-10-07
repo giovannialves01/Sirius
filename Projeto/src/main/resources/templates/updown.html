@@ -28,6 +28,18 @@
 		</button>
 		<br>
 	</form>
+	<br>
+	<form th:action="@{/DownloadFile}" method="GET">
+		<input type="text" name="document" placeholder="documente"/><br> 
+		<input type="text" name="section" placeholder="section"/><br> 
+		<input type="text" name="subsection" placeholder="subsection"/><br>
+		<input type="text" name="block" placeholder="block"/><br>
+		<input type="text" name="code" placeholder="code"/><br> 
+		<input type="text" name="remark" placeholder="remark"/><br>   
+		<input type="submit" value="Download File">
+		</button>
+		<br>
+	</form>
 	<div th:if="${msg}">
 		<span th:text="${msg}"></span>
 	</div>
