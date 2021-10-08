@@ -40,6 +40,11 @@ public class HomeController {
         return "cadastro";
     }
     
+    @RequestMapping("/updown")
+    public String updown(){
+        return "updown";
+    }
+    
     @GetMapping("/cadastrar")
 	public ModelAndView salvar(User user) {
 		

@@ -30,14 +30,17 @@
 </nav>
 <div class="container">
 			
-	<form th:action="@{/UploadFiles}" method="POST" enctype="multipart/form-data">
-		<input type="file"  name="file" multiple/><br>
-		<input type="submit" class="btn btn-info" value="Subir Arquivo"></button><br>
+	
+	</br>
+
+	<form th:action="@{/UploadFile}" method="POST"
+		enctype="multipart/form-data" >
+		<input type="file" name="files" multiple /><br> <input
+			type="submit" class="btn btn-info" value="Subir Arquivo">
+		</button>
+		<br>
 	</form>
-	<div th:if="${msg}">
-		<span th:text="${msg}"></span>
-	</div>
-	<br/>
+	<br>
 	<form th:action="@{/DownloadFile}" method="GET">
 		<input type="text" class="form-control" name="document" placeholder="documente"/><br> 
 		<input type="text" class="form-control" name="section" placeholder="section"/><br> 
@@ -48,7 +51,7 @@
 		<input type="submit" class="btn btn-info" value="Baixar Arquivo">
 		</button>
 		<br>
-	</form>
+
 </body>
 <!-- Footer -->
 <footer class="page-footer font-small blue">
