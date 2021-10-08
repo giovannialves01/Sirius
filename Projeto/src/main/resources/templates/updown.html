@@ -1,17 +1,16 @@
 <!DOCTYPE html>
 <html xmlns:th="http://thymeleaf.org">
 <head>
-<meta charset="ISO-8859-1">
-<title>Insert title here</title>
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
-	integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
-	crossorigin="anonymous">
-<script
-	src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
-	integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
-	crossorigin="anonymous"></script>
+<html xmlns="http://www.w3.or/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+<meta charset="utf-8">
+
 </head>
+<style>
+.container { 
+    text-align: center; 
+}
+</style>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <a class="navbar-brand" href="#">SIRIUS</a>
@@ -30,26 +29,32 @@
   </div>
 </nav>
 <div class="container">
-	<form th:action="@{/block}" method="POST">
-		<input placeholder="Nome" name="block"/><br>
-		<input type="text" name="path"><br>
-		<button id="botaoCadastro" type="submit">Cadastrar</button><br>
-	</form></br>
 			
 	<form th:action="@{/UploadFiles}" method="POST" enctype="multipart/form-data">
-		<input type="file" name="file" multiple/><br>
-		<input type="submit" value="Upload Files">Upload</button><br>
+		<input type="file"  name="file" multiple/><br>
+		<input type="submit" class="btn btn-info" value="Subir Arquivo"></button><br>
 	</form>
 	<div th:if="${msg}">
 		<span th:text="${msg}"></span>
 	</div>
-	
+	<br/>
+	<form th:action="@{/DownloadFile}" method="GET">
+		<input type="text" class="form-control" name="document" placeholder="documente"/><br> 
+		<input type="text" class="form-control" name="section" placeholder="section"/><br> 
+		<input type="text" class="form-control" name="subsection" placeholder="subsection"/><br>
+		<input type="text" class="form-control" name="block" placeholder="block"/><br>
+		<input type="text" class="form-control" name="code" placeholder="code"/><br> 
+		<input type="text" class="form-control" name="remark" placeholder="remark"/><br>   
+		<input type="submit" class="btn btn-info" value="Baixar Arquivo">
+		</button>
+		<br>
+	</form>
 </body>
 <!-- Footer -->
 <footer class="page-footer font-small blue">
 
   <!-- Copyright -->
-  <div class="footer-copyright text-center py-3">© 2021 Copyright: Sirius API 
+  <div class="footer-copyright text-center py-3">Â© 2021 Copyright: Sirius API 
 
   </div>
   <!-- Copyright -->
