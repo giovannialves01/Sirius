@@ -41,13 +41,13 @@
 		<br>
 	</form>
 	<br>
-	<form th:action="@{/DownloadFile}" method="GET">
-		<input type="text" class="form-control" name="document" placeholder="documente"/><br> 
-		<input type="text" class="form-control" name="section" placeholder="section"/><br> 
-		<input type="text" class="form-control" name="subsection" placeholder="subsection"/><br>
-		<input type="text" class="form-control" name="block" placeholder="block"/><br>
-		<input type="text" class="form-control" name="code" placeholder="code"/><br> 
-		<input type="text" class="form-control" name="remark" placeholder="remark"/><br>   
+	<form th:action="@{/DownloadFile}" method="GET" >
+		<input type="text"  class="form-group col-md-4" name="document" placeholder="documente"/><br> 
+		<input type="text" class="form-group col-md-4" name="section" placeholder="section"/><br> 
+		<input type="text" class="form-group col-md-4" name="subsection" placeholder="subsection"/><br>
+		<input type="text" class="form-group col-md-4" name="block" placeholder="block"/><br>
+		<input type="text" class="form-group col-md-4" name="code" placeholder="code"/><br> 
+		<input type="text" class="form-group col-md-4" name="remark" placeholder="remark"/><br>   
 		<input type="submit" class="btn btn-info" value="Baixar Arquivo">
 		</button>
 		<br>
