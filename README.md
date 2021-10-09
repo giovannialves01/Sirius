@@ -70,14 +70,14 @@ Requisitos:
 IDE de desenvolvimento java de sua preferência, recomendamos o Eclipse.
 Conexão de rede
 
-1. Fazendo o downlaod do projeto: 
-	Por "git clone": Faça o git clone na pasta de sua preferência.
-	Por download zip: Faça o download do arquivo zip na pasta de sua preferência e descompacte o projeto.
-2. Abrir o projeto na IDE:
+### 1. Fazendo o downlaod do projeto: 
+		Por "git clone": Faça o git clone na pasta de sua preferência.
+		Por download zip: Faça o download do arquivo zip na pasta de sua preferência e descompacte o projeto.
+### 2. Abrir o projeto na IDE:
 	Abra a sua IDE, e importe a pasta do projeto. No Eclipse você pode seguir o seguintes passos: 
 		File > Open Projects from File System...
 		Após isso abrirá uma janela, clique em "Directory..." e coloque o caminho da pasta do projeto, em seguida
 		aperte "Finish".
-3. Iniciar o projeto:
+### 3. Iniciar o projeto:
 	Para iniciar o projeto clique com o botão direito no na pasta "Projeto".
 	Clique em "Run as > Java Application".
