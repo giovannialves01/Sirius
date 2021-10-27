@@ -18,7 +18,14 @@
 Com a proposta de aprimorar a criação da documentação das aeronaves, a empresa parceira solicitou a criação de uma aplicação que, aprimorasse sua antiga forma manual de desenvolvimento, com uma maneira mais eficaz, segura e simples.
 
 ## Projeto Rodando
-Em breve
+	
+### Login e Cadastro	
+<p align="left">
+  <img src="https://github.com/giovannialves01/Sirius/blob/main/Documentos/Wireframes/Sprint%202/Login%20e%20Cadastro.gif" width="800px" p>
+	
+### Upload e Download
+<p align="left">
+  <img src="https://github.com/giovannialves01/Sirius/blob/main/Documentos/Wireframes/Sprint%202/Upload%20e%20Download.gif" width="800px" p>
 
 ## Sprint Cards
 
