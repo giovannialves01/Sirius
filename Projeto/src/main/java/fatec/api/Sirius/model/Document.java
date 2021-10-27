@@ -9,37 +9,22 @@ import javax.persistence.Table;
 
 
 @Entity
-@Table(name="tb_documents")
+@Table(name="tb_document")
 public class Document {
-
-	//private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
 	
-	@Column
-	//@OneToMany(MappedBy="document_id")
-	private String document;
-	
-	private String path;
+	@Column(name="doc_name")
+	private String name;		
 
-	public String getPath() {
-		return path;
+	public String getName() {
+		return name;
 	}
 
-	public void setPath(String path) {
-		this.path = path;
+	public void setName(String name) {
+		this.name = name;
 	}
-
-	public String getDocument() {
-		return document;
-	}
-
-	public void setDocument(String document) {
-		this.document = document;
-	}
-	
-
 	
 }

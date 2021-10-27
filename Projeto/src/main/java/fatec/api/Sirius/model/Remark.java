@@ -18,7 +18,7 @@ public class Remark {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
 	
-	@Column()
+	@Column(name="rem_name")
 	public String name;
 		
 	@ManyToOne(cascade=CascadeType.PERSIST)

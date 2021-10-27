@@ -11,29 +11,27 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="tb_sections") 
+@Table(name="tb_section") 
 public class Section {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
 	
-	@Column
-	private String section;		
+	@Column(name="sec_name")
+	private String name;		
 	
-	@Column(nullable = false)
-	private String path;
-
 	@ManyToOne(cascade=CascadeType.PERSIST)
 	@JoinColumn(name="document_id")
 	private Document document;
+	
 
-	public String getSection() {
-		return section;
+	public String getName() {
+		return name;
 	}
 
-	public void setSection(String section) {
-		this.section = section;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public Document getDocument() {
@@ -44,19 +42,7 @@ public class Section {
 		this.document = document;
 	}
 
-	public String getPath() {
-		return path;
-	}
-
-	public void setPath(String path) {
-		this.path = path;
-	}
-
 	
-
-	
-	
-
 	
 }
 	

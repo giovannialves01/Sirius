@@ -18,7 +18,7 @@ public class Subsection {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
 	
-	@Column
+	@Column(name="subs_name")
 	private String name;		
 	
 	@ManyToOne(cascade=CascadeType.PERSIST)

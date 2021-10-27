@@ -10,68 +10,39 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+
 @Entity
-@Table(name="tb_blocks")
+@Table(name="tb_block")
 public class Block {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
 	
-	@Column
-	public String block;
-	
-	public String path;
-	
-	public String documentName;
-	
-	public String sectionName;
-	
+	@Column(name="blo_name")
+	public String name;
+		
 	@ManyToOne(cascade=CascadeType.PERSIST)
-	@JoinColumn(name="section_id")
-	private Section section;
+	@JoinColumn(name="subsection_id")
+	private Subsection subsection;
 
-	
-	public String getBlock() {
-		return block;
-	}
 
-	public void setBlock(String block) {
-		this.block = block;
-	}
-	
-	public String getPath() {
-		return path;
+	public String getName() {
+		return name;
 	}
 
-	public void setPath(String path) {
-		this.path = path;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public Section getSection() {
-		return section;
+	public Subsection getSubsection() {
+		return subsection;
 	}
 
-	public void setSection(Section section) {
-		this.section = section;
+	public void setSubsection(Subsection subsection) {
+		this.subsection = subsection;
 	}
 
-	public String getDocumentName() {
-		return documentName;
-	}
-
-	public void setDocumentName(String documentName) {
-		this.documentName = documentName;
-	}
-
-	public String getSectionName() {
-		return sectionName;
-	}
-
-	public void setSectionName(String sectionName) {
-		this.sectionName = sectionName;
-	}
-	
 	
 	
 }
