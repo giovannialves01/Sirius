@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="/css/page3.css">
+    <title>Cadastro</title>
+</head>
+<body>
+	<div class="full-screen">
+		<div class="rightScreenInputs">
+		
+	        <table id="table">
+		            
+		            <thead>
+			        <tr class="tableHeader">
+			            <th id="tableNome" scope="col">Documentos</th>
+			        </tr>		        
+	        	</thead>
+       
+	            	<tr th:each="remark:${remarks}">
+			            <td><span th:text="${remark.getBlock().getSubsection().getSection().getDocument().getName()}"></span></td> 
+			            
+		            </tr>
+				
+			</table>
+		</div>
+		
+	</div>
+
+	
+</body>
+</html>

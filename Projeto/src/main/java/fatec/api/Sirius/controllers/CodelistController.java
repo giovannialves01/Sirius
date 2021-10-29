@@ -2,6 +2,7 @@ package fatec.api.Sirius.controllers;
 
 import java.util.List;
 
+import org.hibernate.criterion.Distinct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -42,21 +43,30 @@ public class CodelistController {
 	@Autowired
 	RemarkRepository rr;
 	
-	@GetMapping("/lista")
-	public ModelAndView todosClientesOrdenadoPorNome() {
-		List<Document> document = dr.findAll();
+	@GetMapping("/codelist")
+	public ModelAndView codelist() {
+
 		List<Section> section = sr.findAll();
 		List<Subsection> subsection = subr.findAll();
 		List<Block> block = br.findAll();
-		List<Remark> remark = rr.findAll();
-		
+		List<Remark> remark = rr.findAll();	
 		
 		ModelAndView capsula = new ModelAndView("codelist");
-		capsula.addObject("documents", document);
+
 		capsula.addObject("sections", section);
 		capsula.addObject("subsections", subsection);
 		capsula.addObject("blocks", block);
 		capsula.addObject("remarks", remark);
+		
+		return capsula;
+	}
+	
+	@GetMapping("/documents")
+	public ModelAndView documents() {
+		
+		List<Document> document = dr.findAll();	
+		ModelAndView capsula = new ModelAndView("documents");
+		capsula.addObject("documents", document);
 		
 		return capsula;
 	}
