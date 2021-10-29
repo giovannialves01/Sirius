@@ -8,7 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -22,7 +22,7 @@ public class Section {
 	@Column(name="sec_name")
 	private String name;		
 	
-	@ManyToOne(cascade=CascadeType.PERSIST, fetch = FetchType.LAZY)
+	@OneToOne(cascade=CascadeType.PERSIST, fetch = FetchType.LAZY)
 	@JoinColumn(name="document_id")
 	private Document document;
 	

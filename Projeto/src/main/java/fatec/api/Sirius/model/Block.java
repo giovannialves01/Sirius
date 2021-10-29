@@ -8,7 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 
@@ -23,7 +23,7 @@ public class Block {
 	@Column(name="blo_name")
 	public String name;
 		
-	@ManyToOne(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToOne(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name="subsection_id")
 	private Subsection subsection;
 

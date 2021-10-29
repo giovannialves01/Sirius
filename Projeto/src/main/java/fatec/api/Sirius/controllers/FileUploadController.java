@@ -28,6 +28,8 @@ public class FileUploadController {
 	@Autowired
 	RemarkRepository remarkRepository;
 	
+	
+	
 	public static String uploadDirectory = "../Root/Master/";
 	
 	RemarkControllers rc = new RemarkControllers();

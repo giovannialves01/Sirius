@@ -13,45 +13,22 @@
 		<div class="rightScreenInputs">
 		
 	        <table id="table">
-	            <thead>
+		            
+		            <thead>
 			        <tr class="tableHeader">
 			            <th id="tableNome" scope="col">Seção</th>
-			        </tr>		        
-	        	</thead>
-       
-	            	<tr th:each="section:${sections}">
-			            <td><span th:text="${section.name}"></span></td>   
-		            </tr>
-		            
-		            
-		            <thead>
-			        <tr class="tableHeader">
-			            <th id="tableNome" scope="col">subseção</th>
-			        </tr>		        
-	        	</thead>
-       
-	            	<tr th:each="subsection:${subsections}">
-			            <td><span th:text="${subsection.name}"></span></td>   
-		            </tr>
-		            
-		            <thead>
-			        <tr class="tableHeader">
+			            <th id="tableNome" scope="col">Subseção</th>
 			            <th id="tableNome" scope="col">Bloco</th>
-			        </tr>		        
-	        	</thead>
-       
-	            	<tr th:each="block:${blocks}">
-			            <td><span th:text="${block.name}"></span></td>   
-		            </tr>
-		            
-		            <thead>
-			        <tr class="tableHeader">
 			            <th id="tableNome" scope="col">Remark</th>
 			        </tr>		        
 	        	</thead>
        
 	            	<tr th:each="remark:${remarks}">
-			            <td><span th:text="${remark.name}"></span></td>   
+			            <td><span th:text="${remark.getBlock().getSubsection().getSection().getName()}"></span></td> 
+			            <td><span th:text="${remark.getBlock().getSubsection().getName() }"></span></td>
+			            <td><span th:text="${remark.getBlock().getName() }"></span></td>
+			            <td><span th:text="${remark.getName() }"></span></td>  
+			            
 		            </tr>
 				
 			</table>
