@@ -10,4 +10,12 @@ public interface DocumentRepository extends JpaRepository<Document, String> {
 	
 	Optional<Document> findById(String id);
 	
+	
+	
+	//@Query("select DISTINCT ON (tb_document.id) tb_document.doc_name,tb_section.sec_name, tb_subsection.subs_name,tb_block.blo_name,tb_remark.rem_name from tb_document, tb_section, tb_subsection, tb_block, tb_remark")
+	//List<String> codelist();
+		
+	//@Query(value = "Select * from Cliente where genero = 'Masculino'", nativeQuery = true)
+	//List<Cliente> getMasc();
+	
 }

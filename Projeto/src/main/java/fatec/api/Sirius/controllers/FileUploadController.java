@@ -61,7 +61,7 @@ public class FileUploadController {
 			remark.getBlock().setName(nameBlock(file.getOriginalFilename()));
 			
 			remark.setBlock((remark.getBlock()));
-			remark.setName("");
+			remark.setName("-");
 			
 			remarkRepository.save(remark);
 					
@@ -139,7 +139,7 @@ public class FileUploadController {
         	}
         	
     	}
-    	return "";
+    	return "-";
     	}
     	
     	public String nameBlock(String path) {
@@ -156,7 +156,7 @@ public class FileUploadController {
     	
     	public String nameBuilder(String achadoDoc,String achadoSecao,String achadoSubs,String achadoBlock) {
     		String caminho = null;
-	    	if(achadoSubs.equals("")){
+	    	if(achadoSubs.equals("-")){
 	    		caminho = achadoDoc + "/" + achadoSecao+ "/" + achadoBlock;
 	    	}else {
 	    		caminho = achadoDoc + "/" + achadoSecao+ "/" + achadoSubs+ "/" + achadoBlock;
