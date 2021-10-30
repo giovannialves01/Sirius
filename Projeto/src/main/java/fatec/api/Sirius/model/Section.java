@@ -11,6 +11,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 @Entity
 @Table(name="tb_section") 
 public class Section {
@@ -24,6 +27,7 @@ public class Section {
 	
 	@ManyToOne(cascade=CascadeType.PERSIST, fetch = FetchType.LAZY)
 	@JoinColumn(name="document_id")
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	private Document document;
 	
 

@@ -11,6 +11,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 @Entity
 @Table(name="tb_remark")
 public class Remark {
@@ -24,6 +27,7 @@ public class Remark {
 		
 	@ManyToOne(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name="block_id")
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	private Block block;
 
 

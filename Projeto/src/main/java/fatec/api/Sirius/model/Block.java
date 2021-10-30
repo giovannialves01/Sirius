@@ -11,6 +11,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 
 @Entity
 @Table(name="tb_block")
@@ -25,6 +28,7 @@ public class Block {
 		
 	@ManyToOne(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name="subsection_id")
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	private Subsection subsection;
 
 
