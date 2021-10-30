@@ -29,7 +29,7 @@
 			            <td><span th:text="${remark.getBlock().getSubsection().getName() }"></span></td>
 			            <td><span th:text="${remark.getBlock().getName() }"></span></td>
 			            <td><span th:text="${remark.getName() }"></span></td>  
-			            <td><a th:href="@{/delete(rem='remark.getBlock().getSubsection().getSection().getDocument().getId()', name='remark.getBlock().getSubsection().getSection().getDocument().getName()'}})}">Deletar bloco</a></td>
+			            <td><a th:href="@{'/delete/' + ${remark.getBlock().getSubsection().getSection().getDocument().getId()}}">Deletar bloco</a></td>
 			            
 			            
 		            </tr>

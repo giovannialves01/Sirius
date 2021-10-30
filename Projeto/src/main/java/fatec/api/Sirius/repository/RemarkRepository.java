@@ -13,10 +13,12 @@ import fatec.api.Sirius.model.Remark;
 
 public interface RemarkRepository extends JpaRepository<Remark, String> {
 
-	Optional<Remark> findById(String id);
+	Remark findById(int id);
 	
 	@Transactional
 	@Modifying
 	@Query(value = "DELETE FROM Document d WHERE d.id = :idDoc")
 	void deleteLine(@Param("idDoc")int idDoc);
+	
+	
 }

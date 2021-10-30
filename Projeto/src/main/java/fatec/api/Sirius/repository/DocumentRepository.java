@@ -10,7 +10,7 @@ import fatec.api.Sirius.model.Document;
 
 public interface DocumentRepository extends JpaRepository<Document, String> {
 	
-	Optional<Document> findById(String id);
+	Document findById(int id);
 	
 	
 	

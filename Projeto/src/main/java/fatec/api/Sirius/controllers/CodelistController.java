@@ -2,16 +2,18 @@ package fatec.api.Sirius.controllers;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import fatec.api.Sirius.model.Document;
 import fatec.api.Sirius.model.Remark;
+import fatec.api.Sirius.repository.DocumentRepository;
 import fatec.api.Sirius.repository.RemarkRepository;
 import io.swagger.annotations.Api;
 
@@ -22,6 +24,9 @@ public class CodelistController {
 	
 	@Autowired
 	RemarkRepository rr;
+	
+	@Autowired
+	DocumentRepository dr;
 	
 	@GetMapping("/codelist/{nomeDocumento}")
 	public ModelAndView codelist(@PathVariable String nomeDocumento) {
@@ -43,12 +48,14 @@ public class CodelistController {
 		return capsula;
 	}
 	
-	@GetMapping("/delete")
-	public String deleteLine(@RequestParam(value = "rem") int idDoc, @RequestParam(value = "name") String nameDoc ) {
+	@GetMapping("/delete/{id}")
+	public String deleteLine(@PathVariable("id") int idDoc) {
 
+		
+		Document doc = dr.findById(idDoc);
 		rr.deleteLine(idDoc);
 		
-		return "codelist/" + nameDoc;
+		return "redirect:/codelist/" + doc.getName();
 	}	
 	
 
