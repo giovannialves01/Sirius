@@ -20,8 +20,9 @@
 			        </tr>		        
 	        	</thead>
        
-	            	<tr th:each="remark:${remarks}">
-			            <td><span th:text="${remark.getBlock().getSubsection().getSection().getDocument().getName()}"></span></td> 
+	            	<tr th:each="document:${documents}">
+			            <td><a th:href="@{/codelist/{doc}(doc=${document})}"><span th:text="${document}"></span></a></td> 		           
+			            
 			            
 		            </tr>
 				
