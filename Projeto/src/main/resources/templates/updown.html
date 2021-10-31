@@ -51,7 +51,7 @@
 
 		<form th:action="@{/UploadFile}" method="POST"
 			enctype="multipart/form-data" id="uploadfor">
-			<input type="file" name="files" multiple /><br /> <br />
+			<input type="file" name="files" multiple required/><br /> <br />
 			<input type="submit" class="btn btn-info" value="Subir Arquivo"
 				id="carregar">
 			</input>
@@ -76,13 +76,13 @@
 		<br>
 		<form th:action="@{/DownloadFile}" method="GET">
 			<input type="text" class="form-group col-md-4" name="document"
-				placeholder="document" /><br> <input type="text"
-				class="form-group col-md-4" name="section" placeholder="section" /><br>
+				placeholder="document" required/><br> <input type="text"
+				class="form-group col-md-4" name="section" placeholder="section" required /><br>
 			<input type="text" class="form-group col-md-4" name="subsection"
 				placeholder="subsection" /><br> <input type="text"
-				class="form-group col-md-4" name="block" placeholder="block" /><br>
+				class="form-group col-md-4" name="block" placeholder="block" required/><br>
 			<input type="text" class="form-group col-md-4" name="code"
-				placeholder="code" /><br> <input type="text"
+				placeholder="code"/><br> <input type="text"
 				class="form-group col-md-4" name="remark" placeholder="remark" /><br>
 			<input type="submit" class="btn btn-info" value="Baixar Arquivo">
 			</button>
