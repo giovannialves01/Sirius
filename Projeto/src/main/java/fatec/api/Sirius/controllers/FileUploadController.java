@@ -35,6 +35,8 @@ public class FileUploadController {
 	@PostMapping("/UploadFile")
 	public String upload(Model model,@RequestParam("files") MultipartFile[] files) {	
 		StringBuilder fileNames = new StringBuilder();
+
+		String concluido;
 		for(MultipartFile file:files) {
 			
 			uploadDirectory = uploadDirectory + organizePath(file.getOriginalFilename());
@@ -70,10 +72,18 @@ public class FileUploadController {
 			try {		
 				Files.write(fileNameAndPath, file.getBytes());
 				uploadDirectory = "../Root/Master/";
+				concluido="ok";
+
+				System.out.println(concluido);
 			} catch (IOException e) {
 				e.printStackTrace();
+				concluido="error";
+
+				System.out.println(concluido);
 			}
 		}
+		
+		//return "updown",concluido;
 		return "updown";
 	}
 	

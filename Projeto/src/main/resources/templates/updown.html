@@ -3,23 +3,19 @@
 <head>
 <html xmlns="http://www.w3.or/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org">
-	
-	
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
 	integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
 	crossorigin="anonymous">
-	
-	
 <meta charset="utf-8">
-
-
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"
 	integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
 	crossorigin="anonymous"></script>
-	
-	
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+
 
 </head>
 <style>
@@ -51,40 +47,39 @@
 
 		<form th:action="@{/UploadFile}" method="POST"
 			enctype="multipart/form-data" id="uploadfor">
-			<input type="file" name="files" multiple required/><br /> <br />
-			<input type="submit" class="btn btn-info" value="Subir Arquivo"
-				id="carregar">
-			</input>
-			<script>
 
-				$("form#uploadfor").submit(function(event) {
-					//event.preventDefault();
-					swal.fire({
-						title : "Pronto!",
-						text : "Carregamento concluido!",
-						type : "success"
-					}).then(function() {
-						form.submit();
-					});
-				});
-			</script>
+			<input type="file" name="files" multiple required /><br /> <br />
 
-
+			<button type="submit" class="btn btn-info" value="Subir Arquivo"
+				id="submitbutton">Subir Arquivo</button>
 			<br>
 		</form>
 
+		<script>
+		if (concluido=="ok") {
+					Swal.fire({
+						  icon: 'error',
+						  title: 'Arquivo carregado!',
+						  text: 'Arquivo carregado!',
+						  footer: '<a href="">Why do I have this issue?</a>',
+						  timer: 3000
+						})
+
+				})
+		</script>
 		<br>
 		<form th:action="@{/DownloadFile}" method="GET">
 			<input type="text" class="form-group col-md-4" name="document"
-				placeholder="document" required/><br> <input type="text"
-				class="form-group col-md-4" name="section" placeholder="section" required /><br>
-			<input type="text" class="form-group col-md-4" name="subsection"
-				placeholder="subsection" /><br> <input type="text"
-				class="form-group col-md-4" name="block" placeholder="block" required/><br>
-			<input type="text" class="form-group col-md-4" name="code"
-				placeholder="code"/><br> <input type="text"
-				class="form-group col-md-4" name="remark" placeholder="remark" /><br>
-			<input type="submit" class="btn btn-info" value="Baixar Arquivo">
+				placeholder="document" required /><br> <input type="text"
+				class="form-group col-md-4" name="section" placeholder="section"
+				required /><br> <input type="text" class="form-group col-md-4"
+				name="subsection" placeholder="subsection" /><br> <input
+				type="text" class="form-group col-md-4" name="block"
+				placeholder="block" required /><br> <input type="text"
+				class="form-group col-md-4" name="code" placeholder="code" /><br>
+			<input type="text" class="form-group col-md-4" name="remark"
+				placeholder="remark" /><br> <input type="submit"
+				class="btn btn-info" value="Baixar Arquivo">
 			</button>
 			<br>
 </body>
