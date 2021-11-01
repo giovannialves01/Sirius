@@ -77,6 +77,7 @@ public class FileUploadController {
 				Files.write(fileNameAndPath, file.getBytes());
 				uploadDirectory = "../Root/Master/";
 				concluido = "ok";
+				model.addAttribute("concluido","ok");
 
 				System.out.println(concluido);
 			} catch (IOException e) {
@@ -91,7 +92,7 @@ public class FileUploadController {
         ArrayList<String> upload = new ArrayList<>();
         upload.add("updown");
         upload.add(concluido);
-		return "updown";
+		return "updown.html";
 	}
 
 	public String organizePath(String path) {

@@ -24,6 +24,7 @@
 }
 </style>
 <body>
+
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
 		<a class="navbar-brand" href="#">SIRIUS</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse"
@@ -53,20 +54,12 @@
 			<button type="submit" class="btn btn-info" value="Subir Arquivo"
 				id="submitbutton">Subir Arquivo</button>
 			<br>
+
+
+
 		</form>
 
-		<script>
-		if (concluido=="ok") {
-					Swal.fire({
-						  icon: 'error',
-						  title: 'Arquivo carregado!',
-						  text: 'Arquivo carregado!',
-						  footer: '<a href="">Why do I have this issue?</a>',
-						  timer: 3000
-						})
 
-				})
-		</script>
 		<br>
 		<form th:action="@{/DownloadFile}" method="GET">
 			<input type="text" class="form-group col-md-4" name="document"
@@ -81,7 +74,19 @@
 				placeholder="remark" /><br> <input type="submit"
 				class="btn btn-info" value="Baixar Arquivo">
 			</button>
-			<br>
+			<br> <span th:text="${concluido}" id="concluido"
+				style="display: none" />
+			<script>
+				if (document.getElementById('concluido').textContent == "ok") {
+					Swal.fire({
+						icon : 'error',
+						title : 'Arquivo carregado!',
+						text : 'Arquivo carregado!',
+						footer : '<a href="">Why do I have this issue?</a>',
+						timer : 3000
+					})
+				}
+			</script>
 </body>
 <!-- Footer -->
 <footer class="page-footer font-small blue">
