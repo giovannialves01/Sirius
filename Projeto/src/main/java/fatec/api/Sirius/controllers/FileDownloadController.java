@@ -39,6 +39,7 @@ public class FileDownloadController {
         {
             Files.copy(pathDirectory, response.getOutputStream());
             response.getOutputStream().flush();
+            System.out.println("normal");
         } 
         catch (IOException ex) {
             ex.printStackTrace();

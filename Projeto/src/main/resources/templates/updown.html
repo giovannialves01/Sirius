@@ -25,6 +25,8 @@
 </style>
 <body>
 
+			<br> <span th:text="${concluidodown}" id="concluidodown"/>
+			
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
 		<a class="navbar-brand" href="#">SIRIUS</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse"
@@ -78,15 +80,14 @@
 				style="display: none" />
 			<script>
 				if (document.getElementById('concluido').textContent == "ok") {
-					Swal.fire({
-						icon : 'error',
-						title : 'Arquivo carregado!',
-						text : 'Arquivo carregado!',
-						footer : '<a href="">Why do I have this issue?</a>',
-						timer : 3000
-					})
+					Swal.fire(
+							  'Muito Bem!',
+							  'Arquivo carregado!',
+							  'success'
+							)
 				}
 			</script>
+			
 </body>
 <!-- Footer -->
 <footer class="page-footer font-small blue">

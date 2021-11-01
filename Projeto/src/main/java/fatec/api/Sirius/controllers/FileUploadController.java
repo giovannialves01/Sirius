@@ -87,11 +87,6 @@ public class FileUploadController {
 				System.out.println(concluido);
 			}
 		}
-		//Map<String, String> map = new HashMap<String, String>();
-		//map.put("updown", concluido);
-        ArrayList<String> upload = new ArrayList<>();
-        upload.add("updown");
-        upload.add(concluido);
 		return "updown.html";
 	}
 
