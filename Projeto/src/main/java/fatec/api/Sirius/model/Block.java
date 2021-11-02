@@ -48,6 +48,10 @@ public class Block {
 		this.subsection = subsection;
 	}
 
+	public int getId() {
+		return id;
+	}
+
 	
 	
 }

@@ -26,7 +26,7 @@ public class Subsection {
 	private String name;		
 	
 	@ManyToOne(cascade=CascadeType.PERSIST, fetch = FetchType.LAZY)
-	@JoinColumn(name="subsection_id")
+	@JoinColumn(name="section_id")
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	private Section Section;
 	
@@ -45,6 +45,10 @@ public class Subsection {
 
 	public void setSection(Section section) {
 		Section = section;
+	}
+
+	public int getId() {
+		return id;
 	}
 	
 }

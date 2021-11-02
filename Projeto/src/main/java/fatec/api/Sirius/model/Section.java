@@ -47,6 +47,10 @@ public class Section {
 		this.document = document;
 	}
 
+	public int getId() {
+		return id;
+	}
+
 	
 	
 }
