@@ -5,9 +5,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -23,13 +21,29 @@ import fatec.api.Sirius.model.Document;
 import fatec.api.Sirius.model.Remark;
 import fatec.api.Sirius.model.Section;
 import fatec.api.Sirius.model.Subsection;
+import fatec.api.Sirius.repository.BlockRepository;
+import fatec.api.Sirius.repository.DocumentRepository;
 import fatec.api.Sirius.repository.RemarkRepository;
+import fatec.api.Sirius.repository.SectionRepository;
+import fatec.api.Sirius.repository.SubsectionRepository;
 
 @Controller
 public class FileUploadController {
 
 	@Autowired
 	RemarkRepository remarkRepository;
+	
+	@Autowired
+	SectionRepository sr;
+	
+	@Autowired
+	SubsectionRepository sub;
+	
+	@Autowired
+	BlockRepository blo;
+	
+	@Autowired
+	DocumentRepository doc;
 
 	public static String uploadDirectory = "../Root/Master/";
 
@@ -54,22 +68,36 @@ public class FileUploadController {
 			remark.getBlock().getSubsection().setSection(new Section());
 			remark.getBlock().getSubsection().getSection().setDocument(new Document());
 
+			
 			remark.getBlock().getSubsection().getSection().getDocument().setName(nameDoc(file.getOriginalFilename()));
 
+		
 			remark.getBlock().getSubsection().getSection()
-					.setDocument(remark.getBlock().getSubsection().getSection().getDocument());
+				.setDocument(remark.getBlock().getSubsection().getSection().getDocument());
 			remark.getBlock().getSubsection().getSection().setName(nameSection(file.getOriginalFilename()));
-
+			
+			
 			remark.getBlock().getSubsection().setSection(remark.getBlock().getSubsection().getSection());
-			remark.getBlock().getSubsection().setName(nameSubs(file.getOriginalFilename()));
-
+			remark.getBlock().getSubsection().setName(nameSubs(file.getOriginalFilename()));	
+			
+			
 			remark.getBlock().setSubsection(remark.getBlock().getSubsection());
 			remark.getBlock().setName(nameBlock(file.getOriginalFilename()));
+			
 
 			remark.setBlock((remark.getBlock()));
 			remark.setName("");
-
-			remarkRepository.save(remark);
+			
+			
+			List<Document> l = doc.findDocEquals(nameDoc(file.getOriginalFilename()));
+			System.out.println("name doc " + nameDoc(file.getOriginalFilename()) );
+			System.out.println(l);
+			
+			
+			if(check(doc.findDocEquals(nameDoc(file.getOriginalFilename())).isEmpty(), blo.findEquals(nameBlock(file.getOriginalFilename())).isEmpty(), sub.findEquals(nameSubs(file.getOriginalFilename())).isEmpty(), sr.findEquals(nameSection(file.getOriginalFilename())).isEmpty())) {
+				remarkRepository.save(remark);
+			}
+							
 
 			Path fileNameAndPath = Paths.get(uploadDirectory, file.getOriginalFilename());
 			fileNames.append(file.getOriginalFilename());
@@ -193,6 +221,16 @@ public class FileUploadController {
 	public File toFile(String string) {
 		File nameFile = new File(string);
 		return nameFile;
+	}
+
+	public boolean check (boolean doc, boolean sec, boolean subs, boolean block) {
+		System.out.println(doc + " " + sec + " " + subs + " " + block);
+		if(doc == true || sec == true || subs== true || block == true) {
+			System.out.println("true");
+			return true;
+		}
+		System.out.println("false");
+		return false;
 	}
 
 }
