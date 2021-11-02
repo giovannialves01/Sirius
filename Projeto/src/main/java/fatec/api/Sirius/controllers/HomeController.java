@@ -17,7 +17,12 @@ public class HomeController {
 	private UserRepository userRepository;
 
 	@RequestMapping("/login")
-	public String login() {
+	public String login(Model model) {
+		/*String concluido = null;
+		concluido = "ok";
+		System.out.println(concluido);
+		model.addAttribute("concluido","ok");*/
+		
 		return "login";
 	}
 

@@ -70,7 +70,16 @@
     <div class="form-group col-md-4">
       <label for="inputPass">Confirmar senha</label>
        <input name= "password" type="password" class="form-control" placeholder="********" required id="password_confirm" oninput="check(this)">
-       
+         <script language='javascript' type="text/javascript">
+    function check(input) {
+        if (input.value != document.getElementById('password').value) {
+            input.setCustomValidity('As senhas estão diferentes.');
+        } else {
+            // input is valid -- reset the error message
+            input.setCustomValidity('');
+        }
+    }
+</script>
     </div>
   			<br> <span th:text="${concluido}" id="concluido" style="display: none"/>
 			<script>
