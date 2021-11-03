@@ -6,39 +6,79 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="/css/page3.css">
-    <title>Cadastro</title>
+    <title>CodeList</title>
+    <link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+	integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+	crossorigin="anonymous">
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+	integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+	crossorigin="anonymous"></script>
 </head>
 <body>
-	<div class="full-screen">
-		<div class="rightScreenInputs">
-		
-	        <table id="table">
-		            
-		            <thead>
-			        <tr class="tableHeader">
-			            <th id="tableNome" scope="col">Seção</th>
-			            <th id="tableNome" scope="col">Subseção</th>
-			            <th id="tableNome" scope="col">Bloco</th>
-			            <th id="tableNome" scope="col">Remark</th>
-			            <th id="tableNome" scope="col"></th>
-			        </tr>		        
-	        	</thead>
-       
-	            	<tr th:each="remark:${remarks}">
-			            <td><span th:text="${remark.getBlock().getSubsection().getSection().getName()}"></span></td> 
-			            <td><span th:text="${remark.getBlock().getSubsection().getName() }"></span></td>
-			            <td><span th:text="${remark.getBlock().getName() }"></span></td>
-			            <td><span th:text="${remark.getName() }"></span></td>  
-			            <td><a th:href="@{'/delete/' + ${remark.getBlock().getSubsection().getSection().getDocument().getId()}}">Deletar bloco</a></td>
-			            
-			            
-		            </tr>
-				
-			</table>
-		</div>
-		
-	</div>
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+		<a class="navbar-brand" href="#">SIRIUS</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse"
+			data-target="#navbarText" aria-controls="navbarText"
+			aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarText">
+			<ul class="navbar-nav mr-auto">
 
-	
+				<li class="nav-item"><a class="nav-link" href="/login">Login</a>
+				</li>
+
+				<li class="nav-item"><a class="nav-link" href="/updown">Download
+						e Upload</a></li>
+				<li class="nav-item"><a class="nav-link" href="/cadastro">Cadastro</a>
+				</li>
+				
+				<li class="nav-item"><a class="nav-link" href="/documentos">Documentos</a>
+				</li>
+				
+
+			</ul>
+			<span class="navbar-text"> Home Page </span>
+		</div>
+	</nav>
+<br>
+
+<br>
+<br>
+<br>	
+	<div class = "container">
+	<h1> Codelist </h1>
+	<table class="table">
+  <thead>
+    <tr>
+     <th id="tableNome" scope="col">Seção</th>
+	 <th id="tableNome" scope="col">Subseção</th>
+	 <th id="tableNome" scope="col">Bloco</th>
+	 <th id="tableNome" scope="col">Remark</th>
+	 <th id="tableNome" scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr th:each="remark:${remarks}">
+      <td><span th:text="${remark.getBlock().getSubsection().getSection().getName()}"></span></td> 
+      <td><span th:text="${remark.getBlock().getSubsection().getName() }"></span></td>
+      <td><span th:text="${remark.getBlock().getName() }"></span></td>
+      <td><span th:text="${remark.getName() }"></span></td>
+      <td><a th:href="@{'/delete/' + ${remark.getBlock().getSubsection().getSection().getDocument().getId()}}">Deletar bloco</a></td>
+    </tr>
+  </tbody>
+</table>
 </body>
+<!-- Footer -->
+<footer class="page-footer font-small blue">
+
+	<!-- Copyright -->
+	<div class="footer-copyright text-center py-3">� 2021 Copyright:
+		Sirius API</div>
+	<!-- Copyright -->
+
+</footer>
+<!-- Footer -->
 </html>
