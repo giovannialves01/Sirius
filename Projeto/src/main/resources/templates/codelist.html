@@ -58,6 +58,7 @@
 	 <th id="tableNome" scope="col">Bloco</th>
 	 <th id="tableNome" scope="col">Remark</th>
 	 <th id="tableNome" scope="col"></th>
+	 <th id="tableNome" scope="col"></th>
     </tr>
   </thead>
   <tbody>
@@ -65,17 +66,23 @@
       <td><span th:text="${remark.getBlock().getSubsection().getSection().getName()}"></span></td> 
       <td><span th:text="${remark.getBlock().getSubsection().getName() }"></span></td>
       <td><span th:text="${remark.getBlock().getName() }"></span></td>
-      <td><span th:text="${remark.getName() }"></span></td>
+      <form th:action="@{/atualizaRemark}" method="POST">
+      <input type="hidden" name="doc" th:value="${remark.getBlock().getSubsection().getSection().getDocument().getName()}"/>
+      <input type="hidden" name="id" th:value="${remark.getId()}"/>
+      <td><input type="text" name="remark" th:value="${remark.getName()}"></td>
+      <td><button type="submit">Atulizar Remark</button></td>
+      </form>
       <td><a th:href="@{'/delete/' + ${remark.getBlock().getSubsection().getSection().getDocument().getId()}}">Deletar bloco</a></td>
     </tr>
   </tbody>
 </table>
+
 </body>
 <!-- Footer -->
 <footer class="page-footer font-small blue">
 
 	<!-- Copyright -->
-	<div class="footer-copyright text-center py-3">© 2021 Copyright:
+	<div class="footer-copyright text-center py-3">ï¿½ 2021 Copyright:
 		Sirius API</div>
 	<!-- Copyright -->
 

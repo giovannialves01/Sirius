@@ -90,10 +90,7 @@ public class FileUploadController {
 			
 			
 			List<Document> l = doc.findDocEquals(nameDoc(file.getOriginalFilename()));
-			System.out.println("name doc " + nameDoc(file.getOriginalFilename()) );
-			System.out.println(l);
-			
-			
+					
 			if(check(doc.findDocEquals(nameDoc(file.getOriginalFilename())).isEmpty(), blo.findEquals(nameBlock(file.getOriginalFilename())).isEmpty(), sub.findEquals(nameSubs(file.getOriginalFilename())).isEmpty(), sr.findEquals(nameSection(file.getOriginalFilename())).isEmpty())) {
 				remarkRepository.save(remark);
 			}
@@ -112,7 +109,6 @@ public class FileUploadController {
 				e.printStackTrace();
 				concluido = "error";
 
-				System.out.println(concluido);
 			}
 		}
 		return "updown.html";
@@ -226,10 +222,8 @@ public class FileUploadController {
 	public boolean check (boolean doc, boolean sec, boolean subs, boolean block) {
 		System.out.println(doc + " " + sec + " " + subs + " " + block);
 		if(doc == true || sec == true || subs== true || block == true) {
-			System.out.println("true");
 			return true;
 		}
-		System.out.println("false");
 		return false;
 	}
 

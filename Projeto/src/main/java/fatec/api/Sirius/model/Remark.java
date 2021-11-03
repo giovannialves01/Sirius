@@ -47,5 +47,9 @@ public class Remark {
 		this.block = block;
 	}
 
+	public int getId() {
+		return id;
+	}
+
 	
 }
