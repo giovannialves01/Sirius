@@ -32,16 +32,16 @@ public class FileUploadController {
 
 	@Autowired
 	RemarkRepository remarkRepository;
-	
+
 	@Autowired
 	SectionRepository sr;
-	
+
 	@Autowired
 	SubsectionRepository sub;
-	
+
 	@Autowired
 	BlockRepository blo;
-	
+
 	@Autowired
 	DocumentRepository doc;
 
@@ -68,41 +68,64 @@ public class FileUploadController {
 			remark.getBlock().getSubsection().setSection(new Section());
 			remark.getBlock().getSubsection().getSection().setDocument(new Document());
 
-			
 			remark.getBlock().getSubsection().getSection().getDocument().setName(nameDoc(file.getOriginalFilename()));
 
-		
 			remark.getBlock().getSubsection().getSection()
-				.setDocument(remark.getBlock().getSubsection().getSection().getDocument());
+					.setDocument(remark.getBlock().getSubsection().getSection().getDocument());
 			remark.getBlock().getSubsection().getSection().setName(nameSection(file.getOriginalFilename()));
-			
-			
+
 			remark.getBlock().getSubsection().setSection(remark.getBlock().getSubsection().getSection());
-			remark.getBlock().getSubsection().setName(nameSubs(file.getOriginalFilename()));	
-			
-			
+			remark.getBlock().getSubsection().setName(nameSubs(file.getOriginalFilename()));
+
 			remark.getBlock().setSubsection(remark.getBlock().getSubsection());
 			remark.getBlock().setName(nameBlock(file.getOriginalFilename()));
-			
 
 			remark.setBlock((remark.getBlock()));
 			remark.setName("");
-			
-			
+
 			List<Document> l = doc.findDocEquals(nameDoc(file.getOriginalFilename()));
-					
-			if(check(doc.findDocEquals(nameDoc(file.getOriginalFilename())).isEmpty(), blo.findEquals(nameBlock(file.getOriginalFilename())).isEmpty(), sub.findEquals(nameSubs(file.getOriginalFilename())).isEmpty(), sr.findEquals(nameSection(file.getOriginalFilename())).isEmpty())) {
+
+			if (check(doc.findDocEquals(nameDoc(file.getOriginalFilename())).isEmpty(),
+					blo.findEquals(nameBlock(file.getOriginalFilename())).isEmpty(),
+					sub.findEquals(nameSubs(file.getOriginalFilename())).isEmpty(),
+					sr.findEquals(nameSection(file.getOriginalFilename())).isEmpty())) {
 				remarkRepository.save(remark);
 			}
-							
+			
+			//inicio da analise
+			String nomedopdf = nameDoc(file.getOriginalFilename());
+			System.out.println("Nome do Documento: " + nomedopdf);
 
+			String nomedasection = nameSection(file.getOriginalFilename());
+			System.out.println("Seção: " + nomedasection);
+
+			String nomedasubsection = nameSubs(file.getOriginalFilename());
+			System.out.println("Sub-Seção: " + nomedasubsection);
+			if (nomedasubsection != null) {
+				try {
+					Double.parseDouble(nomedasubsection);
+					System.out.println("Ok (apenas numeros)");
+				} catch (NumberFormatException e) {
+					System.out.println("Erro");
+				}
+			}
+			String nomedoblock = nameBlock(file.getOriginalFilename());
+			System.out.println("Bloco: " + nomedoblock);
+			try {
+				Double.parseDouble(nomedoblock);
+				System.out.println("Ok (apenas numeros)");
+			} catch (NumberFormatException e) {
+				System.out.println("Erro");
+			}
+			//fim da analise
+			
 			Path fileNameAndPath = Paths.get(uploadDirectory, file.getOriginalFilename());
 			fileNames.append(file.getOriginalFilename());
 			try {
 				Files.write(fileNameAndPath, file.getBytes());
 				uploadDirectory = "../Root/Master/";
 				concluido = "ok";
-				model.addAttribute("concluido","ok");
+				model.addAttribute("concluido", "ok");
 
 				System.out.println(concluido);
 			} catch (IOException e) {
@@ -219,9 +242,9 @@ public class FileUploadController {
 		return nameFile;
 	}
 
-	public boolean check (boolean doc, boolean sec, boolean subs, boolean block) {
+	public boolean check(boolean doc, boolean sec, boolean subs, boolean block) {
 		System.out.println(doc + " " + sec + " " + subs + " " + block);
-		if(doc == true || sec == true || subs== true || block == true) {
+		if (doc == true || sec == true || subs == true || block == true) {
 			return true;
 		}
 		return false;
