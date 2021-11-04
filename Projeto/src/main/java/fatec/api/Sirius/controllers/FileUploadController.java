@@ -131,18 +131,14 @@ public class FileUploadController {
 			// VALIDAR SECTION
 
 			String nomedasection = nameSection(file.getOriginalFilename());
-			System.out.println("Seção: " + nomedasection);
-			int count = 0;
-			for (int i = 0; i < nomedasection.length(); i++) {
-				if (nomedasection.charAt(i) != ' ')
-					count++;
-			}
-			System.out.println("Tamanho da seção:" + count);
-			if (count >= 2 && count <= 4) {
-				System.out.println("=>OK! Tamanho está entre 2 e 4: " + count);
+			System.out.println("Seção: " + nameSection(file.getOriginalFilename()));
+			int tamanhosec = nomedasection.length();
+			System.out.println("Tamanho da seção:" + tamanhosec);
+			if (tamanhosec >= 2 && tamanhosec <= 4) {
+				System.out.println("=>OK! Tamanho está entre 2 e 4: " + tamanhosec);
 				aprovarsec = true;
 			} else {
-				System.out.println("=>ERRO! Tamanho não esta entre 2 e 4: " + count);
+				System.out.println("=>ERRO! Tamanho não esta entre 2 e 4: " + tamanhosec);
 			}
 			System.out.println("--------------------------------------------");
 			// VALIDAR SUBSECTION
