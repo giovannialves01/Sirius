@@ -86,6 +86,13 @@
 							  'success'
 							)
 				}
+				if (document.getElementById('concluido').textContent == "error") {
+					Swal.fire({
+						  icon: 'error',
+						  title: 'Algo deu errado',
+						  text: 'Verifique se o arquivo condiz com a formatação oficial'
+						})
+				}
 			</script>
 			
 				<br> <span th:text="${concluidodown}" id="concluidodown" />

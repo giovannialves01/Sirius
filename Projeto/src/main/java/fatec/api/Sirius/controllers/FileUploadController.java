@@ -91,7 +91,10 @@ public class FileUploadController {
 					sr.findEquals(nameSection(file.getOriginalFilename())).isEmpty())) {
 				remarkRepository.save(remark);
 			}
-
+			Boolean aprovarsec = false;
+			Boolean aprovarsubs = false;
+			Boolean aprovarbloco = false;
+			Boolean aprovarnome = false;
 			// INICIO DA ANALISE
 			System.out.println("ANALISE DO DOCUMENTO");
 			System.out.println("--------------------------------------------");
@@ -99,25 +102,34 @@ public class FileUploadController {
 			String nomedopdf = nameDoc(file.getOriginalFilename());
 			System.out.println("Nome do Documento: " + nomedopdf);
 			if (nomedopdf.length() != 8) {
-				System.out.println("=>ERRO! Tamanho do Documento não é 8: "+nomedopdf.length());
+				System.out.println("=>ERRO! Tamanho do Documento não é 8: " + nomedopdf.length());
 			} else {
 
 				if (nomedopdf.substring(0, 3).matches("[A-Z]*")) {
-					System.out.println("=>ERRO! 3 Primeiros caracteres não são só letras: " + nomedopdf.substring(0, 3));
+					System.out
+							.println("=>ERRO! 3 Primeiros caracteres não são só letras: " + nomedopdf.substring(0, 3));
 				} else {
-					String ultnum=nomedopdf.substring(4, 8);
-					try {
-						Double.parseDouble(ultnum);
-						System.out.println("=>OK! 8 Caracteres + 3 Letras no início + 4 Números no fim: "+nomedopdf);
-					} catch (NumberFormatException e) {
-						System.out.println("=>ERRO! 4 Ultimos caracteres não são só numeros: "+ultnum);
+					int poshifen = nomedopdf.indexOf("-");
+					System.out.println("Posição do hifen:" + poshifen);
+					if (poshifen == 3) {
+						String ultnum = nomedopdf.substring(4, 8);
+						try {
+							Double.parseDouble(ultnum);
+							System.out.println("=>OK! 3 Letras + Hífen + 4 Números no fim: " + nomedopdf);
+							aprovarnome = true;
+						} catch (NumberFormatException e) {
+							System.out.println("=>ERRO! 4 Ultimos caracteres não são só numeros: " + ultnum);
+						}
+					} else {
+						System.out.println("=>ERRO! Hífen na posição errada ou não encontrado: " + poshifen);
 					}
+
 				}
 
 			}
 			System.out.println("--------------------------------------------");
 			// VALIDAR SECTION
-			Boolean aprovar=false;
+
 			String nomedasection = nameSection(file.getOriginalFilename());
 			System.out.println("Seção: " + nomedasection);
 			int count = 0;
@@ -127,10 +139,10 @@ public class FileUploadController {
 			}
 			System.out.println("Tamanho da seção:" + count);
 			if (count >= 2 && count <= 4) {
-				System.out.println("=>OK! Tamanho está entre 2 e 4: "+count);
-				aprovar=true;
+				System.out.println("=>OK! Tamanho está entre 2 e 4: " + count);
+				aprovarsec = true;
 			} else {
-				System.out.println("=>ERRO! Tamanho não esta entre 2 e 4: " +count);
+				System.out.println("=>ERRO! Tamanho não esta entre 2 e 4: " + count);
 			}
 			System.out.println("--------------------------------------------");
 			// VALIDAR SUBSECTION
@@ -139,15 +151,15 @@ public class FileUploadController {
 			if (nomedasubsection.length() > 0) {
 				try {
 					Double.parseDouble(nomedasubsection);
-					System.out.println("=>OK! Subseção consiste apenas de numeros: "+nomedasubsection);
-					aprovar=true;
+					System.out.println("=>OK! Subseção consiste apenas de numeros: " + nomedasubsection);
+					aprovarsubs = true;
 				} catch (NumberFormatException e) {
-					System.out.println("=>ERRO! Subseção não consiste apenas de numeros: "+nomedasubsection);
+					System.out.println("=>ERRO! Subseção não consiste apenas de numeros: " + nomedasubsection);
 				}
 			} else {
 				System.out.println("=>OK! Subseção pode ser vazia");
 				System.out.println(nomedasubsection.length());
-				aprovar=true;
+				aprovarsubs = true;
 			}
 			System.out.println("--------------------------------------------");
 			// VALIDAR BLOCO
@@ -155,26 +167,33 @@ public class FileUploadController {
 			System.out.println("Bloco: " + nomedoblock);
 			try {
 				Double.parseDouble(nomedoblock);
-				System.out.println("=>OK! Bloco consiste apenas de números: "+nomedoblock);
-				aprovar=true;
+				System.out.println("=>OK! Bloco consiste apenas de números: " + nomedoblock);
+				aprovarbloco = true;
 			} catch (NumberFormatException e) {
-				System.out.println("=>ERRO! Bloco não consiste apenas de numeros: "+nomedoblock);
+				System.out.println("=>ERRO! Bloco não consiste apenas de numeros: " + nomedoblock);
 			}
 			System.out.println("--------------------------------------------");
-			System.out.println("Aprovado: "+aprovar);
+			System.out.println("Aprovado: " + aprovarnome + "/" + aprovarsec + "/" + aprovarsubs + "/" + aprovarbloco);
 			// FIM DA ANALISE
 			Path fileNameAndPath = Paths.get(uploadDirectory, file.getOriginalFilename());
 			fileNames.append(file.getOriginalFilename());
 			try {
-				Files.write(fileNameAndPath, file.getBytes());
-				uploadDirectory = "../Root/Master/";
-				concluido = "ok";
-				model.addAttribute("concluido", "ok");
-
-				System.out.println(concluido);
+				if (aprovarnome && aprovarsec && aprovarsubs && aprovarbloco) {
+					Files.write(fileNameAndPath, file.getBytes());
+					uploadDirectory = "../Root/Master/";
+					concluido = "ok";
+					model.addAttribute("concluido", "ok");
+					System.out.println("concluido=" + concluido);
+				} else {
+					concluido = "error";
+					model.addAttribute("concluido", "error");
+					System.out.println("concluido=" + concluido);
+				}
 			} catch (IOException e) {
 				e.printStackTrace();
 				concluido = "error";
+				model.addAttribute("concluido", "error");
+				System.out.println("concluido=" + concluido);
 
 			}
 		}
