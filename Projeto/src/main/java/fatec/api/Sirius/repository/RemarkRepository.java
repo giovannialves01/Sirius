@@ -22,7 +22,7 @@ public interface RemarkRepository extends JpaRepository<Remark, String> {
 	@Query(value = "DELETE FROM Document d WHERE d.id = :idDoc")
 	void deleteLine(@Param("idDoc")int idDoc);
 	
-	@Query(value = "SELECT r FROM Remark r WHERE rem_code = :code")
+	@Query(value = "SELECT r FROM Remark r WHERE rem_name = :code")
 	List<Remark> findRemCodeEquals(@Param("code")String code);
 	
 	

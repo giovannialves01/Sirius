@@ -57,7 +57,6 @@ public class FileUploadController {
 		for (MultipartFile file : files) {
 
 			uploadDirectory = uploadDirectory + organizePath(file.getOriginalFilename());
-			System.out.println(uploadDirectory);
 			File CreateFile = toFile(uploadDirectory);
 			CreateFile.mkdirs();
 

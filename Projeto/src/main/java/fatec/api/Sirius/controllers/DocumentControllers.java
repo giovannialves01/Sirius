@@ -1,12 +1,17 @@
 package fatec.api.Sirius.controllers;
 
+import java.io.File;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import fatec.api.Sirius.model.Remark;
@@ -24,6 +29,9 @@ public class DocumentControllers {
 	
 	@Autowired
 	RemarkRepository rr;
+	
+	public static String Directory = "../Root/Master/";
+	public static String zipDirectory = "../Root/Zip/";
 	
 	@GetMapping("/documentos")
 	public ModelAndView allDocuments() {
@@ -45,7 +53,6 @@ public class DocumentControllers {
 		
 		return "redirect:/codelist/" + doc ;
 	}
-	
-	
+
 
 }	
