@@ -70,7 +70,7 @@
       <input type="hidden" name="doc" th:value="${remark.getBlock().getSubsection().getSection().getDocument().getName()}"/>
       <input type="hidden" name="id" th:value="${remark.getId()}"/>
       <td><input type="text" name="remark" th:value="${remark.getName()}"></td>
-      <td><button type="submit">Atulizar Remark</button></td>
+      <td><button type="submit">Atualizar Remark</button></td>
       </form>
       <td><a th:href="@{'/delete/' + ${remark.getBlock().getSubsection().getSection().getDocument().getId()}}">Deletar bloco</a></td>
     </tr>
