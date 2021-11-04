@@ -56,7 +56,8 @@
      <th id="tableNome" scope="col">Seção</th>
 	 <th id="tableNome" scope="col">Subseção</th>
 	 <th id="tableNome" scope="col">Bloco</th>
-	 <th id="tableNome" scope="col">Remark</th>
+	 <th id="tableNome" scope="col">Codigo</th>
+	 <th id="tableNome" scope="col">Traço</th>
 	 <th id="tableNome" scope="col"></th>
 	 <th id="tableNome" scope="col"></th>
     </tr>
@@ -69,8 +70,9 @@
       <form th:action="@{/atualizaRemark}" method="POST">
       <input type="hidden" name="doc" th:value="${remark.getBlock().getSubsection().getSection().getDocument().getName()}"/>
       <input type="hidden" name="id" th:value="${remark.getId()}"/>
+      <td><span th:text="${remark.getCode()}"></span></td>
       <td><input type="text" name="remark" th:value="${remark.getName()}"></td>
-      <td><button type="submit">Atualizar Remark</button></td>
+      <td><button type="submit">Atualizar Traço</button></td>
       </form>
       <td><a th:href="@{'/delete/' + ${remark.getBlock().getSubsection().getSection().getDocument().getId()}}">Deletar bloco</a></td>
     </tr>

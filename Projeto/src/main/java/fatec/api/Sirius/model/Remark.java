@@ -24,6 +24,9 @@ public class Remark {
 	
 	@Column(name="rem_name")
 	public String name;
+	
+	@Column(name="rem_code")
+	public String code;
 		
 	@ManyToOne(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name="block_id")
@@ -49,6 +52,14 @@ public class Remark {
 
 	public int getId() {
 		return id;
+	}
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
 	}
 
 	

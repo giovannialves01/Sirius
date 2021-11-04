@@ -87,11 +87,12 @@ public class FileUploadController {
 
 			remark.setBlock((remark.getBlock()));
 			remark.setName("");
+			remark.setCode(nameCode(file.getOriginalFilename()));
 			
 			
 			List<Document> l = doc.findDocEquals(nameDoc(file.getOriginalFilename()));
 					
-			if(check(doc.findDocEquals(nameDoc(file.getOriginalFilename())).isEmpty(), blo.findEquals(nameBlock(file.getOriginalFilename())).isEmpty(), sub.findEquals(nameSubs(file.getOriginalFilename())).isEmpty(), sr.findEquals(nameSection(file.getOriginalFilename())).isEmpty())) {
+			if(check(doc.findDocEquals(nameDoc(file.getOriginalFilename())).isEmpty(), blo.findEquals(nameBlock(file.getOriginalFilename())).isEmpty(), sub.findEquals(nameSubs(file.getOriginalFilename())).isEmpty(), sr.findEquals(nameSection(file.getOriginalFilename())).isEmpty(), remarkRepository.findRemCodeEquals(nameCode(file.getOriginalFilename())).isEmpty())) {
 				remarkRepository.save(remark);
 			}
 							
@@ -191,6 +192,18 @@ public class FileUploadController {
 		}
 		return "";
 	}
+	
+	public String nameCode(String path) {
+		String achadoCode = null;
+		String regexCode = "c[^\\s\\D]+";
+		Pattern parteCode = Pattern.compile(regexCode);
+		Matcher matcherCode = parteCode.matcher(path);
+		while (matcherCode.find()) {
+			achadoCode = matcherCode.group().substring(1, matcherCode.group().length());
+			return achadoCode;
+		}
+		return "";
+	}
 
 	public String nameBuilder(String achadoDoc, String achadoSecao, String achadoSubs, String achadoBlock) {
 		String caminho = null;
@@ -219,9 +232,9 @@ public class FileUploadController {
 		return nameFile;
 	}
 
-	public boolean check (boolean doc, boolean sec, boolean subs, boolean block) {
-		System.out.println(doc + " " + sec + " " + subs + " " + block);
-		if(doc == true || sec == true || subs== true || block == true) {
+	public boolean check (boolean doc, boolean sec, boolean subs, boolean block, boolean code) {
+		System.out.println(doc + " " + sec + " " + subs + " " + block + " " + code);
+		if(doc == true || sec == true || subs== true || block == true || code == true) {
 			return true;
 		}
 		return false;
