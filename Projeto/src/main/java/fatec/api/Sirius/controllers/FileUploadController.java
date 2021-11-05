@@ -12,6 +12,7 @@ import java.util.regex.Pattern;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -49,6 +50,14 @@ public class FileUploadController {
 
 	RemarkControllers rc = new RemarkControllers();
 
+	@GetMapping("/CompactFile")
+	public String compact(@RequestParam("source")String source) {
+		ZipUtils appZip = new ZipUtils(source);
+        appZip.generateFileList(new File(source));
+        appZip.zipIt("C:\\Users\\levim\\eclipse-workspace\\Root\\Master\\folder.zip");
+	return "updown.html";
+	}
+	
 	@PostMapping("/UploadFile")
 	public String upload(Model model, @RequestParam("files") MultipartFile[] files) {
 		StringBuilder fileNames = new StringBuilder();

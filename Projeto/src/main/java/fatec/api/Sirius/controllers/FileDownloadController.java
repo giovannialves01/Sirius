@@ -24,7 +24,7 @@ public class FileDownloadController {
 	
 	BlockControllers bc = new BlockControllers();
 	
-	public static String zipDirectory = "../Root/Zip/";
+	public static String zipDirectory = "../Root/Master/";
 	public static String Directory = "../Root/Master/";
 	String compactName = "compact.pdf";
 	
@@ -33,7 +33,7 @@ public class FileDownloadController {
 		
 		File pathDirectory = null;
 		String fileName = null;
-		if(section.equals("") && remark.equals("") && !code.equals("")) {
+		if(!section.equals("") && remark.equals("") && !code.equals("")) {
 			if(subsection.equals("")){
 				Directory = Directory + document + "/" + section + "/" + block + "/" + document + "-" + section + "-" + block + "c" + code + ".pdf";
 				fileName = document + "-" + section + "-" + block + "c" + code + ".pdf";
@@ -77,7 +77,7 @@ public class FileDownloadController {
 	    	Directory = Directory + path;    					
 		}
 		
-		response.setContentType("application/pdf");
+		response.setContentType("application/zip");
 	    response.addHeader("Content-Disposition", "attachment; filename="+"Pdf Full E Delta");
 	    try
 	    {
