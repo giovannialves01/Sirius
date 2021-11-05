@@ -91,6 +91,7 @@ public class FileUploadController {
 					sr.findEquals(nameSection(file.getOriginalFilename())).isEmpty())) {
 				remarkRepository.save(remark);
 			}
+
 			Boolean aprovarsec = false;
 			Boolean aprovarsubs = false;
 			Boolean aprovarbloco = false;
@@ -105,7 +106,7 @@ public class FileUploadController {
 				System.out.println("=>ERRO! Tamanho do Documento não é 8: " + nomedopdf.length());
 			} else {
 
-				if (nomedopdf.substring(0, 3).matches("[A-Z]*")) {
+				if (nomedopdf.substring(0, 3).matches(".*[^A-z].")) {
 					System.out
 							.println("=>ERRO! 3 Primeiros caracteres não são só letras: " + nomedopdf.substring(0, 3));
 				} else {
@@ -130,17 +131,18 @@ public class FileUploadController {
 			System.out.println("--------------------------------------------");
 			// VALIDAR SECTION
 
-			String nomedasection = nameSection(file.getOriginalFilename());
-			System.out.println("Seção: " + nameSection(file.getOriginalFilename()));
-			int tamanhosec = nomedasection.length();
-			System.out.println("Tamanho da seção:" + tamanhosec);
-			if (tamanhosec >= 2 && tamanhosec <= 4) {
-				System.out.println("=>OK! Tamanho está entre 2 e 4: " + tamanhosec);
-				aprovarsec = true;
-			} else {
-				System.out.println("=>ERRO! Tamanho não esta entre 2 e 4: " + tamanhosec);
+			// sr.findEquals(nameSection(file.getOriginalFilename()))
+			String nomesec = nameSection(file.getOriginalFilename());
+			if(nomesec.equals(null)) {
+				System.out.println("=>ERRO! Seção não pode ser vazia");
 			}
+			else {
+				System.out.println("=>OK! Seção não esta vazia");
+				aprovarsec = true;
+			}
+			System.out.println("Seção: " + nameSection(file.getOriginalFilename()));
 			System.out.println("--------------------------------------------");
+
 			// VALIDAR SUBSECTION
 			String nomedasubsection = nameSubs(file.getOriginalFilename());
 			System.out.println("Sub-Seção: " + nomedasubsection);
@@ -174,7 +176,7 @@ public class FileUploadController {
 			Path fileNameAndPath = Paths.get(uploadDirectory, file.getOriginalFilename());
 			fileNames.append(file.getOriginalFilename());
 			try {
-				if (aprovarnome && aprovarsec && aprovarsubs && aprovarbloco) {
+				if (aprovarnome  && aprovarsec  && aprovarsubs && aprovarbloco) {
 					Files.write(fileNameAndPath, file.getBytes());
 					uploadDirectory = "../Root/Master/";
 					concluido = "ok";
@@ -215,25 +217,8 @@ public class FileUploadController {
 	}
 
 	public String nameSection(String path) {
-		String achadoSecao = null;
-		String regexSecao1 = "\\D+-\\d+-\\w+-";
-		String regexSecao2 = "[^\\D]+-$";
-		Pattern parteSecao = Pattern.compile(regexSecao1);
-		Matcher matcherSecao = parteSecao.matcher(path);
-		while (matcherSecao.find()) {
-			achadoSecao = matcherSecao.group();
-
-			parteSecao = Pattern.compile(regexSecao2);
-			matcherSecao = parteSecao.matcher(achadoSecao);
-
-			while (matcherSecao.find()) {
-				achadoSecao = matcherSecao.group();
-				achadoSecao = matcherSecao.group().substring(0, matcherSecao.group().length() - 1);
-				return achadoSecao;
-			}
-
-		}
-		return "";
+		String[] partes = path.split("-");
+		return partes[2];
 	}
 
 	public String nameSubs(String path) {
