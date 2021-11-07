@@ -13,6 +13,7 @@
   - [Cronograma de Entregas](#cronograma-de-entregas)
 - [Integrantes do Grupo](#integrantes-do-grupo)
 - [Manual de Instalação](#manual-de-instalação)
+- [Modelo Físico Banco de Dados](#modelo-físico-banco-de-dados)
 
 # Objetivo
 Com a proposta de aprimorar a criação da documentação das aeronaves, a empresa parceira solicitou a criação de uma aplicação que, aprimorasse sua antiga forma manual de desenvolvimento, com uma maneira mais eficaz, segura e simples.
@@ -26,7 +27,13 @@ Com a proposta de aprimorar a criação da documentação das aeronaves, a empre
 ### Upload e Download
 <p align="left">
   <img src="https://github.com/giovannialves01/Sirius/blob/main/Documentos/Wireframes/Sprint%202/Upload%20e%20Download.gif" width="800px" p>
+	
+### Codelist
 
+<p align="left">
+  <img src="https://github.com/giovannialves01/Sirius/blob/main/Documentos/Wireframes/Sprint%203/Codelist.gif" width="800px" p>
+	
+	
 ## Sprint Cards
 
 ### Sprint 1
@@ -88,3 +95,63 @@ Conexão de rede
 ### 3. Iniciar o projeto:
 	Para iniciar o projeto clique com o botão direito no na pasta "Projeto".
 	Clique em "Run as > Java Application".
+
+# Modelo Físico Banco de Dados 	
+
+### 
+	CREATE TABLE tb_docs (
+	docsID INT PRIMARY KEY NOT NULL,
+	docsName VARCHAR(15) NOT NULL,
+	docsPath VARCHAR(255) NOT NULL
+	);
+	
+	CREATE TABLE tb_section(
+	sectionID INT PRIMARY KEY NOT NULL,
+	docsID int not null,
+	sectionName VARCHAR(15) NOT NULL,
+	sectionPath VARCHAR(255) NOT NULL
+	);
+
+	alter table tb_section add foreign key(docsID) references tb_docs(docsID);
+
+	CREATE TABLE tb_subSection(
+	subSectionID INT PRIMARY KEY NOT NULL,
+	sectionID int not null,
+	subSectionName VARCHAR(15) NOT NULL,
+	subSectionPath VARCHAR(255) NOT NULL
+	);
+
+	alter table tb_subSection add foreign key(sectionID) references tb_section(sectionID);
+
+	CREATE TABLE tb_block(
+	blockID INT PRIMARY KEY NOT NULL,
+	subSectionID INT not null,
+	blockName VARCHAR(15) NOT NULL,
+	blockPath VARCHAR(255) NOT NULL
+	);
+
+	alter table tb_block add foreign key (subSectionID) references tb_subSection(subSectionID);
+
+	CREATE TABLE tb_code(
+	codeID INT PRIMARY KEY NOT NULL,
+	blockID INT NOT NULL,
+	nameCode VARCHAR(50) NOT NULL);
+
+	ALTER TABLE tb_code ADD FOREIGN KEY (blockID) REFERENCES tb_block(blockID);
+
+	CREATE TABLE tb_files(
+	fileID INT PRIMARY KEY NOT NULL,
+	codeID int not null,
+	fileName VARCHAR(15) NOT NULL,
+	filePath VARCHAR(255) NOT NULL
+	);
+
+	alter table tb_files add foreign key(codeID) references tb_code(codeID);
+
+	CREATE TABLE tb_user(
+	userID INT PRIMARY KEY NOT NULL,
+	fileID INT NOT NULL,
+	username VARCHAR(15) NOT NULL,
+	userpass VARCHAR (100) NOT NULL);
+	
+	alter table tb_user add foreign key(fileID) references tb_files(fileID);
