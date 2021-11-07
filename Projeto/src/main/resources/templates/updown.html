@@ -25,9 +25,9 @@
 </style>
 <body>
 
-		
-			
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+
+
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
 		<a class="navbar-brand" href="#">SIRIUS</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse"
 			data-target="#navbarText" aria-controls="navbarText"
@@ -36,23 +36,24 @@
 		</button>
 		<div class="collapse navbar-collapse" id="navbarText">
 			<ul class="navbar-nav mr-auto">
-
+				<li class="nav-item active"><a class="nav-link" href="/">Home
+				</a></li>
 				<li class="nav-item"><a class="nav-link" href="/updown">Download
 						e Upload</a></li>
 				<li class="nav-item"><a class="nav-link" href="/cadastro">Cadastro</a>
 				</li>
-				
+
 				<li class="nav-item"><a class="nav-link" href="/documentos">Documentos</a>
 				</li>
-				
+
 
 			</ul>
 			<span class="navbar-text"> Home Page </span>
 		</div>
-	</nav>	<div class="container">
+	</nav>
+	<div class="container">
 
-	<br> <span th:text="${concluidodown}" id="concluidodown"/></span>
-		<br>
+		<br> <span th:text="${concluidodown}" id="concluidodown" /></span> <br>
 
 		<form th:action="@{/UploadFile}" method="POST"
 			enctype="multipart/form-data" id="uploadfor">
@@ -72,41 +73,34 @@
 		<form th:action="@{/DownloadFile}" method="GET">
 			<input type="text" class="form-group col-md-4" name="document"
 				placeholder="document" required /><br> <input type="text"
-				class="form-group col-md-4" name="section" placeholder="section"
-				 /><br> <input type="text" class="form-group col-md-4"
-				name="subsection" placeholder="subsection" /><br> <input
-				type="text" class="form-group col-md-4" name="block"
-				placeholder="block" /><br> <input type="text"
-				class="form-group col-md-4" name="code" placeholder="code" /><br>
-			<input type="text" class="form-group col-md-4" name="remark"
-				placeholder="remark" /><br> <input type="submit"
-				class="btn btn-info" value="Baixar Arquivo">
+				class="form-group col-md-4" name="section" placeholder="section" /><br>
+			<input type="text" class="form-group col-md-4" name="subsection"
+				placeholder="subsection" /><br> <input type="text"
+				class="form-group col-md-4" name="block" placeholder="block" /><br>
+			<input type="text" class="form-group col-md-4" name="code"
+				placeholder="code" /><br> <input type="text"
+				class="form-group col-md-4" name="remark" placeholder="remark" /><br>
+			<input type="submit" class="btn btn-info" value="Baixar Arquivo">
 		</form>
-			
-		<br>
-			
-		<form th:action="@{/CompactFile}">
-			<input type="text" class="form-group col-md-4" name="source"
-			placeholder="source" required /><br>
-			<input type="submit" class="btn btn-info" value="Compactar">
-		</form>
-		
-		<br> 
-			
-			<span th:text="${concluido}" id="concluido"
-				style="display: none" /></span>
-			<script>
-				if (document.getElementById('concluido').textContent == "ok") {
-					Swal.fire(
-							  'Muito Bem!',
-							  'Arquivo carregado!',
-							  'success'
-							)
-				}
-			</script>
-			
-				<br> <span th:text="${concluidodown}" id="concluidodown" /></span>
-		</div>
+
+		<br> <br> <span th:text="${concluido}" id="concluido"
+			style="display: none" /></span>
+		<script>
+			if (document.getElementById('concluido').textContent == "ok") {
+				Swal.fire('Muito Bem!', 'Arquivo carregado!', 'success')
+			}
+			if (document.getElementById('concluido').textContent == "error") {
+				Swal
+						.fire({
+							icon : 'error',
+							title : 'Algo deu errado',
+							text : 'Verifique se o nome do arquivo condiz com a formatação oficial'
+						})
+			}
+		</script>
+
+		<br> <span th:text="${concluidodown}" id="concluidodown" /></span>
+	</div>
 </body>
 <!-- Footer -->
 <footer class="page-footer font-small blue">

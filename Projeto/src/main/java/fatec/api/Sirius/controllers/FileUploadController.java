@@ -33,16 +33,16 @@ public class FileUploadController {
 
 	@Autowired
 	RemarkRepository remarkRepository;
-	
+
 	@Autowired
 	SectionRepository sr;
-	
+
 	@Autowired
 	SubsectionRepository sub;
-	
+
 	@Autowired
 	BlockRepository blo;
-	
+
 	@Autowired
 	DocumentRepository doc;
 
@@ -51,13 +51,13 @@ public class FileUploadController {
 	RemarkControllers rc = new RemarkControllers();
 
 	@GetMapping("/CompactFile")
-	public String compact(@RequestParam("source")String source) {
+	public String compact(@RequestParam("source") String source) {
 		ZipUtils appZip = new ZipUtils(source);
-        appZip.generateFileList(new File(source));
-        appZip.zipIt("C:\\Users\\levim\\eclipse-workspace\\Root\\Master\\folder.zip");
-	return "updown.html";
+		appZip.generateFileList(new File(source));
+		appZip.zipIt("C:\\Users\\levim\\eclipse-workspace\\Root\\Master\\folder.zip");
+		return "updown.html";
 	}
-	
+
 	@PostMapping("/UploadFile")
 	public String upload(Model model, @RequestParam("files") MultipartFile[] files) {
 		StringBuilder fileNames = new StringBuilder();
@@ -76,47 +76,132 @@ public class FileUploadController {
 			remark.getBlock().getSubsection().setSection(new Section());
 			remark.getBlock().getSubsection().getSection().setDocument(new Document());
 
-			
 			remark.getBlock().getSubsection().getSection().getDocument().setName(nameDoc(file.getOriginalFilename()));
 
-		
 			remark.getBlock().getSubsection().getSection()
-				.setDocument(remark.getBlock().getSubsection().getSection().getDocument());
+					.setDocument(remark.getBlock().getSubsection().getSection().getDocument());
 			remark.getBlock().getSubsection().getSection().setName(nameSection(file.getOriginalFilename()));
-			
-			
+
 			remark.getBlock().getSubsection().setSection(remark.getBlock().getSubsection().getSection());
-			remark.getBlock().getSubsection().setName(nameSubs(file.getOriginalFilename()));	
-			
-			
+			remark.getBlock().getSubsection().setName(nameSubs(file.getOriginalFilename()));
+
 			remark.getBlock().setSubsection(remark.getBlock().getSubsection());
 			remark.getBlock().setName(nameBlock(file.getOriginalFilename()));
-			
 
 			remark.setBlock((remark.getBlock()));
 			remark.setName("");
 			remark.setCode(nameCode(file.getOriginalFilename()));
-			
-			
+
 			List<Document> l = doc.findDocEquals(nameDoc(file.getOriginalFilename()));
-					
-			if(check(doc.findDocEquals(nameDoc(file.getOriginalFilename())).isEmpty(), blo.findEquals(nameBlock(file.getOriginalFilename())).isEmpty(), sub.findEquals(nameSubs(file.getOriginalFilename())).isEmpty(), sr.findEquals(nameSection(file.getOriginalFilename())).isEmpty(), remarkRepository.findRemCodeEquals(nameCode(file.getOriginalFilename())).isEmpty())) {
+
+			if (check(doc.findDocEquals(nameDoc(file.getOriginalFilename())).isEmpty(),
+					blo.findEquals(nameBlock(file.getOriginalFilename())).isEmpty(),
+					sub.findEquals(nameSubs(file.getOriginalFilename())).isEmpty(),
+					sr.findEquals(nameSection(file.getOriginalFilename())).isEmpty(),
+					remarkRepository.findRemCodeEquals(nameCode(file.getOriginalFilename())).isEmpty())) {
 				remarkRepository.save(remark);
 			}
-							
+
+			Boolean aprovarsec = false;
+			Boolean aprovarsubs = false;
+			Boolean aprovarbloco = false;
+			Boolean aprovarnome = false;
+			// INICIO DA ANALISE
+			System.out.println("ANALISE DO DOCUMENTO");
+			System.out.println("--------------------------------------------");
+			// VALIDAR NOME
+			String nomedopdf = nameDoc(file.getOriginalFilename());
+			System.out.println("Nome do Documento: " + nomedopdf);
+			if (nomedopdf.length() != 8) {
+				System.out.println("=>ERRO! Tamanho do Documento não é 8: " + nomedopdf.length());
+			} else {
+
+				if (nomedopdf.substring(0, 3).matches(".*[^A-z].")) {
+					System.out
+							.println("=>ERRO! 3 Primeiros caracteres não são só letras: " + nomedopdf.substring(0, 3));
+				} else {
+					int poshifen = nomedopdf.indexOf("-");
+					System.out.println("Posição do hifen:" + poshifen);
+					if (poshifen == 3) {
+						String ultnum = nomedopdf.substring(4, 8);
+						try {
+							Double.parseDouble(ultnum);
+							System.out.println("=>OK! 3 Letras + Hífen + 4 Números no fim: " + nomedopdf);
+							aprovarnome = true;
+						} catch (NumberFormatException e) {
+							System.out.println("=>ERRO! 4 Ultimos caracteres não são só numeros: " + ultnum);
+						}
+					} else {
+						System.out.println("=>ERRO! Hífen na posição errada ou não encontrado: " + poshifen);
+					}
+
+				}
+
+			}
+			System.out.println("--------------------------------------------");
+			// VALIDAR SECTION
+
+			// sr.findEquals(nameSection(file.getOriginalFilename()))
+			String nomesec = nameSection(file.getOriginalFilename());
+			if (nomesec.equals(null)) {
+				System.out.println("=>ERRO! Seção não pode ser vazia");
+			} else {
+				System.out.println("=>OK! Seção não esta vazia");
+				aprovarsec = true;
+			}
+			System.out.println("Seção: " + nameSection(file.getOriginalFilename()));
+			System.out.println("--------------------------------------------");
+
+			// VALIDAR SUBSECTION
+			String nomedasubsection = nameSubs(file.getOriginalFilename());
+			System.out.println("Sub-Seção: " + nomedasubsection);
+			if (nomedasubsection.length() > 0) {
+				try {
+					Double.parseDouble(nomedasubsection);
+					System.out.println("=>OK! Subseção consiste apenas de numeros: " + nomedasubsection);
+					aprovarsubs = true;
+				} catch (NumberFormatException e) {
+					System.out.println("=>ERRO! Subseção não consiste apenas de numeros: " + nomedasubsection);
+				}
+			} else {
+				System.out.println("=>OK! Subseção pode ser vazia");
+				System.out.println(nomedasubsection.length());
+				aprovarsubs = true;
+			}
+			System.out.println("--------------------------------------------");
+			// VALIDAR BLOCO
+			String nomedoblock = nameBlock(file.getOriginalFilename());
+			System.out.println("Bloco: " + nomedoblock);
+			try {
+				Double.parseDouble(nomedoblock);
+				System.out.println("=>OK! Bloco consiste apenas de números: " + nomedoblock);
+				aprovarbloco = true;
+			} catch (NumberFormatException e) {
+				System.out.println("=>ERRO! Bloco não consiste apenas de numeros: " + nomedoblock);
+			}
+			System.out.println("--------------------------------------------");
+			System.out.println("Aprovado: " + aprovarnome + "/" + aprovarsec + "/" + aprovarsubs + "/" + aprovarbloco);
+			// FIM DA ANALISE
 
 			Path fileNameAndPath = Paths.get(uploadDirectory, file.getOriginalFilename());
 			fileNames.append(file.getOriginalFilename());
 			try {
-				Files.write(fileNameAndPath, file.getBytes());
-				uploadDirectory = "../Root/Master/";
-				concluido = "ok";
-				model.addAttribute("concluido","ok");
-
-				System.out.println(concluido);
+				if (aprovarnome && aprovarsec && aprovarsubs && aprovarbloco) {
+					Files.write(fileNameAndPath, file.getBytes());
+					uploadDirectory = "../Root/Master/";
+					concluido = "ok";
+					model.addAttribute("concluido", "ok");
+					System.out.println("concluido=" + concluido);
+				} else {
+					concluido = "error";
+					model.addAttribute("concluido", "error");
+					System.out.println("concluido=" + concluido);
+				}
 			} catch (IOException e) {
 				e.printStackTrace();
 				concluido = "error";
+				model.addAttribute("concluido", "error");
+				System.out.println("concluido=" + concluido);
 
 			}
 		}
@@ -142,25 +227,8 @@ public class FileUploadController {
 	}
 
 	public String nameSection(String path) {
-		String achadoSecao = null;
-		String regexSecao1 = "\\D+-\\d+-\\w+-";
-		String regexSecao2 = "[^\\D]+-$";
-		Pattern parteSecao = Pattern.compile(regexSecao1);
-		Matcher matcherSecao = parteSecao.matcher(path);
-		while (matcherSecao.find()) {
-			achadoSecao = matcherSecao.group();
-
-			parteSecao = Pattern.compile(regexSecao2);
-			matcherSecao = parteSecao.matcher(achadoSecao);
-
-			while (matcherSecao.find()) {
-				achadoSecao = matcherSecao.group();
-				achadoSecao = matcherSecao.group().substring(0, matcherSecao.group().length() - 1);
-				return achadoSecao;
-			}
-
-		}
-		return "";
+		String[] partes = path.split("-");
+		return partes[2];
 	}
 
 	public String nameSubs(String path) {
@@ -200,7 +268,7 @@ public class FileUploadController {
 		}
 		return "";
 	}
-	
+
 	public String nameCode(String path) {
 		String achadoCode = null;
 		String regexCode = "c[^\\s\\D]+";
@@ -240,9 +308,9 @@ public class FileUploadController {
 		return nameFile;
 	}
 
-	public boolean check (boolean doc, boolean sec, boolean subs, boolean block, boolean code) {
+	public boolean check(boolean doc, boolean sec, boolean subs, boolean block, boolean code) {
 		System.out.println(doc + " " + sec + " " + subs + " " + block + " " + code);
-		if(doc == true || sec == true || subs== true || block == true || code == true) {
+		if (doc == true || sec == true || subs == true || block == true || code == true) {
 			return true;
 		}
 		return false;
