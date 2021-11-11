@@ -1,13 +1,20 @@
 package fatec.api.Sirius.controllers;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipException;
+import java.util.zip.ZipFile;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -51,11 +58,13 @@ public class FileUploadController {
 	RemarkControllers rc = new RemarkControllers();
 
 	@GetMapping("/CompactFile")
-	public String compact(@RequestParam("source") String source) {
+	public String compact(@RequestParam("source") String source, @RequestParam("newDoc") String newDoc) throws ZipException, IOException {
+		source = uploadDirectory + source;
 		ZipUtils appZip = new ZipUtils(source);
 		appZip.generateFileList(new File(source));
-		appZip.zipIt("C:\\Users\\levim\\eclipse-workspace\\Root\\Master\\folder.zip");
-		return "updown.html";
+		appZip.zipIt("..\\Root\\Master\\folder.zip");
+		extrairZip(new File("..\\Root\\Master\\folder.zip"), new File("..\\Root\\Master\\" + newDoc));
+		return "documents";
 	}
 
 	@PostMapping("/UploadFile")
@@ -315,5 +324,66 @@ public class FileUploadController {
 		}
 		return false;
 	}
+	
+	public void extrairZip( File arquivoZip, File diretorio ) throws ZipException, IOException {
+		ZipFile zip = null;
+		File arquivo = null;
+		InputStream is = null;
+		OutputStream os = null;
+		byte[] buffer = new byte[1024];
+		     try {
+		       //cria diretório informado, caso não exista
+		       if( !diretorio.exists() ) {
+		         diretorio.mkdirs();
+		       }
+		       if( !diretorio.exists() || !diretorio.isDirectory() ) {
+		         throw new IOException("Informe um diretório válido");
+		       }
+		  zip = new ZipFile( arquivoZip );
+		  Enumeration e = zip.entries();
+		  while( e.hasMoreElements() ) {
+		       ZipEntry entrada = (ZipEntry) e.nextElement();
+		       arquivo = new File( diretorio, entrada.getName() );
+		         //se for diretório inexistente, cria a estrutura 
+		         //e pula pra próxima entrada
+		       if( entrada.isDirectory() && !arquivo.exists() ) {
+		           arquivo.mkdirs();
+		           continue;
+		        }
+		         //se a estrutura de diretórios não existe, cria
+		        if( !arquivo.getParentFile().exists() ) {
+		          arquivo.getParentFile().mkdirs();
+		        }
+		        try {
+		          is = zip.getInputStream( entrada );
+		          os = new FileOutputStream( arquivo );
+		          int bytesLidos = 0;
+		          if( is == null ) {
+		            throw new ZipException("Erro ao ler a entrada do zip: "+entrada.getName());
+		           }
+		           while( (bytesLidos = is.read( buffer )) > 0 ) {
+		             os.write( buffer, 0, bytesLidos );
+		           }
+		         } finally {
+		           if( is != null ) {
+		             try {
+		               is.close();
+		             } catch( Exception ex ) {}
+		           }
+		           if( os != null ) {
+		             try {
+		               os.close();
+		             } catch( Exception ex ) {}
+		           }
+		         }
+		       }
+		     } finally {
+		       if( zip != null ) {
+		         try {
+		           zip.close();
+		         } catch( Exception e ) {}
+		       }
+		     }
+		   }
 
 }
