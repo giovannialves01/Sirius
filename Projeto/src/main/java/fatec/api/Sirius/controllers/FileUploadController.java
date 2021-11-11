@@ -331,50 +331,47 @@ public class FileUploadController {
 		InputStream is = null;
 		OutputStream os = null;
 		byte[] buffer = new byte[1024];
-		     try {
-		       //cria diretório informado, caso não exista
-		       if( !diretorio.exists() ) {
-		         diretorio.mkdirs();
-		       }
-		       if( !diretorio.exists() || !diretorio.isDirectory() ) {
-		         throw new IOException("Informe um diretório válido");
-		       }
-		  zip = new ZipFile( arquivoZip );
-		  Enumeration e = zip.entries();
-		  while( e.hasMoreElements() ) {
-		       ZipEntry entrada = (ZipEntry) e.nextElement();
-		       arquivo = new File( diretorio, entrada.getName() );
-		         //se for diretório inexistente, cria a estrutura 
-		         //e pula pra próxima entrada
-		       if( entrada.isDirectory() && !arquivo.exists() ) {
-		           arquivo.mkdirs();
-		           continue;
-		        }
-		         //se a estrutura de diretórios não existe, cria
-		        if( !arquivo.getParentFile().exists() ) {
-		          arquivo.getParentFile().mkdirs();
-		        }
-		        try {
-		          is = zip.getInputStream( entrada );
-		          os = new FileOutputStream( arquivo );
-		          int bytesLidos = 0;
-		          if( is == null ) {
-		            throw new ZipException("Erro ao ler a entrada do zip: "+entrada.getName());
-		           }
-		           while( (bytesLidos = is.read( buffer )) > 0 ) {
+		try {
+
+		    if( !diretorio.exists() ) {
+		        diretorio.mkdirs();
+		     }
+		     if( !diretorio.exists() || !diretorio.isDirectory() ) {
+		        throw new IOException("Informe um diretório válido");
+		     }
+		     zip = new ZipFile( arquivoZip );
+		     Enumeration e = zip.entries();
+		     while( e.hasMoreElements() ) {
+		    	 ZipEntry entrada = (ZipEntry) e.nextElement();
+		    	 arquivo = new File( diretorio, entrada.getName() );
+		    	 if( entrada.isDirectory() && !arquivo.exists() ) {
+		    		 arquivo.mkdirs();
+		    		 continue;
+		    	 }
+		    	 if( !arquivo.getParentFile().exists() ) {
+		    		 arquivo.getParentFile().mkdirs();
+		    	 }
+		    	 try {
+		    		 is = zip.getInputStream( entrada );
+		    		 os = new FileOutputStream( arquivo );
+		    		 int bytesLidos = 0;
+		    		 if( is == null ) {
+		    			 throw new ZipException("Erro ao ler a entrada do zip: "+entrada.getName());
+		    		 }
+		    		 while( (bytesLidos = is.read( buffer )) > 0 ) {
 		             os.write( buffer, 0, bytesLidos );
-		           }
+		    		 }
 		         } finally {
-		           if( is != null ) {
+		         if( is != null ) {
 		             try {
 		               is.close();
 		             } catch( Exception ex ) {}
-		           }
-		           if( os != null ) {
-		             try {
+		         }
+		         if( os != null ) {
+		        	 try {
 		               os.close();
 		             } catch( Exception ex ) {}
-		           }
+		         }
 		         }
 		       }
 		     } finally {
