@@ -25,11 +25,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import fatec.api.Sirius.model.Block;
+import fatec.api.Sirius.model.Code;
 import fatec.api.Sirius.model.Document;
 import fatec.api.Sirius.model.Remark;
 import fatec.api.Sirius.model.Section;
 import fatec.api.Sirius.model.Subsection;
 import fatec.api.Sirius.repository.BlockRepository;
+import fatec.api.Sirius.repository.CodeRepository;
 import fatec.api.Sirius.repository.DocumentRepository;
 import fatec.api.Sirius.repository.RemarkRepository;
 import fatec.api.Sirius.repository.SectionRepository;
@@ -52,6 +54,9 @@ public class FileUploadController {
 
 	@Autowired
 	DocumentRepository doc;
+	
+	@Autowired
+	CodeRepository cr;
 
 	public static String uploadDirectory = "../Root/Master/";
 
@@ -80,26 +85,30 @@ public class FileUploadController {
 
 			Remark remark = new Remark();
 
-			remark.setBlock(new Block());
-			remark.getBlock().setSubsection(new Subsection());
-			remark.getBlock().getSubsection().setSection(new Section());
-			remark.getBlock().getSubsection().getSection().setDocument(new Document());
+			remark.setCode(new Code());
+			remark.getCode().setBlock(new Block());
+			remark.getCode().getBlock().setSubsection(new Subsection());
+			remark.getCode().getBlock().getSubsection().setSection(new Section());
+			remark.getCode().getBlock().getSubsection().getSection().setDocument(new Document());
 
-			remark.getBlock().getSubsection().getSection().getDocument().setName(nameDoc(file.getOriginalFilename()));
+			remark.getCode().getBlock().getSubsection().getSection().getDocument().setName(nameDoc(file.getOriginalFilename()));
 
-			remark.getBlock().getSubsection().getSection()
-					.setDocument(remark.getBlock().getSubsection().getSection().getDocument());
-			remark.getBlock().getSubsection().getSection().setName(nameSection(file.getOriginalFilename()));
+			remark.getCode().getBlock().getSubsection().getSection()
+					.setDocument(remark.getCode().getBlock().getSubsection().getSection().getDocument());
+			remark.getCode().getBlock().getSubsection().getSection().setName(nameSection(file.getOriginalFilename()));
 
-			remark.getBlock().getSubsection().setSection(remark.getBlock().getSubsection().getSection());
-			remark.getBlock().getSubsection().setName(nameSubs(file.getOriginalFilename()));
+			remark.getCode().getBlock().getSubsection().setSection(remark.getCode().getBlock().getSubsection().getSection());
+			remark.getCode().getBlock().getSubsection().setName(nameSubs(file.getOriginalFilename()));
 
-			remark.getBlock().setSubsection(remark.getBlock().getSubsection());
-			remark.getBlock().setName(nameBlock(file.getOriginalFilename()));
+			remark.getCode().getBlock().setSubsection(remark.getCode().getBlock().getSubsection());
+			remark.getCode().getBlock().setName(nameBlock(file.getOriginalFilename()));
 
-			remark.setBlock((remark.getBlock()));
+			remark.getCode().setBlock((remark.getCode().getBlock()));
+			
+			remark.getCode().setName(nameCode(file.getOriginalFilename()));
+			remark.setCode(remark.getCode());
+								
 			remark.setName("");
-			remark.setCode(nameCode(file.getOriginalFilename()));
 
 			List<Document> l = doc.findDocEquals(nameDoc(file.getOriginalFilename()));
 
@@ -107,7 +116,8 @@ public class FileUploadController {
 					blo.findEquals(nameBlock(file.getOriginalFilename())).isEmpty(),
 					sub.findEquals(nameSubs(file.getOriginalFilename())).isEmpty(),
 					sr.findEquals(nameSection(file.getOriginalFilename())).isEmpty(),
-					remarkRepository.findRemCodeEquals(nameCode(file.getOriginalFilename())).isEmpty())) {
+					cr.findEquals(nameSection(file.getOriginalFilename())).isEmpty()))
+					 {
 				remarkRepository.save(remark);
 			}
 

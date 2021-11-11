@@ -66,10 +66,10 @@ public class FileDownloadController {
 		
 		for (Remark file : remarks) {
 			
-			String d = file.getBlock().getSubsection().getSection().getDocument().getName();
-			String s = file.getBlock().getSubsection().getSection().getName();			
-			String sub = file.getBlock().getSubsection().getName();						
-			String b = file.getBlock().getName();
+			String d = file.getCode().getBlock().getSubsection().getSection().getDocument().getName();
+			String s = file.getCode().getBlock().getSubsection().getSection().getName();			
+			String sub = file.getCode().getBlock().getSubsection().getName();						
+			String b = file.getCode().getBlock().getName();
 			
 			String path = nameBuilder(d, s, sub, b);
 			

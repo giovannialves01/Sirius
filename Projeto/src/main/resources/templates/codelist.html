@@ -64,17 +64,17 @@
   </thead>
   <tbody>
     <tr th:each="remark:${remarks}">
-      <td><span th:text="${remark.getBlock().getSubsection().getSection().getName()}"></span></td> 
-      <td><span th:text="${remark.getBlock().getSubsection().getName() }"></span></td>
-      <td><span th:text="${remark.getBlock().getName() }"></span></td>
+      <td><span th:text="${remark.getCode().getBlock().getSubsection().getSection().getName()}"></span></td> 
+      <td><span th:text="${remark.getCode().getBlock().getSubsection().getName() }"></span></td>
+      <td><span th:text="${remark.getCode().getBlock().getName() }"></span></td>
       <form th:action="@{/atualizaRemark}" method="POST">
-      <input type="hidden" name="doc" th:value="${remark.getBlock().getSubsection().getSection().getDocument().getName()}"/>
+      <input type="hidden" name="doc" th:value="${remark.getCode().getBlock().getSubsection().getSection().getDocument().getName()}"/>
       <input type="hidden" name="id" th:value="${remark.getId()}"/>
-      <td><span th:text="${remark.getCode()}"></span></td>
+      <td><span th:text="${remark.getCode().getName()}"></span></td>
       <td><input type="text" name="remark" th:value="${remark.getName()}"></td>
       <td><button type="submit">Atualizar Traço</button></td>
       </form>
-      <td><a th:href="@{'/delete/' + ${remark.getBlock().getSubsection().getSection().getDocument().getId()}}">Deletar bloco</a></td>
+      <td><a th:href="@{'/delete/' + ${remark.getCode().getBlock().getSubsection().getSection().getDocument().getId()}}">Deletar bloco</a></td>
     </tr>
   </tbody>
 </table>

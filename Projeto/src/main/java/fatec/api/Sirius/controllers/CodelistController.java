@@ -50,7 +50,7 @@ public class CodelistController {
 		List<Remark> filtroDocumento = new ArrayList<Remark>();
 		
 		for(int i = 0 ; i < remark.size(); i++){
-			if(remark.get(i).getBlock().getSubsection().getSection().getDocument().getName().equals(nomeDocumento)) {
+			if(remark.get(i).getCode().getBlock().getSubsection().getSection().getDocument().getName().equals(nomeDocumento)) {
 				filtroDocumento.add(remark.get(i));
 			}
      }

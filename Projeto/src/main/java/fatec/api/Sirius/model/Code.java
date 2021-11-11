@@ -14,21 +14,22 @@ import javax.persistence.Table;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+
 @Entity
-@Table(name="tb_remark")
-public class Remark {
+@Table(name="tb_code")
+public class Code {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
 	
-	@Column(name="rem_name")
+	@Column(name="cod_name")
 	public String name;
 		
 	@ManyToOne(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinColumn(name="code_id")
+	@JoinColumn(name="blo_id")
 	@OnDelete(action = OnDeleteAction.CASCADE)
-	private Code code;
+	private Block block;
 
 
 	public String getName() {
@@ -39,18 +40,18 @@ public class Remark {
 		this.name = name;
 	}
 
-	public Code getCode() {
-		return code;
+	public Block getBlock() {
+		return block;
 	}
 
-	public void setCode(Code code) {
-		this.code = code;
+	public void setBlock(Block block) {
+		this.block = block;
 	}
 
 	public int getId() {
 		return id;
 	}
 
-
+	
 	
 }
