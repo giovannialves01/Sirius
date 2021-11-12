@@ -59,7 +59,7 @@
     <tr th:each="document:${documents}">
 	<td><a th:href="@{/codelist/{doc}(doc=${document})}"><span th:text="${document}"></span></a></td> 	
 		           
-	<form th:action="@{/CompactFile}" method="GET">
+	<form th:action="@{/copyFiles}" method="GET">
 		<input type="hidden" name="source" th:value="${document}"/>
 		<td><input type="text" name="newDoc"/></td>
 		<td><input type="submit" class="btn btn-info" value="Novo documento a partir deste"></td>

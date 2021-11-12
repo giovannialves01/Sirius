@@ -1,10 +1,12 @@
 package fatec.api.Sirius.controllers;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.channels.FileChannel;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -63,13 +65,11 @@ public class FileUploadController {
 	RemarkControllers rc = new RemarkControllers();
 
 	@GetMapping("/CompactFile")
-	public String compact(@RequestParam("source") String source, @RequestParam("newDoc") String newDoc) throws ZipException, IOException {
-		copyCodelistFromDB(source, newDoc);
+	public String compact(@RequestParam("source") String source) throws ZipException, IOException {
 		source = uploadDirectory + source;
 		ZipUtils appZip = new ZipUtils(source);
 		appZip.generateFileList(new File(source));
 		appZip.zipIt("..\\Root\\Master\\folder.zip");
-		extrairZip(new File("..\\Root\\Master\\folder.zip"), new File("..\\Root\\Master\\" + newDoc));
 		return "documents";
 	}
 
@@ -394,7 +394,7 @@ public class FileUploadController {
 		     }
 		   }
 	
-public void copyCodelistFromDB(String nameDoc, String nameNewDoc) {
+	public void copyCodelistFromDB(String nameDoc, String nameNewDoc) {
 		
 		List<Document> document = dr.findDocEquals(nameDoc);
 		for(int i = 0 ; i < document.size(); i++){
@@ -440,5 +440,73 @@ public void copyCodelistFromDB(String nameDoc, String nameNewDoc) {
 			}	
      
 	}
+	
+	@GetMapping("/copyFiles")
+	public String createNewCodelistFromDocument(@RequestParam("source") String source, @RequestParam("newDoc") String newDoc) throws ZipException, IOException {
+		copyCodelistFromDB(source, newDoc);
+		copyAll(new File("../Root/Master/" + source), new File("../Root/Master/" + newDoc), true);
+		return "redirect:documentos";
+	}
+	
+	public static void copy(File origem, File destino, boolean overwrite) throws IOException {
+
+        if (destino.exists() && !overwrite) {
+            return;
+        }
+
+        FileInputStream source = new FileInputStream(origem);
+        FileOutputStream destination = new FileOutputStream(destino);
+
+        FileChannel sourceFileChannel = source.getChannel();
+        FileChannel destinationFileChannel = destination.getChannel();
+
+        long size = sourceFileChannel.size();
+        sourceFileChannel.transferTo(0, size, destinationFileChannel);
+
+    }
+
+
+    public static void copyAll(File origem, File destino, String extensao, boolean overwrite) throws IOException, UnsupportedOperationException {
+        if (!destino.exists()) {
+            destino.mkdir();
+        }
+        if (!origem.isDirectory()) {
+            throw new UnsupportedOperationException("Origem deve ser um diretório");
+        }
+        if (!destino.isDirectory()) {
+            throw new UnsupportedOperationException("Destino deve ser um diretório");
+        }
+        File[] files = origem.listFiles();
+        for (int i = 0; i < files.length; ++i) {
+            if (files[i].isDirectory()) {
+                copyAll(files[i], new File(destino + "\\" + files[i].getName()), overwrite);
+            } else {
+                if (files[i].getName().endsWith(extensao)) {
+                    copy(files[i], new File(destino + "\\" + files[i].getName()), overwrite);
+                }
+            }
+        }
+    }
+
+
+    public static void copyAll(File origem, File destino, boolean overwrite) throws IOException, UnsupportedOperationException {
+        if (!destino.exists()) {
+            destino.mkdir();
+        }
+        if (!origem.isDirectory()) {
+            throw new UnsupportedOperationException("Origem deve ser um diretório");
+        }
+        if (!destino.isDirectory()) {
+            throw new UnsupportedOperationException("Destino deve ser um diretório");
+        }
+        File[] files = origem.listFiles();
+        for (int i = 0; i < files.length; ++i) {
+            if (files[i].isDirectory()) {
+                copyAll(files[i], new File(destino + "\\" + files[i].getName()), overwrite);
+            } else {
+                copy(files[i], new File(destino + "\\" + files[i].getName()), overwrite);
+            }
+        }
+    }
 
 }
