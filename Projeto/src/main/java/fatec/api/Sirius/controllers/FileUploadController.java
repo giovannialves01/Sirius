@@ -53,7 +53,7 @@ public class FileUploadController {
 	BlockRepository blo;
 
 	@Autowired
-	DocumentRepository doc;
+	DocumentRepository dr;
 	
 	@Autowired
 	CodeRepository cr;
@@ -64,6 +64,7 @@ public class FileUploadController {
 
 	@GetMapping("/CompactFile")
 	public String compact(@RequestParam("source") String source, @RequestParam("newDoc") String newDoc) throws ZipException, IOException {
+		copyCodelistFromDB(source, newDoc);
 		source = uploadDirectory + source;
 		ZipUtils appZip = new ZipUtils(source);
 		appZip.generateFileList(new File(source));
@@ -110,9 +111,9 @@ public class FileUploadController {
 								
 			remark.setName("");
 
-			List<Document> l = doc.findDocEquals(nameDoc(file.getOriginalFilename()));
+			List<Document> l = dr.findDocEquals(nameDoc(file.getOriginalFilename()));
 
-			if (check(doc.findDocEquals(nameDoc(file.getOriginalFilename())).isEmpty(),
+			if (check(dr.findDocEquals(nameDoc(file.getOriginalFilename())).isEmpty(),
 					blo.findEquals(nameBlock(file.getOriginalFilename())).isEmpty(),
 					sub.findEquals(nameSubs(file.getOriginalFilename())).isEmpty(),
 					sr.findEquals(nameSection(file.getOriginalFilename())).isEmpty(),
@@ -392,5 +393,52 @@ public class FileUploadController {
 		       }
 		     }
 		   }
+	
+public void copyCodelistFromDB(String nameDoc, String nameNewDoc) {
+		
+		List<Document> document = dr.findDocEquals(nameDoc);
+		for(int i = 0 ; i < document.size(); i++){
+				
+				int doc = document.get(i).getId();
+				Section sec = sr.findSectionByDocId(doc);
+				Subsection subs = sub.findSubsectionBySectionId(sec.getId());
+				Block block = blo.findBlockBySubsectionId(subs.getId());
+				Code code = cr.findCodeByBlockId(block.getId());
+				Remark remark = remarkRepository.findRemarkByCodeId(code.getId());
+				
+				
+				Remark newCodelist = new Remark();
+				newCodelist.setCode(new Code());
+				newCodelist.getCode().setBlock(new Block());
+				newCodelist.getCode().getBlock().setSubsection(new Subsection());
+				newCodelist.getCode().getBlock().getSubsection().setSection(new Section());
+				newCodelist.getCode().getBlock().getSubsection().getSection().setDocument(new Document());
+				
+				newCodelist.getCode().getBlock().getSubsection().getSection().getDocument().setName(nameNewDoc);
+				newCodelist.getCode().getBlock().getSubsection().getSection()
+					.setDocument(newCodelist.getCode().getBlock().getSubsection().getSection().getDocument());
+				
+				newCodelist.getCode().getBlock().getSubsection().getSection().setName(sec.getName());
+				newCodelist.getCode().getBlock().getSubsection().setSection(newCodelist.getCode().getBlock()
+						.getSubsection().getSection());
+				
+				newCodelist.getCode().getBlock().getSubsection().setName(subs.getName());
+				newCodelist.getCode().getBlock().setSubsection(newCodelist.getCode().getBlock().getSubsection());
+				
+				newCodelist.getCode().getBlock().setName(block.getName());
+				newCodelist.getCode().setBlock(newCodelist.getCode().getBlock());
+				
+				newCodelist.getCode().setName(code.getName());	
+				newCodelist.setCode(newCodelist.getCode());
+																
+				newCodelist.setName(remark.getName());
+				
+				System.out.println(i);
+				remarkRepository.save(newCodelist);
+				
+				
+			}	
+     
+	}
 
 }

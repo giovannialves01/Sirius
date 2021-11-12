@@ -12,8 +12,8 @@ import fatec.api.Sirius.model.Code;
 public interface CodeRepository extends JpaRepository<Code, String> {
 	
 	
-	@Query(value = "SELECT c FROM Code c WHERE block_id = :bloId")
-	Code findBlockBySubsectionId(@Param("bloId")int bloId);
+	@Query(value = "SELECT c FROM Code c WHERE blo_id = :bloId")
+	Code findCodeByBlockId(@Param("bloId")int bloId);
 	
 	@Query(value = "SELECT c FROM Code c WHERE cod_name = :name")
 	List<Code> findEquals(@Param("name")String name);
