@@ -1,5 +1,6 @@
 package fatec.api.Sirius.controllers;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -10,7 +11,9 @@ import java.nio.channels.FileChannel;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -18,6 +21,11 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipException;
 import java.util.zip.ZipFile;
 
+import org.apache.commons.collections4.IteratorUtils;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -74,7 +82,8 @@ public class FileUploadController {
 	}
 
 	@PostMapping("/UploadFile")
-	public String upload(Model model, @RequestParam("files") MultipartFile[] files) {
+	public String upload(Model model, @RequestParam("files") MultipartFile[] files, MultipartFile excel) {
+		
 		StringBuilder fileNames = new StringBuilder();
 
 		String concluido = null;
@@ -116,10 +125,54 @@ public class FileUploadController {
 			if (check(dr.findDocEquals(nameDoc(file.getOriginalFilename())).isEmpty(),
 					blo.findEquals(nameBlock(file.getOriginalFilename())).isEmpty(),
 					sub.findEquals(nameSubs(file.getOriginalFilename())).isEmpty(),
-					sr.findEquals(nameSection(file.getOriginalFilename())).isEmpty(),
-					cr.findEquals(nameSection(file.getOriginalFilename())).isEmpty()))
-					 {
+					sr.findEquals(nameSection(file.getOriginalFilename())).isEmpty(),				
+					cr.findEquals(nameSection(file.getOriginalFilename())).isEmpty())){
+				
+				
+				if(excel.isEmpty()) {
+					System.out.println("nao tem excel");
+				}
+				else {
+					byte[] bytes;
+					
+						try {
+							bytes = excel.getBytes();
+							BufferedOutputStream stream=new BufferedOutputStream(new FileOutputStream(new File ("../codelist.xlsx")));
+				            stream.write(bytes);
+				            stream.close();
+				           			          
+				            
+				            XSSFWorkbook workbook = new XSSFWorkbook(new FileInputStream("../codelist.xlsx"));
+				            XSSFSheet sheet = workbook.getSheetAt(0);
+					            
+					        int linhas = sheet.getLastRowNum();
+					        List<Row> row = new ArrayList<>(); 
+					        for (int i = 1; i < sheet.getLastRowNum()+1; i++) {
+					        	
+					        	//System.out.println(normalizarCelula(sheet.getRow(i).getCell(2).getRawValue()) + "  " + nameBlock(file.getOriginalFilename()));
+					        	if(normalizarCelula(sheet.getRow(i).getCell(0).toString()).equals(nameSection(file.getOriginalFilename()))) {
+					        		if((sheet.getRow(i).getCell(1) == null && nameSubs(file.getOriginalFilename()).equals("")) || (normalizarCelula(sheet.getRow(i).getCell(2).toString()).equals(nameSubs(file.getOriginalFilename())))) {					        
+					        			if(normalizarCelula(sheet.getRow(i).getCell(2).toString()).equals(nameBlock(file.getOriginalFilename()))) {
+					        				if(normalizarCelula(sheet.getRow(i).getCell(3).toString()).equals(nameCode(file.getOriginalFilename()))) {
+					        					if(sheet.getRow(i).getCell(4) != null) {
+					        						remark.setName(normalizarCelula(sheet.getRow(i).getCell(4).toString()));
+					        					}        					
+					        				}
+					        			}
+					        		}
+					        	}			       
+					        }
+					    
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}			
+				}
+				
 				remarkRepository.save(remark);
+				
+				
+
 			}
 
 			Boolean aprovarsec = false;
@@ -127,80 +180,54 @@ public class FileUploadController {
 			Boolean aprovarbloco = false;
 			Boolean aprovarnome = false;
 			// INICIO DA ANALISE
-			System.out.println("ANALISE DO DOCUMENTO");
-			System.out.println("--------------------------------------------");
 			// VALIDAR NOME
 			String nomedopdf = nameDoc(file.getOriginalFilename());
-			System.out.println("Nome do Documento: " + nomedopdf);
 			if (nomedopdf.length() != 8) {
-				System.out.println("=>ERRO! Tamanho do Documento não é 8: " + nomedopdf.length());
 			} else {
 
 				if (nomedopdf.substring(0, 3).matches(".*[^A-z].")) {
-					System.out
-							.println("=>ERRO! 3 Primeiros caracteres não são só letras: " + nomedopdf.substring(0, 3));
 				} else {
 					int poshifen = nomedopdf.indexOf("-");
-					System.out.println("Posição do hifen:" + poshifen);
 					if (poshifen == 3) {
 						String ultnum = nomedopdf.substring(4, 8);
 						try {
 							Double.parseDouble(ultnum);
-							System.out.println("=>OK! 3 Letras + Hífen + 4 Números no fim: " + nomedopdf);
 							aprovarnome = true;
 						} catch (NumberFormatException e) {
-							System.out.println("=>ERRO! 4 Ultimos caracteres não são só numeros: " + ultnum);
 						}
 					} else {
-						System.out.println("=>ERRO! Hífen na posição errada ou não encontrado: " + poshifen);
 					}
 
 				}
 
 			}
-			System.out.println("--------------------------------------------");
 			// VALIDAR SECTION
 
 			// sr.findEquals(nameSection(file.getOriginalFilename()))
 			String nomesec = nameSection(file.getOriginalFilename());
 			if (nomesec.equals(null)) {
-				System.out.println("=>ERRO! Seção não pode ser vazia");
 			} else {
-				System.out.println("=>OK! Seção não esta vazia");
 				aprovarsec = true;
 			}
-			System.out.println("Seção: " + nameSection(file.getOriginalFilename()));
-			System.out.println("--------------------------------------------");
 
 			// VALIDAR SUBSECTION
 			String nomedasubsection = nameSubs(file.getOriginalFilename());
-			System.out.println("Sub-Seção: " + nomedasubsection);
 			if (nomedasubsection.length() > 0) {
 				try {
 					Double.parseDouble(nomedasubsection);
-					System.out.println("=>OK! Subseção consiste apenas de numeros: " + nomedasubsection);
 					aprovarsubs = true;
 				} catch (NumberFormatException e) {
-					System.out.println("=>ERRO! Subseção não consiste apenas de numeros: " + nomedasubsection);
 				}
 			} else {
-				System.out.println("=>OK! Subseção pode ser vazia");
-				System.out.println(nomedasubsection.length());
 				aprovarsubs = true;
-			}
-			System.out.println("--------------------------------------------");
+			}			
 			// VALIDAR BLOCO
 			String nomedoblock = nameBlock(file.getOriginalFilename());
-			System.out.println("Bloco: " + nomedoblock);
 			try {
 				Double.parseDouble(nomedoblock);
-				System.out.println("=>OK! Bloco consiste apenas de números: " + nomedoblock);
 				aprovarbloco = true;
 			} catch (NumberFormatException e) {
-				System.out.println("=>ERRO! Bloco não consiste apenas de numeros: " + nomedoblock);
 			}
-			System.out.println("--------------------------------------------");
-			System.out.println("Aprovado: " + aprovarnome + "/" + aprovarsec + "/" + aprovarsubs + "/" + aprovarbloco);
 			// FIM DA ANALISE
 
 			Path fileNameAndPath = Paths.get(uploadDirectory, file.getOriginalFilename());
@@ -211,17 +238,14 @@ public class FileUploadController {
 					uploadDirectory = "../Root/Master/";
 					concluido = "ok";
 					model.addAttribute("concluido", "ok");
-					System.out.println("concluido=" + concluido);
 				} else {
 					concluido = "error";
 					model.addAttribute("concluido", "error");
-					System.out.println("concluido=" + concluido);
 				}
 			} catch (IOException e) {
 				e.printStackTrace();
 				concluido = "error";
 				model.addAttribute("concluido", "error");
-				System.out.println("concluido=" + concluido);
 
 			}
 		}
@@ -329,10 +353,11 @@ public class FileUploadController {
 	}
 
 	public boolean check(boolean doc, boolean sec, boolean subs, boolean block, boolean code) {
-		System.out.println(doc + " " + sec + " " + subs + " " + block + " " + code);
-		if (doc == true || sec == true || subs == true || block == true || code == true) {
+		//System.out.println(doc + " " + sec + " " + subs + " " + block + " " + code);
+		if (doc == true || sec == true || subs == true || block == true || code == true) {			
 			return true;
 		}
+		System.out.println("DEU FALSE");
 		return false;
 	}
 	
@@ -509,4 +534,43 @@ public class FileUploadController {
         }
     }
 
+    public String normalizarCelula(String celula){  
+    	String listString[] = celula.split("\\.");
+    	if(listString.length == 2) {
+    		if(listString[0].equals("0")) {
+    			return "00";
+    		}
+    		if(listString[0].equals("1")) {
+    			return "01";
+    		}
+    		if(listString[0].equals("2")) {
+    			return "02";
+    		}
+    		if(listString[0].equals("3")) {
+    			return "03";
+    		}
+    		if(listString[0].equals("4")) {
+    			return "04";
+    		}
+    		if(listString[0].equals("5")) {
+    			return "06";
+    		}
+    		if(listString[0].equals("6")) {
+    			return "06";
+    		}
+    		if(listString[0].equals("7")) {
+    			return "07";
+    		}
+    		if(listString[0].equals("8")) {
+    			return "08";
+    		}
+    		if(listString[0].equals("9")) {
+    			return "09";
+    		}
+    		return listString[0];   	
+    	}else {
+    		return celula;
+    	}
+    	
+    }
 }

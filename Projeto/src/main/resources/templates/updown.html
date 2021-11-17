@@ -58,8 +58,9 @@
 		<form th:action="@{/UploadFile}" method="POST"
 			enctype="multipart/form-data" id="uploadfor">
 
-			<input type="file" name="files" multiple required /><br /> <br />
-
+			<input type="file" name="files" multiple required />
+			<input type="file" name="excel"/>excel<br /> <br />
+			
 			<button type="submit" class="btn btn-info" value="Subir Arquivo"
 				id="submitbutton">Subir Arquivo</button>
 			<br>
