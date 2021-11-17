@@ -12,11 +12,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.servlet.ModelAndView;
 
 import fatec.api.Sirius.model.Block;
+import fatec.api.Sirius.model.Code;
 import fatec.api.Sirius.model.Document;
 import fatec.api.Sirius.model.Remark;
 import fatec.api.Sirius.model.Section;
 import fatec.api.Sirius.model.Subsection;
 import fatec.api.Sirius.repository.BlockRepository;
+import fatec.api.Sirius.repository.CodeRepository;
 import fatec.api.Sirius.repository.DocumentRepository;
 import fatec.api.Sirius.repository.RemarkRepository;
 import fatec.api.Sirius.repository.SectionRepository;
@@ -42,6 +44,9 @@ public class CodelistController {
 	
 	@Autowired
 	BlockRepository blo;
+	
+	@Autowired
+	CodeRepository cr;
 	
 	@GetMapping("/codelist/{nomeDocumento}")
 	public ModelAndView codelist(@PathVariable String nomeDocumento) {
@@ -71,6 +76,7 @@ public class CodelistController {
 		Section sec = sr.findSectionByDocId(doc.getId());
 		Subsection subs = sub.findSubsectionBySectionId(sec.getId());
 		Block block = blo.findBlockBySubsectionId(subs.getId());
+		Code code = cr.findCodeByBlockId(block.getId());
 		
 		System.out.println(doc.getName());
 		System.out.println(sec.getName());
@@ -78,9 +84,9 @@ public class CodelistController {
 		System.out.println(block.getName());
 		
 		if(subs.getName().equals("-")) {
-		deleteFiles("../Root/Master/" + "/" + doc.getName() + "/" + sec.getName() + "/" + block.getName());
+		deleteFiles("../Root/Master/" + doc.getName() + "/" + sec.getName() + "/" + block.getName() + "/" + doc.getName()+ "-" + sec.getName() + "-" + block.getName() + "c" + code.getName() + ".pdf") ;
 		} else {
-		deleteFiles("../Root/Master/" + "/" + doc.getName() + "/" + sec.getName() + "/" + subs.getName() + "/" + block.getName());
+		deleteFiles("../Root/Master/" + doc.getName() + "/" + sec.getName() + "/" + subs.getName() + "/" + block.getName() + "/" + doc.getName() + "-" + sec.getName() + "-" + subs.getName() + "-" + block.getName() + "c" + code.getName() + ".pdf");
 		}
 		rr.deleteLine(Integer.parseInt(idDoc));
 		
@@ -90,15 +96,7 @@ public class CodelistController {
 	}	
 	
 	public void deleteFiles(String path) {
-		
 		File file = toFile(path);
-		System.out.println(path);
-		
-		String[]entries = file.list();
-		for(String s: entries){
-		    File currentFile = new File(file.getPath(),s);
-		    currentFile.delete();
-		}
 		file.delete();
 	}
 	
