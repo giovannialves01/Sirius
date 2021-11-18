@@ -84,9 +84,9 @@ public class CodelistController {
 		System.out.println(block.getName());
 		
 		if(subs.getName().equals("-")) {
-		deleteFiles("../Root/Master/" + doc.getName() + "/" + sec.getName() + "/" + block.getName() + "/" + doc.getName()+ "-" + sec.getName() + "-" + block.getName() + "c" + code.getName() + ".pdf") ;
+		deleteFiles("../Root/Master/" + doc.getName() + "/" + sec.getName() + "/" + block.getName() + "/" + doc.getName()+ "-" + sec.getName() + "-" + block.getName() + "c" + code.getName() + ".docx") ;
 		} else {
-		deleteFiles("../Root/Master/" + doc.getName() + "/" + sec.getName() + "/" + subs.getName() + "/" + block.getName() + "/" + doc.getName() + "-" + sec.getName() + "-" + subs.getName() + "-" + block.getName() + "c" + code.getName() + ".pdf");
+		deleteFiles("../Root/Master/" + doc.getName() + "/" + sec.getName() + "/" + subs.getName() + "/" + block.getName() + "/" + doc.getName() + "-" + sec.getName() + "-" + subs.getName() + "-" + block.getName() + "c" + code.getName() + ".docx");
 		}
 		rr.deleteLine(Integer.parseInt(idDoc));
 		

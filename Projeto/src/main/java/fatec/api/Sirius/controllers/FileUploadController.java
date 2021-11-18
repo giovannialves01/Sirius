@@ -357,7 +357,7 @@ public class FileUploadController {
 		if (doc == true || sec == true || subs == true || block == true || code == true) {			
 			return true;
 		}
-		System.out.println("DEU FALSE");
+		/*=-=-=-=-=-=-=-=-=-=-=-=ARRUMAR AQUI=-=-=-=-=-=-=-=-=-=-=-*/
 		return false;
 	}
 	
