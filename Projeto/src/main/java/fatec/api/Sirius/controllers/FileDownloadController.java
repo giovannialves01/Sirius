@@ -70,14 +70,14 @@ public class FileDownloadController {
 				fileName = document + "-" + section + "-" + block;
 				String newRevision = Revision + "Rev" + String.valueOf(stackRevision);
 			 	new File(newRevision).mkdirs();		 	
-			 	FileUploadController.copyAll(new File(Directory + document + "/" + section + "/" + block), new File(newRevision), true);		 	
+			 	FileUploadController.copyAllFiles(new File(Directory + document + "/" + section + "/" + block), new File(newRevision), true);		 	
 			 	FileUploadController fuc = new FileUploadController();
 			 	fuc.compact(document + "/" + section + "/" + block);
 			}else {
 	    		fileName = document + "-" + section + "-" + subsection + "-" + block;
 	    		String newRevision = Revision + "Rev" + String.valueOf(stackRevision);
 			 	new File(newRevision).mkdirs();		 	
-			 	FileUploadController.copyAll(new File(Directory + document + "/" + section + "/" + subsection + "/" + block), new File(newRevision), true);		 	
+			 	FileUploadController.copyAllFiles(new File(Directory + document + "/" + section + "/" + subsection + "/" + block), new File(newRevision), true);		 	
 			 	FileUploadController fuc = new FileUploadController();
 			 	fuc.compact(document + "/" + section + "/" + subsection + "/" + block);
 			}				
@@ -136,7 +136,7 @@ public class FileDownloadController {
 		}
 				
 		}	
-			return "redirect:/updown";
+			return "redirect:updown";
 		}
 	
 	public void downloadFile(Remark file) {
