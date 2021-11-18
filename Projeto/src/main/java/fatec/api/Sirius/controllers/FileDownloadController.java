@@ -35,17 +35,17 @@ public class FileDownloadController {
 		String fileName = null;
 		if(!section.equals("") && remark.equals("") && !code.equals("")) {
 			if(subsection.equals("")){
-				Directory = Directory + document + "/" + section + "/" + block + "/" + document + "-" + section + "-" + block + "c" + code + ".pdf";
-				fileName = document + "-" + section + "-" + block + "c" + code + ".pdf";
+				Directory = Directory + document + "/" + section + "/" + block + "/" + document + "-" + section + "-" + block + "c" + code + ".docx";
+				fileName = document + "-" + section + "-" + block + "c" + code + ".docx";
 	    	}else {
-	    		Directory = Directory + document + "/" + section + "/" + subsection + "/" + block + "/" + document + "-" + section + "-" + subsection + "-" + block + "c" + code + ".pdf";
-	    		fileName = document + "-" + section + "-" + subsection + "-" + block + "c" + code + ".pdf";
+	    		Directory = Directory + document + "/" + section + "/" + subsection + "/" + block + "/" + document + "-" + section + "-" + subsection + "-" + block + "c" + code + ".docx";
+	    		fileName = document + "-" + section + "-" + subsection + "-" + block + "c" + code + ".docx";
 	    	}				
 						
 		 	pathDirectory = toFile(Directory);
 				
 				
-			response.setContentType("application/pdf");
+			response.setContentType("application/docx");
 		    response.addHeader("Content-Disposition", "attachment; filename="+fileName);
 		    try
 		    {
