@@ -456,7 +456,6 @@ public class FileUploadController {
 																
 				newCodelist.setName(remark.getName());
 				
-				System.out.println(i);
 				remarkRepository.save(newCodelist);
 				
 				

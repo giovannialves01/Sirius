@@ -103,9 +103,51 @@ public class FileDownloadController {
 		
 		if(section.equals("") && subsection.equals("") && block.equals("") && !remark.equals("") && code.equals("")) {
 			
-		List<Remark> remarks = rr.findRemCodeEquals(remark);
+		List<Remark> remarks = rr.findAll();
 		
 		for (Remark file : remarks) {
+	
+			if(file.getName().equals("ALL")) {
+				
+				String d = file.getCode().getBlock().getSubsection().getSection().getDocument().getName();
+				String s = file.getCode().getBlock().getSubsection().getSection().getName();			
+				String sub = file.getCode().getBlock().getSubsection().getName();						
+				String b = file.getCode().getBlock().getName();
+				String c = file.getCode().getName();
+				
+				
+				
+				if(sub.equals("")) {					
+					Directory = Directory + d + "/" + s + "/" + b + "/";
+					fileName = d + "-" + s + "-" + b + "c" + c + ".docx";
+					
+			    }else {
+			    	Directory = Directory + d + "/" + s + "/" + sub + "/" + b + "/";
+			    	fileName = d + "-" + s + "-" + sub + "-" + b + "c" + c + ".docx";
+			    }	
+				
+
+			 	if(!new File("../Root/FullDelta/FULL/").exists()) {
+			 		new File("../Root/FullDelta/FULL/").mkdirs();
+			 	}
+			 	FileUploadController.copy(new File(Directory + fileName), new File( "../Root/FullDelta/FULL/" + fileName), true);
+			 	Directory = "../Root/Master/";
+			}
+			
+			if(file.getName().contains(",")) {				
+				System.out.println(file.getName());
+			}
+			
+			
+			
+		}
+			
+			
+			
+		}
+		
+		
+		/*for (Remark file : remarks) {
 			
 			String d = file.getCode().getBlock().getSubsection().getSection().getDocument().getName();
 			String s = file.getCode().getBlock().getSubsection().getSection().getName();			
@@ -130,14 +172,14 @@ public class FileDownloadController {
 	    }
 
 	    Directory = "../Root/Master/";
-	    stackRevision = stackRevision + 1;
+	    stackRevision = stackRevision + 1;*/
 	    
-		System.out.println("Começo da funçao de download por traço");
+		
 		
 		
 		}
 		
-	}
+	
 	
 	public String nameBuilder(String achadoDoc, String achadoSecao, String achadoSubs, String achadoBlock) {
 		String caminho = null;
