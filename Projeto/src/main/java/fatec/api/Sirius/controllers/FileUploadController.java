@@ -72,13 +72,11 @@ public class FileUploadController {
 
 	RemarkControllers rc = new RemarkControllers();
 
-	@GetMapping("/CompactFile")
-	public String compact(@RequestParam("source") String source) throws ZipException, IOException {
+	public void compact(String source) throws ZipException, IOException {
 		source = uploadDirectory + source;
 		ZipUtils appZip = new ZipUtils(source);
 		appZip.generateFileList(new File(source));
 		appZip.zipIt("..\\Root\\Master\\folder.zip");
-		return "documents";
 	}
 
 	@PostMapping("/UploadFile")

@@ -26,6 +26,8 @@ public class FileDownloadController {
 	
 	public static String zipDirectory = "../Root/Master/";
 	public static String Directory = "../Root/Master/";
+	public static String Revision = "../Root/Rev/";
+	public static int stackRevision = 1;
 	String compactName = "compact.pdf";
 	
 	@GetMapping("/DownloadFile")
@@ -43,7 +45,10 @@ public class FileDownloadController {
 	    	}				
 						
 		 	pathDirectory = toFile(Directory);
-				
+			
+		 	String newRevision = Revision + "Rev" + String.valueOf(stackRevision);
+		 	new File(newRevision).mkdirs();		 	
+		 	FileUploadController.copy(pathDirectory, new File(newRevision + "/" + fileName), true);
 				
 			response.setContentType("application/docx");
 		    response.addHeader("Content-Disposition", "attachment; filename="+fileName);
@@ -56,7 +61,43 @@ public class FileDownloadController {
 		        ex.printStackTrace();
 		    }
 
-		    Directory = "../Root/Master/";	
+		    Directory = "../Root/Master/";
+		    stackRevision = stackRevision + 1;
+	}
+		
+		if(!section.equals("") && remark.equals("") && code.equals("")) {
+			if(subsection.equals("")){
+				fileName = document + "-" + section + "-" + block;
+				String newRevision = Revision + "Rev" + String.valueOf(stackRevision);
+			 	new File(newRevision).mkdirs();		 	
+			 	FileUploadController.copyAll(new File(Directory + document + "/" + section + "/" + block), new File(newRevision), true);		 	
+			 	FileUploadController fuc = new FileUploadController();
+			 	fuc.compact(document + "/" + section + "/" + block);
+			}else {
+	    		fileName = document + "-" + section + "-" + subsection + "-" + block;
+	    		String newRevision = Revision + "Rev" + String.valueOf(stackRevision);
+			 	new File(newRevision).mkdirs();		 	
+			 	FileUploadController.copyAll(new File(Directory + document + "/" + section + "/" + subsection + "/" + block), new File(newRevision), true);		 	
+			 	FileUploadController fuc = new FileUploadController();
+			 	fuc.compact(document + "/" + section + "/" + subsection + "/" + block);
+			}				
+						
+		 	pathDirectory = toFile("..\\Root\\Master\\folder.zip");
+			 	
+				
+			response.setContentType("application/zip");
+		    response.addHeader("Content-Disposition", "attachment; filename="+fileName+".zip");
+		    try
+		    {
+		        Files.copy(pathDirectory, response.getOutputStream());
+		        response.getOutputStream().flush();
+		    } 
+		    catch (IOException ex) {
+		        ex.printStackTrace();
+		    }
+
+		    Directory = "../Root/Master/";
+		    stackRevision = stackRevision + 1;
 	}
 		
 		
@@ -88,7 +129,8 @@ public class FileDownloadController {
 	        ex.printStackTrace();
 	    }
 
-	    Directory = "../Root/Master/";	
+	    Directory = "../Root/Master/";
+	    stackRevision = stackRevision + 1;
 	    
 		System.out.println("Começo da funçao de download por traço");
 		
