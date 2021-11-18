@@ -147,15 +147,15 @@ public class FileUploadController {
 					            
 					        int linhas = sheet.getLastRowNum();
 					        List<Row> row = new ArrayList<>(); 
-					        for (int i = 1; i < sheet.getLastRowNum()+1; i++) {
+					        for (int i = 2; i < sheet.getLastRowNum()+1; i++) {
 					        	
 					        	//System.out.println(normalizarCelula(sheet.getRow(i).getCell(2).getRawValue()) + "  " + nameBlock(file.getOriginalFilename()));
-					        	if(normalizarCelula(sheet.getRow(i).getCell(0).toString()).equals(nameSection(file.getOriginalFilename()))) {
-					        		if((sheet.getRow(i).getCell(1) == null && nameSubs(file.getOriginalFilename()).equals("")) || (normalizarCelula(sheet.getRow(i).getCell(2).toString()).equals(nameSubs(file.getOriginalFilename())))) {					        
-					        			if(normalizarCelula(sheet.getRow(i).getCell(2).toString()).equals(nameBlock(file.getOriginalFilename()))) {
-					        				if(normalizarCelula(sheet.getRow(i).getCell(3).toString()).equals(nameCode(file.getOriginalFilename()))) {
-					        					if(sheet.getRow(i).getCell(4) != null) {
-					        						remark.setName(normalizarCelula(sheet.getRow(i).getCell(4).toString()));
+					        	if(normalizarCelula(sheet.getRow(i).getCell(1).toString()).equals(nameSection(file.getOriginalFilename()))) {
+					        		if((sheet.getRow(i).getCell(2) == null && nameSubs(file.getOriginalFilename()).equals("")) || (normalizarCelula(sheet.getRow(i).getCell(2).toString()).equals(nameSubs(file.getOriginalFilename())))) {					        
+					        			if(normalizarCelula(sheet.getRow(i).getCell(3).toString()).equals(nameBlock(file.getOriginalFilename()))) {
+					        				if(normalizarCelula(sheet.getRow(i).getCell(5).toString()).equals(nameCode(file.getOriginalFilename()))) {
+					        					if(sheet.getRow(i).getCell(6) != null) {
+					        						remark.setName(normalizarCelula(sheet.getRow(i).getCell(6).toString()));
 					        					}        					
 					        				}
 					        			}
