@@ -31,7 +31,7 @@ public class FileDownloadController {
 	String compactName = "compact.pdf";
 	
 	@GetMapping("/DownloadFile")
-	public void DownloadFile(String document, String section, String subsection, String block, String code, String remark,HttpServletRequest request, HttpServletResponse response ) throws Exception {		
+	public String DownloadFile(String document, String section, String subsection, String block, String code, String remark,HttpServletRequest request, HttpServletResponse response ) throws Exception {		
 		
 		File pathDirectory = null;
 		String fileName = null;
@@ -106,78 +106,74 @@ public class FileDownloadController {
 		List<Remark> remarks = rr.findAll();
 		
 		for (Remark file : remarks) {
-	
+			//Se for ALL sempre faz download
 			if(file.getName().equals("ALL")) {
-				
-				String d = file.getCode().getBlock().getSubsection().getSection().getDocument().getName();
-				String s = file.getCode().getBlock().getSubsection().getSection().getName();			
-				String sub = file.getCode().getBlock().getSubsection().getName();						
-				String b = file.getCode().getBlock().getName();
-				String c = file.getCode().getName();
-				
-				
-				
-				if(sub.equals("")) {					
-					Directory = Directory + d + "/" + s + "/" + b + "/";
-					fileName = d + "-" + s + "-" + b + "c" + c + ".docx";
-					
-			    }else {
-			    	Directory = Directory + d + "/" + s + "/" + sub + "/" + b + "/";
-			    	fileName = d + "-" + s + "-" + sub + "-" + b + "c" + c + ".docx";
-			    }	
-				
-
-			 	if(!new File("../Root/FullDelta/FULL/").exists()) {
-			 		new File("../Root/FullDelta/FULL/").mkdirs();
-			 	}
-			 	FileUploadController.copy(new File(Directory + fileName), new File( "../Root/FullDelta/FULL/" + fileName), true);
-			 	Directory = "../Root/Master/";
+				downloadFile(file);			
 			}
-			
-			if(file.getName().contains(",")) {				
-				System.out.println(file.getName());
+			//Se tiver mais de um remark faz uma tratativa para ler todos os remark e faz download
+			if(file.getName().contains(",")) {
+				String[] files = file.getName().split(",");
+				for(String each:files) {
+					if(each.contains(" ")) {
+						if(each.equals(" " + remark)) {
+							downloadFile(file);
+						}					
+					}
+					else {
+						if(each.equals(remark)) {
+							downloadFile(file);
+						}
+					}
+				}
+			}
+			//Se tiver apenas um remark. Verifica se é igual e faz download
+			if(file.getName().equals(remark)) {
+				downloadFile(file);
 			}
 			
 			
 			
 		}
-			
-			
-			
+				
+		}	
+			return "redirect:/updown";
 		}
+	
+	public void downloadFile(Remark file) {
+		
+		String fileName = null;
+		
+		String d = file.getCode().getBlock().getSubsection().getSection().getDocument().getName();
+		String s = file.getCode().getBlock().getSubsection().getSection().getName();			
+		String sub = file.getCode().getBlock().getSubsection().getName();						
+		String b = file.getCode().getBlock().getName();
+		String c = file.getCode().getName();
 		
 		
-		/*for (Remark file : remarks) {
-			
-			String d = file.getCode().getBlock().getSubsection().getSection().getDocument().getName();
-			String s = file.getCode().getBlock().getSubsection().getSection().getName();			
-			String sub = file.getCode().getBlock().getSubsection().getName();						
-			String b = file.getCode().getBlock().getName();
-			
-			String path = nameBuilder(d, s, sub, b);
-			
-			pathDirectory = toFile(zipDirectory);
-	    	Directory = Directory + path;    					
-		}
 		
-		response.setContentType("application/zip");
-	    response.addHeader("Content-Disposition", "attachment; filename="+"Pdf Full E Delta");
-	    try
-	    {
-	        Files.copy(pathDirectory, response.getOutputStream());
-	        response.getOutputStream().flush();
-	    } 
-	    catch (IOException ex) {
-	        ex.printStackTrace();
-	    }
+		if(sub.equals("")) {					
+			Directory = Directory + d + "/" + s + "/" + b + "/";
+			fileName = d + "-" + s + "-" + b + "c" + c + ".docx";
+			
+	    }else {
+	    	Directory = Directory + d + "/" + s + "/" + sub + "/" + b + "/";
+	    	fileName = d + "-" + s + "-" + sub + "-" + b + "c" + c + ".docx";
+	    }	
+		
 
-	    Directory = "../Root/Master/";
-	    stackRevision = stackRevision + 1;*/
-	    
-		
-		
-		
+	 	if(!new File("../Root/FullDelta/FULL/").exists()) {
+	 		new File("../Root/FullDelta/FULL/").mkdirs();
+	 	}
+	 	
+	 	try {
+			FileUploadController.copy(new File(Directory + fileName), new File( "../Root/FullDelta/FULL/" + fileName), true);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+	 	
+	 	Directory = "../Root/Master/";
+	}
 		
 	
 	
