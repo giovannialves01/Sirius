@@ -530,6 +530,25 @@ public class FileUploadController {
             }
         }
     }
+    
+    public static void copyAllFiles(File origem, File destino, boolean overwrite) throws IOException, UnsupportedOperationException {
+        if (!destino.exists()) {
+            destino.mkdir();
+        }
+        if (!origem.isDirectory()) {
+            throw new UnsupportedOperationException("Origem deve ser um diretório");
+        }
+        if (!destino.isDirectory()) {
+            throw new UnsupportedOperationException("Destino deve ser um diretório");
+        }
+        File[] files = origem.listFiles();
+        for (int i = 0; i < files.length; ++i) {
+            if (!files[i].isDirectory()) {
+            	System.out.println(files[i]);
+            	copy(files[i], new File(destino + "\\" + files[i].getName()), overwrite);
+            }
+        }
+    }
 
     public String normalizarCelula(String celula){  
     	String listString[] = celula.split("\\.");

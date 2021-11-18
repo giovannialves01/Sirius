@@ -149,12 +149,36 @@ public class FileDownloadController {
 		String b = file.getCode().getBlock().getName();
 		String c = file.getCode().getName();
 		
+		//Lê todos os arquivos que estão na REV
+		if(new File(Revision + "/Rev" + (stackRevision-1)).exists()) {
+			File[] files = new File(Revision + "/Rev" + (stackRevision-1)).listFiles();
+			
+			if(sub.equals("")) {					
+				fileName = d + "-" + s + "-" + b + "c" + c + ".docx";			
+		    }else {
+		    	fileName = d + "-" + s + "-" + sub + "-" + b + "c" + c + ".docx";
+		    }	
+		    
+			//Verifica se algum deles é o mesmo que o arquivo que estou buscando
+			for(File each:files) {
+
+				if(each.getName().equals(fileName)) {
+					try {
+						FileUploadController.copy(new File(Revision + "/Rev" + (stackRevision-1) + "/" + fileName), new File( "../Root/FullDelta/FULL/" + fileName), true);
+						System.out.println("pegou da rev" + each.getName());
+						return;
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+		}
 		
-		
+		//Senão ele pegará da MASTER
 		if(sub.equals("")) {					
 			Directory = Directory + d + "/" + s + "/" + b + "/";
 			fileName = d + "-" + s + "-" + b + "c" + c + ".docx";
-			
 	    }else {
 	    	Directory = Directory + d + "/" + s + "/" + sub + "/" + b + "/";
 	    	fileName = d + "-" + s + "-" + sub + "-" + b + "c" + c + ".docx";
@@ -167,6 +191,7 @@ public class FileDownloadController {
 	 	
 	 	try {
 			FileUploadController.copy(new File(Directory + fileName), new File( "../Root/FullDelta/FULL/" + fileName), true);
+			System.out.println("pegou da master" + fileName);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
