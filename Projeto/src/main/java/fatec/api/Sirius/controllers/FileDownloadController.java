@@ -105,6 +105,27 @@ public class FileDownloadController {
 			
 		List<Remark> remarks = rr.findAll();
 		
+		if(!new File("../Root/FullDelta/DELTA/").exists()) {
+			new File("../Root/FullDelta/DELTA/").mkdirs();
+		}
+		
+		if(new File(Revision + "/Rev" + (stackRevision-1)).exists()) {
+			File[] files = new File(Revision + "/Rev" + (stackRevision-1)).listFiles();
+			
+			for(File each:files) {
+					try {
+						FileUploadController.copy(each, new File( "../Root/FullDelta/DELTA/" + each.getName()), true);					
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				
+			}
+			
+		}
+		
+		
+		
 		for (Remark file : remarks) {
 			//Se for ALL sempre faz download
 			if(file.getName().equals("ALL")) {
