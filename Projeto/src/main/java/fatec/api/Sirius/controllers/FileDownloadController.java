@@ -1,7 +1,11 @@
 package fatec.api.Sirius.controllers;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,6 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import com.documents4j.api.DocumentType;
+import com.documents4j.api.IConverter;
+import com.documents4j.job.LocalConverter;
 import com.google.common.io.Files;
 
 import fatec.api.Sirius.model.Remark;
@@ -18,18 +25,18 @@ import fatec.api.Sirius.repository.RemarkRepository;
 
 @Controller
 public class FileDownloadController {
-	
+
 	@Autowired
 	RemarkRepository rr;
-	
+
 	BlockControllers bc = new BlockControllers();
-	
+
 	public static String zipDirectory = "../Root/Master/";
 	public static String Directory = "../Root/Master/";
 	public static String Revision = "../Root/Rev/";
 	public static int stackRevision = 1;
 	String compactName = "compact.pdf";
-	
+
 	@GetMapping("/DownloadFile")
 	public String DownloadFile(String document, String section, String subsection, String block, String code, String remark,HttpServletRequest request, HttpServletResponse response ) throws Exception {		
 		
@@ -144,8 +151,11 @@ public class FileDownloadController {
 						if(each.equals(remark)) {
 							downloadFile(file);
 						}
+						
 					}
+					
 				}
+				
 			}
 			//Se tiver apenas um remark. Verifica se é igual e faz download
 			if(file.getName().equals(remark)) {
@@ -157,35 +167,58 @@ public class FileDownloadController {
 		}
 				
 		}	
+		String[] lista = new File("../Root/FullDelta/FULL").list();
+		for(int i=0;i<lista.length;i++) {
+			System.out.println("Lista: "+lista[i]);
+	        try  {
+	    		String nomedoc=null;
+	    		nomedoc=lista[i];
+	            InputStream docxInputStream = new FileInputStream("../Root/FullDelta/FULL/"+nomedoc);
+	            OutputStream outputStream = new FileOutputStream("../Root/FullDelta/FULL/"+nomedoc.substring(0, nomedoc.length() - 5)+".pdf");
+	            IConverter converter = LocalConverter.builder().build();
+	            converter.convert(docxInputStream).as(DocumentType.DOCX).to(outputStream).as(DocumentType.PDF).execute();
+	            outputStream.close();
+	            System.out.println("success");
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	            System.out.println("<<<<<<<<<<DEU RUIM>>>>>>>>>>");
+	        }
+		}
+
+				/*For(String each:lista){
+				//codigo da minha poc
+				}*/
+		
 			return "redirect:updown";
 		}
-	
+
 	public void downloadFile(Remark file) {
-		
+
 		String fileName = null;
-		
+
 		String d = file.getCode().getBlock().getSubsection().getSection().getDocument().getName();
-		String s = file.getCode().getBlock().getSubsection().getSection().getName();			
-		String sub = file.getCode().getBlock().getSubsection().getName();						
+		String s = file.getCode().getBlock().getSubsection().getSection().getName();
+		String sub = file.getCode().getBlock().getSubsection().getName();
 		String b = file.getCode().getBlock().getName();
 		String c = file.getCode().getName();
-		
-		//Lê todos os arquivos que estão na REV
-		if(new File(Revision + "/Rev" + (stackRevision-1)).exists()) {
-			File[] files = new File(Revision + "/Rev" + (stackRevision-1)).listFiles();
-			
-			if(sub.equals("")) {					
-				fileName = d + "-" + s + "-" + b + "c" + c + ".docx";			
-		    }else {
-		    	fileName = d + "-" + s + "-" + sub + "-" + b + "c" + c + ".docx";
-		    }	
-		    
-			//Verifica se algum deles é o mesmo que o arquivo que estou buscando
-			for(File each:files) {
 
-				if(each.getName().equals(fileName)) {
+		// Lê todos os arquivos que estão na REV
+		if (new File(Revision + "/Rev" + (stackRevision - 1)).exists()) {
+			File[] files = new File(Revision + "/Rev" + (stackRevision - 1)).listFiles();
+
+			if (sub.equals("")) {
+				fileName = d + "-" + s + "-" + b + "c" + c + ".docx";
+			} else {
+				fileName = d + "-" + s + "-" + sub + "-" + b + "c" + c + ".docx";
+			}
+
+			// Verifica se algum deles é o mesmo que o arquivo que estou buscando
+			for (File each : files) {
+
+				if (each.getName().equals(fileName)) {
 					try {
-						FileUploadController.copy(new File(Revision + "/Rev" + (stackRevision-1) + "/" + fileName), new File( "../Root/FullDelta/FULL/" + fileName), true);
+						FileUploadController.copy(new File(Revision + "/Rev" + (stackRevision - 1) + "/" + fileName),
+								new File("../Root/FullDelta/FULL/" + fileName), true);
 						System.out.println("pegou da rev" + each.getName());
 						return;
 					} catch (IOException e) {
@@ -195,34 +228,32 @@ public class FileDownloadController {
 				}
 			}
 		}
-		
-		//Senão ele pegará da MASTER
-		if(sub.equals("")) {					
+
+		// Senão ele pegará da MASTER
+		if (sub.equals("")) {
 			Directory = Directory + d + "/" + s + "/" + b + "/";
 			fileName = d + "-" + s + "-" + b + "c" + c + ".docx";
-	    }else {
-	    	Directory = Directory + d + "/" + s + "/" + sub + "/" + b + "/";
-	    	fileName = d + "-" + s + "-" + sub + "-" + b + "c" + c + ".docx";
-	    }	
-		
+		} else {
+			Directory = Directory + d + "/" + s + "/" + sub + "/" + b + "/";
+			fileName = d + "-" + s + "-" + sub + "-" + b + "c" + c + ".docx";
+		}
 
-	 	if(!new File("../Root/FullDelta/FULL/").exists()) {
-	 		new File("../Root/FullDelta/FULL/").mkdirs();
-	 	}
-	 	
-	 	try {
-			FileUploadController.copy(new File(Directory + fileName), new File( "../Root/FullDelta/FULL/" + fileName), true);
+		if (!new File("../Root/FullDelta/FULL/").exists()) {
+			new File("../Root/FullDelta/FULL/").mkdirs();
+		}
+
+		try {
+			FileUploadController.copy(new File(Directory + fileName), new File("../Root/FullDelta/FULL/" + fileName),
+					true);
 			System.out.println("pegou da master" + fileName);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	 	
-	 	Directory = "../Root/Master/";
+
+		Directory = "../Root/Master/";
 	}
-		
-	
-	
+
 	public String nameBuilder(String achadoDoc, String achadoSecao, String achadoSubs, String achadoBlock) {
 		String caminho = null;
 		if (achadoSubs.equals("")) {
@@ -233,7 +264,7 @@ public class FileDownloadController {
 
 		return caminho;
 	}
-	
+
 	public File toFile(String string) {
 		File nameFile = new File(string);
 		return nameFile;
