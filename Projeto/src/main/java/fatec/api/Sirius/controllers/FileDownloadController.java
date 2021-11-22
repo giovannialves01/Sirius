@@ -184,10 +184,6 @@ public class FileDownloadController {
 	            System.out.println("<<<<<<<<<<DEU RUIM>>>>>>>>>>");
 	        }
 		}
-
-				/*For(String each:lista){
-				//codigo da minha poc
-				}*/
 		
 			return "redirect:updown";
 		}
