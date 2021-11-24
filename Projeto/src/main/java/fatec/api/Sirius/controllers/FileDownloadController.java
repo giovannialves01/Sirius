@@ -183,6 +183,9 @@ public class FileDownloadController {
 				String nomedoc = null;
 				nomedoc = lista[i];
 				InputStream docxInputStream = new FileInputStream("../Root/FullDelta/FULL/" + nomedoc);
+				if(!new File("../Root/FullDelta/FULL/convPdf/").exists()) {
+					new File("../Root/FullDelta/FULL/convPdf/").mkdirs();
+				}
 				OutputStream outputStream = new FileOutputStream(
 						"../Root/FullDelta/FULL/convPdf/" + nomedoc.substring(0, nomedoc.length() - 5) + ".pdf");
 				IConverter converter = LocalConverter.builder().build();
@@ -195,12 +198,14 @@ public class FileDownloadController {
 
 			} catch (Exception e) {
 				e.printStackTrace();
-				System.out.println("<<<<<<<<<<DEU RUIM>>>>>>>>>>");
 			}
 
 		}
 		System.out.println("saiu do loop");
-		ut.setDestinationFileName("../Root/FullDelta/FULL/convPdf/FULL.pdf");
+		if(!new File("../Root/FullDelta/FULLDELTA/").exists()) {
+			new File("../Root/FullDelta/FULLDELTA/").mkdirs();
+		}
+		ut.setDestinationFileName("../Root/FullDelta/FULLDELTA/FULL.pdf");
 		ut.mergeDocuments();
 		
 		
@@ -213,6 +218,9 @@ public class FileDownloadController {
 				String nomedoc = null;
 				nomedoc = listadelta[i];
 				InputStream docxInputStream = new FileInputStream("../Root/FullDelta/DELTA/" + nomedoc);
+				if(!new File("../Root/FullDelta/DELTA/convPdf/").exists()) {
+					new File("../Root/FullDelta/DELTA/convPdf/").mkdirs();
+				}
 				OutputStream outputStream = new FileOutputStream(
 						"../Root/FullDelta/DELTA/convPdf/" + nomedoc.substring(0, nomedoc.length() - 5) + ".pdf");
 				IConverter converter = LocalConverter.builder().build();
@@ -225,13 +233,34 @@ public class FileDownloadController {
 
 			} catch (Exception e) {
 				e.printStackTrace();
-				System.out.println("<<<<<<<<<<DEU RUIM>>>>>>>>>>");
 			}
 
 		}
 		System.out.println("saiu do loop delta");
-		utdelta.setDestinationFileName("../Root/FullDelta/DELTA/convPdf/DELTA.pdf");
+		if(!new File("../Root/FullDelta/FULLDELTA/").exists()) {
+			new File("../Root/FullDelta/FULLDELTA/").mkdirs();
+		}
+		utdelta.setDestinationFileName("../Root/FullDelta/FULLDELTA/DELTA.pdf");
 		utdelta.mergeDocuments();
+		
+		FileUploadController fuc = new FileUploadController();
+		fuc.compact("../FullDelta/FULLDELTA");
+	
+
+		pathDirectory = toFile("..\\Root\\Master\\folder.zip");
+
+		response.setContentType("application/zip");
+		response.addHeader("Content-Disposition", "attachment; filename=" + document + remark + ".zip");
+			
+		try {
+			Files.copy(pathDirectory, response.getOutputStream());
+			response.getOutputStream().flush();
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
+		
+		Directory = "../Root/Master/";
+		stackRevision = stackRevision + 1;
 		
 		return "redirect:updown";
 	}
