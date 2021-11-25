@@ -224,10 +224,11 @@ public class FileDownloadController {
 		utdelta.setDestinationFileName("../Root/FullDelta/FULLDELTA/DELTA.pdf");
 		utdelta.mergeDocuments();
 		
+		generateLep();
 		FileUploadController fuc = new FileUploadController();
 		fuc.compact("../FullDelta/FULLDELTA");
 		
-		generateLep();
+		
 
 		pathDirectory = toFile("..\\Root\\Master\\folder.zip");
 
@@ -244,9 +245,6 @@ public class FileDownloadController {
 		}
 		Directory = "../Root/Master/";
 		stackRevision = stackRevision + 1;
-		
-		
-		
 		
 		
 		return "redirect:updown";
