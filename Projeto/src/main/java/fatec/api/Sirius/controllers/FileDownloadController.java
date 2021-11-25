@@ -1,27 +1,23 @@
 package fatec.api.Sirius.controllers;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
+import java.util.HashMap;
 import java.util.List;
-import org.apache.pdfbox.multipdf.PDFMergerUtility;
-import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.pdfparser.*;
-import org.apache.pdfbox.pdmodel.*;
-import org.apache.pdfbox.cos.*;
-import org.apache.pdfbox.util.*;
-import org.apache.pdfbox.pdmodel.PDPage;
-import org.apache.pdfbox.pdmodel.PDPageContentStream;
-import org.apache.pdfbox.pdmodel.common.PDRectangle;
-import org.apache.pdfbox.pdmodel.graphics.form.PDFormXObject;
-import java.io.File;
-import java.io.IOException;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.pdfbox.multipdf.PDFMergerUtility;
+import org.apache.pdfbox.pdmodel.PDDocument;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -54,6 +50,7 @@ public class FileDownloadController {
 
 		File pathDirectory = null;
 		String fileName = null;
+		//download de um docx
 		if (!section.equals("") && remark.equals("") && !code.equals("")) {
 			if (subsection.equals("")) {
 				Directory = Directory + document + "/" + section + "/" + block + "/" + document + "-" + section + "-"
@@ -79,11 +76,8 @@ public class FileDownloadController {
 			} catch (IOException ex) {
 				ex.printStackTrace();
 			}
-
-			Directory = "../Root/Master/";
-			stackRevision = stackRevision + 1;
 		}
-
+		//download de uma bloco
 		if (!section.equals("") && remark.equals("") && code.equals("")) {
 			if (subsection.equals("")) {
 				fileName = document + "-" + section + "-" + block;
@@ -114,11 +108,7 @@ public class FileDownloadController {
 			} catch (IOException ex) {
 				ex.printStackTrace();
 			}
-
-			Directory = "../Root/Master/";
-			stackRevision = stackRevision + 1;
 		}
-
 		if (section.equals("") && subsection.equals("") && block.equals("") && !remark.equals("") && code.equals("")) {
 
 			List<Remark> remarks = rr.findAll();
@@ -137,11 +127,8 @@ public class FileDownloadController {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-
 				}
-
 			}
-
 			for (Remark file : remarks) {
 				// Se for ALL sempre faz download
 				if (file.getName().equals("ALL")) {
@@ -160,20 +147,14 @@ public class FileDownloadController {
 							if (each.equals(remark)) {
 								downloadFile(file);
 							}
-
 						}
-
 					}
-
 				}
 				// Se tiver apenas um remark. Verifica se é igual e faz download
 				if (file.getName().equals(remark)) {
 					downloadFile(file);
 				}
-
-			}
-
-		}
+			}	
 		//Junção do full
 		String[] lista = new File("../Root/FullDelta/FULL").list();
 		PDFMergerUtility ut = new PDFMergerUtility();
@@ -245,7 +226,8 @@ public class FileDownloadController {
 		
 		FileUploadController fuc = new FileUploadController();
 		fuc.compact("../FullDelta/FULLDELTA");
-	
+		
+		generateLep();
 
 		pathDirectory = toFile("..\\Root\\Master\\folder.zip");
 
@@ -259,8 +241,13 @@ public class FileDownloadController {
 			ex.printStackTrace();
 		}
 		
+		}
 		Directory = "../Root/Master/";
 		stackRevision = stackRevision + 1;
+		
+		
+		
+		
 		
 		return "redirect:updown";
 	}
@@ -337,9 +324,82 @@ public class FileDownloadController {
 
 		return caminho;
 	}
+	
+	
+	public void generateLep() throws IOException {
+		OutputStream os = new FileOutputStream("../Root/FullDelta/FULLDELTA/Lep.txt");
+		Writer wr = new OutputStreamWriter(os);
+		BufferedWriter br = new BufferedWriter(wr);
+		File listaPathRev = new File("../Root/Rev");
+		Map<String, String> map = new HashMap<String, String>();
+		
+		if(!listaPathRev.exists()) {
+			br.close();
+			return;
+		}
+		File[] listaRev = listaPathRev.listFiles();
+		for(int i = listaRev.length; i != 0; i--) {
+			for(String file : new File("../Root/Rev/Rev" + i).list()) {
+				if(!map.containsKey(file)) {
+				map.put(file, Integer.toString(i));
+				}
+			}
+		}
+		String[] listFull = new File("../Root/FullDelta/FULL").list();
+		for(String each: listFull) {
+			if(!each.equals("convPdf")) {
+				int repete = quantPagPdf(new File("../Root/FullDelta/FULL/convPdf/" + each.substring(0, each.length() - 5) + ".pdf"));
+				int i = 1;
+				while(i <= repete) {
+					if(map.containsKey(each)) {
+						if(haveSubs(each)) {
+							br.write(each + "   Pagina " + i + "   Revisão " + map.get(each));
+							br.newLine();
+						}else {
+						br.write(each + "      Pagina " + i + "   Revisão " + map.get(each));
+						br.newLine();
+						}
+						
+					}else {
+						if(haveSubs(each)) {
+							br.write(each + "   Pagina " + i + "   Revisão Original");
+							br.newLine();
+						} else {
+						br.write(each + "      Pagina " + i + "   Revisão Original");
+						br.newLine();
+						}
+					}
+					i++;
+				}
+				br.write("----------------------------------------------------");
+				br.newLine();
+			}
+		}
+		br.close();
+		//System.out.println(map);
+	}
 
 	public File toFile(String string) {
 		File nameFile = new File(string);
 		return nameFile;
+	}
+	
+	public boolean haveSubs(String name) {
+
+		name = name.replace("-", " ");
+		String[] words = name.split(" ");
+
+		if (words.length == 5) {
+			return true;
+		}
+		return false;
+	}
+	
+	public int quantPagPdf(File path) throws IOException {
+		PDDocument pdfDocument = null;
+		pdfDocument = PDDocument.load(path);
+		int i = pdfDocument.getNumberOfPages();
+		pdfDocument.close();
+		return i;
 	}
 }
