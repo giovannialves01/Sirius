@@ -467,6 +467,7 @@ public class FileUploadController {
 	public String createNewCodelistFromDocument(@RequestParam("source") String source, @RequestParam("newDoc") String newDoc) throws ZipException, IOException {
 		copyCodelistFromDB(source, newDoc);
 		copyAll(new File("../Root/Master/" + source), new File("../Root/Master/" + newDoc), true);
+		changeName("../Root/Master/" + newDoc, newDoc);
 		return "redirect:documentos";
 	}
 	
@@ -484,6 +485,8 @@ public class FileUploadController {
 
         long size = sourceFileChannel.size();
         sourceFileChannel.transferTo(0, size, destinationFileChannel);
+        sourceFileChannel.close();
+        destinationFileChannel.close();
 
     }
 
@@ -588,5 +591,17 @@ public class FileUploadController {
     		return celula;
     	}
     	
+    }
+    public void changeName(String newDoc, String docName) throws IOException {
+    	for(String each:new File(newDoc).list()){
+    		if(new File(newDoc + "/"+ each).isDirectory()) {
+    			changeName(newDoc + "/" + each, docName);
+    		}
+    		else {    			
+    			String newName = docName + each.substring(8, each.length());
+    			Path source = Paths.get(newDoc + "/" + each);
+    			Files.move(source, source.resolveSibling(newName));
+    		}
+    	}
     }
 }
