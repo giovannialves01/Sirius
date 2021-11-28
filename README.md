@@ -29,10 +29,36 @@ Com a proposta de aprimorar a criação da documentação das aeronaves, a empre
   <img src="https://github.com/giovannialves01/Sirius/blob/main/Documentos/Wireframes/Sprint%202/Upload%20e%20Download.gif" width="800px" p>
 	
 ### Codelist
-
 <p align="left">
   <img src="https://github.com/giovannialves01/Sirius/blob/main/Documentos/Wireframes/Sprint%203/Codelist.gif" width="800px" p>
+
+### Novo documento de um existente
+<p align="left">
+  <img src="https://github.com/giovannialves01/Sirius/blob/main/Documentos/Wireframes/Sprint%204/Novo-doc.-de-um-existente.gif" width="800px" p>
 	
+### Upload de multiplos arquivos 
+<p align="left">
+  <img src="https://github.com/giovannialves01/Sirius/blob/main/Documentos/Wireframes/Sprint%204/Upload-de-multiplos-arquivos.gif" width="800px" p>	
+	
+### Upload de arquivo Excel 
+<p align="left">
+  <img src="https://github.com/giovannialves01/Sirius/blob/main/Documentos/Wireframes/Sprint%204/Upload-de-Excel.gif" width="800px" p>	
+	
+### Download com Revisão do Bloco
+<p align="left">
+  <img src="https://github.com/giovannialves01/Sirius/blob/main/Documentos/Wireframes/Sprint%204/Download-com-Rev.-do-Bloco.gif" width="800px" p>	
+	
+### Download criando Revisão de documento
+<p align="left">
+  <img src="https://github.com/giovannialves01/Sirius/blob/main/Documentos/Wireframes/Sprint%204/Download-criando-Rev.-de-documento.gif" width="800px" p>	
+	
+### Funcionamento da Revisão  	
+<p align="left">
+  <img src="https://github.com/giovannialves01/Sirius/blob/main/Documentos/Wireframes/Sprint%203/Codelist.gif" width="800px" p>	
+	
+### Documento FULL com variação de Revisão 
+<p align="left">
+  <img src="https://github.com/giovannialves01/Sirius/blob/main/Documentos/Wireframes/Sprint%204/Doc.-FULL-com-varia%C3%A7%C3%A3o-de-Rev..gif" width="800px" p>	
 	
 ## Sprint Cards
 
