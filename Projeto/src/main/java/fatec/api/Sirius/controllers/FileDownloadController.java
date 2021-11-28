@@ -360,10 +360,10 @@ public class FileDownloadController {
 						
 					}else {
 						if(haveSubs(each)) {
-							br.write(each + "   Pagina " + i + "   Revisão Original");
+							br.write(each + "   Pagina " + i + "   Original");
 							br.newLine();
 						} else {
-						br.write(each + "      Pagina " + i + "   Revisão Original");
+						br.write(each + "      Pagina " + i + "   Original");
 						br.newLine();
 						}
 					}
