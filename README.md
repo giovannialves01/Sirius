@@ -54,7 +54,7 @@ Com a proposta de aprimorar a criação da documentação das aeronaves, a empre
 	
 ### Funcionamento da Revisão  	
 <p align="left">
-  <img src="https://github.com/giovannialves01/Sirius/blob/main/Documentos/Wireframes/Sprint%203/Codelist.gif" width="800px" p>	
+  <img src="https://github.com/giovannialves01/Sirius/blob/main/Documentos/Wireframes/Sprint%204/Funcionamento-da-Revis%C3%A3o.gif" width="800px" p>	
 	
 ### Documento FULL com variação de Revisão 
 <p align="left">
