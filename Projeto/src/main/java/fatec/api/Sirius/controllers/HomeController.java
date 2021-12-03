@@ -47,18 +47,26 @@ public class HomeController {
 	}
 
 	@GetMapping("/cadastrar")
-	public String salvar(User user, Model model) {
-
-		userRepository.save(user);
-		ModelAndView andView = new ModelAndView("cadastro");
-		Iterable<User> usersIt = userRepository.findAll();
-		andView.addObject("users", usersIt);
+	public String salvar(User user) {
 		
-		String concluido = null;
-		concluido = "ok";
-		model.addAttribute("concluido","ok");
+		try {
 
-		return "cadastro.html";
+			userRepository.save(user);
+			ModelAndView andView = new ModelAndView("cadastro");
+			Iterable<User> usersIt = userRepository.findAll();
+			andView.addObject("users", usersIt);
+			
+			String concluido = null;
+			concluido = "ok";
+
+			System.out.println("User:"+user);
+			return "cadastro.html";
+		} catch (Exception e) {
+			System.out.println("User:"+user);
+			System.out.println("ERRO! "+e);
+			e.printStackTrace();
+			return "error";
+		}
 	}
 
 }
