@@ -21,7 +21,7 @@ import fatec.api.Sirius.repository.UserRepository;
 public class HomeControllerTest {
 @Autowired
 private HomeController homeCon;
-   
+   //
     @Test
     void testSalvar() {
         User usertest =new User();
@@ -30,7 +30,7 @@ private HomeController homeCon;
         usertest.setName("Novo");
         usertest.setPassword("asd");
         usertest.setEnabled(false);
-        usertest.setUsername("AAAAAAAA1");
+        usertest.setUsername("AAAAAeffre1");
         usertest.setId(80);
         String resultado=homeCon.salvar(usertest);
         System.out.println("Resultado:"+resultado);
