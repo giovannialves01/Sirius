@@ -17,7 +17,7 @@ public class HomeController {
 	private UserRepository userRepository;
 
 	@RequestMapping("/login")
-	public String login(Model model) {		
+	public String login(Model model) {
 		return "login";
 	}
 
@@ -48,24 +48,52 @@ public class HomeController {
 
 	@GetMapping("/cadastrar")
 	public String salvar(User user) {
-		
+
 		try {
+		System.out.println("A");
+
+		/*user.setEmail("teste@gmail.com");
+		user.setLast_name("Teste1");
+		user.setName("teste1");
+		user.setPassword("teste");
+		user.setEnabled(false);
+		user.setUsername("TESTE2");*/
+		
+		
+		System.out.println("1-" + user.getName());
+		System.out.println("2-" + user.getId());
+		System.out.println("3-" + user.getEmail());
+		System.out.println("4-" + user.getLast_name());
+		System.out.println("5-" + user.getPassword());
+		System.out.println("6-" + user.getUsername());
+		System.out.println("7-" + user.getClass());
+		
+		System.out.println("user null? " + (user == null ? "yep" : "nope"));
 
 			userRepository.save(user);
+
+			System.out.println("B");
 			ModelAndView andView = new ModelAndView("cadastro");
+
+			System.out.println("C");
 			Iterable<User> usersIt = userRepository.findAll();
+
+			System.out.println("D");
 			andView.addObject("users", usersIt);
-			
+
+			System.out.println("E");
 			String concluido = null;
+
+			System.out.println("F");
 			concluido = "ok";
 
-			System.out.println("User:"+user);
+			System.out.println("G*");
+			// model.addAttribute("concluido","ok");
+
 			return "cadastro.html";
 		} catch (Exception e) {
-			System.out.println("User:"+user);
-			System.out.println("ERRO! "+e);
-			e.printStackTrace();
-			return "error";
+	        e.printStackTrace();
+			return "erro";
 		}
 	}
 

@@ -1,39 +1,42 @@
 package fatec.api.Sirius;
 
+import static org.junit.Assert.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
-
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.ui.Model;
-
-
+import org.junit.Assert;
 import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.web.servlet.MockMvc;
 
 import fatec.api.Sirius.controllers.HomeController;
 import fatec.api.Sirius.model.User;
-import junit.framework.Assert;
+import fatec.api.Sirius.repository.UserRepository;
 
 @SpringBootTest
-class HomeControllerTest {
-
-	@Test
-	void testLogin() {
-		fail("Not yet implemented");
-	}
-
-	@SuppressWarnings("deprecation")
-	@Test
-	void testSalvar() {
-		HomeController homecon = new HomeController();
-		User usertest =new User();
-		usertest.setEmail("email");
-		usertest.setLast_name("last_name");
-		usertest.setName("name");
-		usertest.setPassword("password");
-		usertest.setUsername("naoexiste");
-		String resultado=homecon.salvar(usertest);
-		String esperado ="cadastro.html";
-		Assert.assertEquals(esperado, resultado);
-		
-	}
+public class HomeControllerTest {
+@Autowired
+private HomeController homeCon;
+   
+    @Test
+    void testSalvar() {
+        User usertest =new User();
+        usertest.setEmail("aaaaa@gmail.com");
+        usertest.setLast_name("Usuario");
+        usertest.setName("Novo");
+        usertest.setPassword("asd");
+        usertest.setEnabled(false);
+        usertest.setUsername("AAAAAAAA1");
+        usertest.setId(80);
+        String resultado=homeCon.salvar(usertest);
+        System.out.println("Resultado:"+resultado);
+        System.out.println("Usuario:"+usertest);
+        String esperado ="cadastro.html";
+         Assert.assertEquals(esperado, resultado);
+    }
 
 }
