@@ -19,24 +19,24 @@ import fatec.api.Sirius.repository.UserRepository;
 
 @SpringBootTest
 public class HomeControllerTest {
-@Autowired
-private HomeController homeCon;
-   //
-    @Test
-    void testSalvar() {
-        User usertest =new User();
-        usertest.setEmail("aaaaa@gmail.com");
-        usertest.setLast_name("Usuario");
-        usertest.setName("Novo");
-        usertest.setPassword("asd");
-        usertest.setEnabled(false);
-        usertest.setUsername("AAAAAeffre1");
-        usertest.setId(80);
-        String resultado=homeCon.salvar(usertest);
-        System.out.println("Resultado:"+resultado);
-        System.out.println("Usuario:"+usertest);
-        String esperado ="cadastro.html";
-         Assert.assertEquals(esperado, resultado);
-    }
+	@Autowired
+	private HomeController homeCon;
+
+	@Test
+	void testSalvar() {
+		User usertest = new User();
+		usertest.setEmail("aaaaa@gmail.com");
+		usertest.setLast_name("Usuario");
+		usertest.setName("Novo");
+		usertest.setPassword("asd");
+		usertest.setEnabled(false);
+		usertest.setUsername("berry chalcon até o fim");
+		usertest.setId(80);
+		String resultado = homeCon.salvar(usertest);
+		System.out.println("Resultado:" + resultado);
+		System.out.println("Usuario:" + usertest);
+		String esperado = "cadastro.html";
+		Assert.assertEquals(esperado, resultado);
+	}
 
 }
