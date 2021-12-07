@@ -16,8 +16,8 @@ public class BlockControllersTest {
 
 	@Test
 	void testPdfName() {
-		String resultado=blockControllers.pdfName("ABC-1234", "00", "00", "00");
-		String esperado = "ABC-1234-00-00c00";
+		String resultado=blockControllers.pdfName("Abb-1234", "00", "11", "00");
+		String esperado = "Abb-134-00-11c00";
 		Assert.assertEquals(esperado, resultado);
 	}
 

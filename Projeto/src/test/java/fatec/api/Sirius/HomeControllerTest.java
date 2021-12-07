@@ -30,7 +30,7 @@ public class HomeControllerTest {
 		usertest.setName("Novo");
 		usertest.setPassword("asd");
 		usertest.setEnabled(false);
-		usertest.setUsername("rodrigoADM");
+		usertest.setUsername("rodrigoADM2342");
 		usertest.setId(80);
 		String resultado = homeCon.salvar(usertest);
 		System.out.println("Resultado:" + resultado);

@@ -23,7 +23,7 @@ class TestDeleteLine {
 		Document afterDelete = null;
 		String esperado = null;
 				
-		String id = "8";
+		String id = "14";
 		Document beforeDelete = dr.findById(Integer.parseInt(id));
 		System.out.println(beforeDelete.getName());
 		cc.deleteLine(id);
